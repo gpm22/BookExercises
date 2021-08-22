@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains codes of solved exercises from books and it is organized by programming language and themes.
+This repository contains codes of solved exercises from books and it is organized by programming language and books.
 
 ## Contents
 
