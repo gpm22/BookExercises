@@ -11,7 +11,7 @@ Created on Tue Dec 31 17:27:48 2019
 import numpy as np
 import matplotlib.pyplot as plt
 
-tempo, posicao, erro = np.loadtxt('exercise_6_4.txt', skiprows = 1, usecols = (0,1,2), unpack = True)
+tempo, posicao, erro = np.loadtxt('../exercise_6_4.txt', skiprows = 1, usecols = (0,1,2), unpack = True)
 
 
 velocidade = (posicao[:-1]-posicao[1:])/(tempo[:-1]-tempo[1:]) #velocidade

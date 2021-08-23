@@ -35,7 +35,7 @@ def oscDecay(t, A, B, C, omega, tau):
 
 #d(t) = A(1+B*cos(w*t))exp(-t²/2*tau²) + C
 
-tempo, sinal, erro = np.loadtxt('exercise_8_6.txt', skiprows = 4 , unpack = True)
+tempo, sinal, erro = np.loadtxt('../exercise_8_6.txt', skiprows = 4 , unpack = True)
 
 y = sinal
 x = tempo
@@ -59,7 +59,7 @@ d_2 = A_1*(1+B_1*np.cos(omega1*x_2))*np.exp((-(x_2/tau1)**2)/2) + C_1
 
 chi_2 = (((y-d)/erro_1)**2).sum()
 chi_red_1 = chi_2/(x.size-2)
-    
+
 print("\no" + r'$ {\chi} $' + "² é {}.".format(chi_red_1))
 print("\nO valor de A é {}, o de B é {}, o de C é {}, o de omega é {} e o de tau é {}.".format(A_1, B_1, C_1, omega1, tau1))
 print("\nO valor do erro associado a A é {}, o de B é {}, o de C é {}, o de omega é {} e o de tau é {}.".format(erro_A, erro_B, erro_C, erro_omega, erro_tau))

@@ -11,7 +11,7 @@ Created on Tue Dec 31 06:27:51 2019
 import numpy as np
 import matplotlib.pyplot as plt
 
-tempo, altura, erro = np.loadtxt('exercise_6_4.txt', skiprows = 1, usecols = (0,1,2), unpack = True)
+tempo, altura, erro = np.loadtxt('../exercise_6_4.txt', skiprows = 1, usecols = (0,1,2), unpack = True)
 
 y = (3+np.sin(np.pi*tempo/5)/2)*tempo*np.exp(-tempo/10)
 

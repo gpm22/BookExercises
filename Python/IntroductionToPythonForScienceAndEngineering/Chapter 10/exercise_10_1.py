@@ -9,12 +9,12 @@ Created on Sun Jan 19 17:10:15 2020
 import numpy as np
 import pandas as pd
 
-planetas = pd.read_table('planetData.txt', sep='\s+', index_col = 'planet')
+planetas = pd.read_table('../planetData.txt', sep='\s+', index_col = 'planet')
 
 #calcular a densidade de cada planeta relativo a densidade da terra
 #densidade = massa/volume
 
-# volume dos planetas 
+# volume dos planetas
 
 volume = np.pi*planetas['diameter']**3/6
 

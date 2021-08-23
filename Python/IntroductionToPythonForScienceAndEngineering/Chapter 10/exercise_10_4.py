@@ -9,7 +9,7 @@ Created on Sun Jan 19 19:09:34 2020
 import pandas as pd
 import matplotlib.pyplot as plt
 
-clima = pd.read_csv('exercise_10_4.csv', index_col = 'DATE')
+clima = pd.read_csv('../exercise_10_4.csv', index_col = 'DATE')
 
 clima.index = pd.to_datetime(clima.index)
 
@@ -32,5 +32,5 @@ media_min.plot(ax=ax1, color = 'blue', label = 'TMIN')
 
 ax1.set_ylabel('Temperatura do ar (ºC)')
 
-fig_1.show() 
+fig_1.show()
 fig_1.canvas.manager.window.raise_()
