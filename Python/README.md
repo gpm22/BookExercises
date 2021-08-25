@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains codes of solved exercises from books about python language.
+This repository contains codes of solved exercises from books about the python language.
 
 ## Contents
 
