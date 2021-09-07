@@ -12,3 +12,5 @@ This repository contains codes of solved exercises from books and it is organize
   * **Classic Computer Science Problems in Python** by David Kopec;
 * **JavaScript**
   * **JavaScript for Python Programmers** by Brad Miller;
+* **Java**
+  * **Introduction to Programming with Java** by Linda Seiter and Dan Palmer.
