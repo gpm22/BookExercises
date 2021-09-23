@@ -14,3 +14,4 @@ This repository contains codes of solved exercises from books and it is organize
   * **JavaScript for Python Programmers** by Brad Miller;
 * **Java**
   * **Introduction to Programming with Java** by Linda Seiter and Dan Palmer.
+  * **Java e Orientação a Objetos** by [Caelum](https://www.caelum.com.br/apostila-java-orientacao-objetos/)
