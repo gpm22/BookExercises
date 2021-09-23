@@ -10,9 +10,9 @@ A java introdutory book in portuguese.
 
 ## Contents
 
-1. Como Aprender Java **LIDO**
-2. O que é Java? **LIDO**
-3. Variáveis Primitivas e Controle de Fluxo **LIDO**
+1. Como Aprender Java
+2. O que é Java?
+3. Variáveis Primitivas e Controle de Fluxo
 4. Orientação a Objetos Básica
 5. Modificadores de Acesso e Atributos de Classe
 6. Eclipse IDE
