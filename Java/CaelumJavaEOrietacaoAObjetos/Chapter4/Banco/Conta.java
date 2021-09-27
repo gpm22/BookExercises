@@ -1,12 +1,21 @@
 class Conta {
-	int numero;
-	Cliente titular;
-	String agencia;
-	Data dataDeAbertura;
-	double saldo;
-	double limite;
+	private static int numeros = 0;
+	private int numero;
+	private Cliente titular;
+	private String agencia;
+	private Data dataDeAbertura;
+	private double saldo;
+	private double limite;
 
-	boolean saca(double valor) {
+	public Conta(Cliente titular, String agencia, Data dataDeAbertura, double limite) {
+		this.numero = Conta.numeros++;
+		this.titular = titular;
+		this.agencia = agencia;
+		this.dataDeAbertura = dataDeAbertura;
+		this.limite = limite;
+	}
+
+	boolean sacar(double valor) {
 
 		if (this.saldo < valor) {
 			return false;
@@ -16,29 +25,34 @@ class Conta {
 		return true;
 	}
 
-	boolean transferePara(Conta destino, double valor) {
+	public boolean transferirPara(Conta destino, double valor) {
 
-		if (this.saca(valor)) {
-			destino.deposita(valor);
+		if (this.sacar(valor)) {
+			destino.depositar(valor);
 			return true;
 		}
 
 		return false;
 	}
 
-	void deposita(double valor) {
-		this.saldo += valor;
+	public void depositar(double valor) {
+
+		if (valor > 0) {
+			this.saldo += valor;
+		}
 	}
 
-	double calcularRendimento() {
+	public double calcularRendimento() {
 		return this.saldo * 0.1;
 	}
 
-	String recuperarDadosParaImpressão() {
+	public String recuperarDadosParaImpressão() {
 
-		return "\nNome completo do titular: " + this.titular.nome + " " + this.titular.sobrenome + "\nCPF do titular: "
-				+ this.titular.cpf + "\nAgencia: " + this.agencia + "\nSaldo: " + this.saldo + "\nLimite: "
-				+ this.limite + "\nData de Abertura: " + this.dataDeAbertura.retornarData() + "\n";
+		return "\nNome completo do titular: " + this.titular.getNome() + " " + this.titular.getSobrenome()
+				+ "\nCPF do titular: " + this.titular.getCpf() + "\nNúmero da conta: " + this.numero + "\nAgencia: "
+				+ this.agencia + "\nSaldo: " + this.saldo + "\nLimite: " + this.limite + "\nData de Abertura: "
+				+ this.dataDeAbertura.retornarData() + "\n";
 
 	}
+
 }
