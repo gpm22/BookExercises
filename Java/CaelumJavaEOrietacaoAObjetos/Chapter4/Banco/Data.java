@@ -35,11 +35,7 @@ class Data {
 		
 		for(int i=0; i<12; i++){
 			if(mes == meses[i]){
-				if(dia <= diasDoMes[i]){
-					return true;
-				} else {
-					return false;				
-				}
+				return (dia <= diasDoMes[i]) ? true : false;
 			}
 		}
 
