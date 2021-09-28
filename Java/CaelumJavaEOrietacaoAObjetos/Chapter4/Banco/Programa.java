@@ -2,7 +2,7 @@ class Programa {
 	public static void main(String[] args) {
 		try {
 			Data data1 = new Data(1, 10, 2020);
-			Data data2 = new Data(28, 2, 2001);
+			Data data2 = new Data(31, 4, 2001);
 
 			Cliente cliente1 = new Cliente("Alberto", "Alves", "10", 30);
 			Cliente cliente2 = new Cliente("Alexandro", "Santos", "20", 18);
