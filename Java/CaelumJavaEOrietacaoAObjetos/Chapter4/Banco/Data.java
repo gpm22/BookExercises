@@ -45,13 +45,13 @@ class Data {
 		if (mes == 2) {
 
 			if (this.isAnoBissexto(ano)) {
-				if ((dia >= 1 && dia <= 28)) {
+				if ((dia >= 1 && dia <= 29)) {
 					return true;
 				} else {
 					return false;
 				}
 			} else {
-				if ((dia >= 1 && dia <= 29)) {
+				if ((dia >= 1 && dia <= 28)) {
 					return true;
 				} else {
 					return false;
