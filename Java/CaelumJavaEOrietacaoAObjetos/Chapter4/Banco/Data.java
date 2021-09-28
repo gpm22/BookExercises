@@ -20,133 +20,23 @@ class Data {
 	}
 
 	private String formatarDiaOuMes(int valor) {
-		if (valor < 10) {
-			return "0" + valor;
-		} else {
-			return "" + valor;
-		}
+		return (valor < 10) ? "0" + valor : "" + valor;
 	}
 
 	private boolean validarData(int dia, int mes, int ano) {
 
-		if (dia < 0 || mes < 0 || ano < 0) {
+		if (dia < 1 || mes < 1 || ano < 0) {
 			return false;
 		}
 
-		if (mes == 1) {
-			if ((dia >= 1 && dia <= 31)) {
-				return true;
-			} else {
-				return false;
+		int diasEmFevereiro = this.isAnoBissexto(ano) ? 29 : 28;
+		int[] meses = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+		int[] diasDoMes = { 31, diasEmFevereiro, 31, 30, 31, 30, 31, 31, 30, 30, 30, 31 };
+
+		for (int i = 0; i < 12; i++) {
+			if (mes == meses[i]) {
+				return (dia <= diasDoMes[i]) ? true : false;
 			}
-
-		}
-
-		if (mes == 2) {
-
-			if (this.isAnoBissexto(ano)) {
-				if ((dia >= 1 && dia <= 29)) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				if ((dia >= 1 && dia <= 28)) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-
-		}
-
-		if (mes == 3) {
-			if ((dia >= 1 && dia <= 31)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		if (mes == 4) {
-			if ((dia >= 1 && dia <= 30)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 5) {
-			if ((dia >= 1 && dia <= 31)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 6) {
-			if ((dia >= 1 && dia <= 30)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 7) {
-			if ((dia >= 1 && dia <= 31)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 8) {
-			if ((dia >= 1 && dia <= 31)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 9) {
-			if ((dia >= 1 && dia <= 30)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 10) {
-			if ((dia >= 1 && dia <= 30)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 11) {
-			if ((dia >= 1 && dia <= 30)) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
-
-		if (mes == 12) {
-			if ((dia >= 1 && dia <= 31)) {
-				return true;
-			} else {
-				return false;
-			}
-
 		}
 
 		return false;
