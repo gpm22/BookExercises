@@ -1,4 +1,10 @@
-class Programa {
+package br.com.gpm22.main;
+
+import br.com.gpm22.banco.Cliente;
+import br.com.gpm22.banco.Conta;
+import br.com.gpm22.banco.Data;
+
+class Main {
 	public static void main(String[] args) {
 		try {
 			Data data1 = new Data(1, 10, 2020);

@@ -1,4 +1,6 @@
-class Data {
+package br.com.gpm22.banco;
+
+public class Data {
 	int dia;
 	int mes;
 	int ano;

@@ -1,4 +1,6 @@
-class Conta {
+package br.com.gpm22.banco;
+
+public class Conta {
 	private static int numeros = 0;
 	private int numero;
 	private Cliente titular;

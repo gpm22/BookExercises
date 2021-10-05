@@ -1,4 +1,6 @@
-class Cliente {
+package br.com.gpm22.banco;
+
+public class Cliente {
 	private String nome;
 	private String sobrenome;
 	private String cpf;
