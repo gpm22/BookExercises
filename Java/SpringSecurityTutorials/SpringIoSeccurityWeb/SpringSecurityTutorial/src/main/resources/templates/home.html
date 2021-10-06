@@ -8,4 +8,10 @@
         
         <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
     </body>
+    <div sec:authorize="isAuthenticated()">
+        This content is only shown to authenticated users.
+    </div>
+    <div sec:authorize="!isAuthenticated()">
+        This content is only shown to non-authenticated users.
+    </div>
 </html>
