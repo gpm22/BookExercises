@@ -1,3 +1,6 @@
 ﻿# Compiled class file
 *.class
 /.metadata/
+
+#Servers
+Servers/
