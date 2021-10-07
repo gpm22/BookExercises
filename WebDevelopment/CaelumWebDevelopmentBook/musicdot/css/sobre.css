@@ -12,13 +12,13 @@ p {
 	text-align: justify;
 }
 
-h1 {
+.titulo {
 	padding: 10px;
 	
 	background-color: #E1EDF2;
 }
 
-h2 {
+.subtitulo {
 	border-bottom: 2px solid black;
 }
 
@@ -28,10 +28,26 @@ figure {
 	
 	text-align: center;
 	
-	background-color: white-smoke;
+	background-color: #f8f8f8;
 	border: 1px solid lightgrey;
 }
 
 figcaption {
 	margin-top: 10px;
 }
+
+.matriz-musicdot {
+  width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.familia-tupfeln {
+  width: 275px;
+  float: right;
+}
+
+figure img {
+  width: 100%;
+}
+

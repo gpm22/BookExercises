@@ -5,6 +5,7 @@ public class Cliente {
 	private String sobrenome;
 	private String cpf;
 	private int idade;
+	private Conta conta;
 
 	public Cliente(String nome, String sobrenome, String cpf, int idade) {
 		if (this.validarCPF(cpf)) {
@@ -53,4 +54,13 @@ public class Cliente {
 		return this.cpf;
 	}
 
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	
 }

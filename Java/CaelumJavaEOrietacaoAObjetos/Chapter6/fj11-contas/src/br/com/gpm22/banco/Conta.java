@@ -56,5 +56,13 @@ public class Conta {
 				+ this.dataDeAbertura.retornarData() + "\n";
 
 	}
+	
+	public String getAgencia() {
+		return this.agencia;
+	}
+	
+	public int getNumero() {
+		return this.numero;
+	}
 
 }
