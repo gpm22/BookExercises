@@ -10,8 +10,11 @@ class Main {
 			Data data1 = new Data(1, 10, 2020);
 			Data data2 = new Data(30, 4, 2001);
 
-			Cliente cliente1 = new Cliente("Alberto", "Alves", "10", 30);
-			Cliente cliente2 = new Cliente("Alexandro", "Santos", "20", 18);
+			Data dataDeNascimento1 = new Data(1, 10, 1978);
+			Data dataDeNascimento2 = new Data(30, 4, 2000);
+
+			Cliente cliente1 = new Cliente("Alberto", "Alves", "10", dataDeNascimento1);
+			Cliente cliente2 = new Cliente("Alexandro", "Santos", "20", dataDeNascimento2);
 
 			Conta conta1 = new Conta(cliente1, "A", data1, 1000.5);
 			Conta conta2 = new Conta(cliente2, "B", data2, 2000);

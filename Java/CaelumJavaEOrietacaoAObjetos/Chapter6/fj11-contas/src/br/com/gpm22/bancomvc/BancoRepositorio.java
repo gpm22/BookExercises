@@ -1,4 +1,4 @@
-package br.com.gpm22.bancointerface;
+package br.com.gpm22.bancomvc;
 
 import java.util.ArrayList;
 
@@ -15,6 +15,14 @@ public class BancoRepositorio {
 	
 	public static void adicionarCliente(Cliente cliente) {
 		clientes.add(cliente);
+	}
+
+	public static void removerConta(Conta conta) {
+		contas.remove(conta);
+	}
+	
+	public static void removerCliente(Cliente cliente) {
+		clientes.remove(cliente);
 	}
 	
 	public static Cliente retornarClientePeloNomeCompleto(String nomeCLiente) {

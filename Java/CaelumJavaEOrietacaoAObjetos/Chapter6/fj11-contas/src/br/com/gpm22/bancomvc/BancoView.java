@@ -1,4 +1,4 @@
-package br.com.gpm22.bancointerface;
+package br.com.gpm22.bancomvc;
 
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -7,7 +7,7 @@ import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.banco.Conta;
 import br.com.gpm22.banco.Data;
 
-public class BancoInterface {
+public class BancoView {
 	
 	private Scanner entrada = new Scanner(System.in);
 	
@@ -75,7 +75,7 @@ public class BancoInterface {
 			
 			conta = new Conta(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
 			
-			cliente.setConta(conta);
+			cliente.addConta(conta);
 			
 			return conta;
 			
@@ -87,7 +87,7 @@ public class BancoInterface {
 	private Data criarDataDeCriacao() throws Exception{
 		int[] dataDeCriacaoEntrada;
 		
-		System.out.println("Digite a data de hoje, por favor no seguinte formato:\ndia/mes/ano");
+		System.out.println("Digite a data de hoje, por favor no seguinte formato:\ndd/mm/aaaa");
 		dataDeCriacaoEntrada = Stream.of(entrada.next().split("/")).mapToInt(Integer::parseInt).toArray();
 		
 		try {
@@ -98,11 +98,12 @@ public class BancoInterface {
 			
 	}
 	
-	private Cliente criarCliente() {
+	private Cliente criarCliente() throws Exception {
 		String nomeDoCliente;
 		String sobrenomeDoCliente;
 		String cpfDoCliente;
-		int idadeDoCliente;
+		String[] entradaDataDeNascimento;
+		Data dataDeNascimentoDoCliente;
 				
 		System.out.println("Digite o nome do Cliente:");
 		nomeDoCliente = entrada.next();
@@ -110,10 +111,15 @@ public class BancoInterface {
 		sobrenomeDoCliente = entrada.next();
 		System.out.println("Digite o cpf do Cliente:");
 		cpfDoCliente = entrada.next();
-		System.out.println("Digite a idade do Cliente:");
-		idadeDoCliente = entrada.nextInt();
+		System.out.println("Digite a data de nascimento do Cliente (dd/mm/aaaa):");
+		entradaDataDeNascimento = entrada.next().split("/");
+		try{
+			dataDeNascimentoDoCliente = new Data(Integer.parseInt(entradaDataDeNascimento[0]), Integer.parseInt(entradaDataDeNascimento[1]), Integer.parseInt(entradaDataDeNascimento[2]));
+		} catch (Exception e){
+			throw e;
+		}
 		
-		return new Cliente(nomeDoCliente, sobrenomeDoCliente, cpfDoCliente, idadeDoCliente);
+		return new Cliente(nomeDoCliente, sobrenomeDoCliente, cpfDoCliente, dataDeNascimentoDoCliente);
 	}
 	
 }

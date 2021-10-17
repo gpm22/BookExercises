@@ -47,4 +47,18 @@ public class Data {
 	private boolean isAnoBissexto(int ano) {
 		return (ano % 4 == 0 && !(ano % 100 == 0 && ano % 400 != 0)) ? true : false;
 	}
+
+	public int calcularIdade(Data diaAtual){
+		int idade = diaAtual.ano - this.ano;
+
+		if(diaAtual.mes > this.mes){
+			return idade;
+		}
+
+		if(diaAtual.mes == this.mes && diaAtual.dia >= this.dia){
+			return idade;
+		}
+
+		return idade-1;
+	}
 }

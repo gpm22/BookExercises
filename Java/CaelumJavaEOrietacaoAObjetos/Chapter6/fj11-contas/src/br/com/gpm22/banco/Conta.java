@@ -48,10 +48,18 @@ public class Conta {
 		return this.saldo * 0.1;
 	}
 
-	public String recuperarDadosParaImpressão() {
+	public String recuperarDadosParaImpressão() throws Exception{
+
+		Data diaAtual;
+		try {
+			diaAtual = new Data(30, 4, 2030);
+		} catch (Exception e){
+			throw e;
+		}
+
 
 		return "\nNome completo do titular: " + this.titular.getNome() + " " + this.titular.getSobrenome()
-				+ "\nCPF do titular: " + this.titular.getCpf() + "\nNúmero da conta: " + this.numero + "\nAgencia: "
+				+ "\nCPF do titular: " + this.titular.getCpf() + "\nIdade: " + this.titular.getIdade(diaAtual) + "\nNúmero da conta: " + this.numero + "\nAgencia: "
 				+ this.agencia + "\nSaldo: " + this.saldo + "\nLimite: " + this.limite + "\nData de Abertura: "
 				+ this.dataDeAbertura.retornarData() + "\n";
 

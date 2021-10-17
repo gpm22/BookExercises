@@ -1,18 +1,22 @@
 package br.com.gpm22.banco;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente {
 	private String nome;
 	private String sobrenome;
 	private String cpf;
-	private int idade;
-	private Conta conta;
+	private Data dataDeNascimento;
+	private List<Conta> contas;
 
-	public Cliente(String nome, String sobrenome, String cpf, int idade) {
+	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento) {
 		if (this.validarCPF(cpf)) {
 			this.nome = nome;
 			this.sobrenome = sobrenome;
 			this.cpf = cpf;
-			this.idade = idade;
+			this.dataDeNascimento = dataDeNascimento;
+			this.contas = new ArrayList<>();
 		}
 	}
 
@@ -34,8 +38,8 @@ public class Cliente {
 		this.sobrenome = sobrenome;
 	}
 
-	public void setIdade(int idade) {
-		this.idade = idade;
+	public void setDataDeNascimento(Data dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
 	}
 
 	public String getNome() {
@@ -46,20 +50,24 @@ public class Cliente {
 		return this.sobrenome;
 	}
 
-	public int getIdade() {
-		return this.idade;
+	public int getIdade(Data diaAtual) {
+		return this.dataDeNascimento.calcularIdade(diaAtual);
+	}
+
+	public Data getDataDeNascimento() {
+		return this.dataDeNascimento;
 	}
 
 	public String getCpf() {
 		return this.cpf;
 	}
 
-	public Conta getConta() {
-		return conta;
+	public List<Conta> getContas() {
+		return contas;
 	}
 
-	public void setConta(Conta conta) {
-		this.conta = conta;
+	public void addConta(Conta conta) {
+		this.contas.add(conta);
 	}
 
 	
