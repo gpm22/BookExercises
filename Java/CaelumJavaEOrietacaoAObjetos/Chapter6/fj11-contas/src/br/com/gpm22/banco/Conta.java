@@ -17,11 +17,18 @@ public class Conta {
 		this.limite = limite;
 	}
 
-	boolean sacar(double valor) {
-
-		if (this.saldo < valor) {
+	public boolean sacar(double valor) {
+		
+		if (valor < 0) {
+			System.out.println("Impossível Sacar ou Transferir um Valor Negativo!");
 			return false;
 		}
+
+		if (this.saldo < valor) {
+			System.out.println("\nValor indisponível para Saque ou Transferência");
+			System.out.println("Sua conta possui saldo de: " + this.saldo);
+			return false;
+		}	
 
 		this.saldo -= valor;
 		return true;
@@ -41,6 +48,8 @@ public class Conta {
 
 		if (valor > 0) {
 			this.saldo += valor;
+		} else {
+			System.out.println("\nImpossível depositar valores negativos.");
 		}
 	}
 
