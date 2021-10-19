@@ -70,5 +70,10 @@ public class Cliente {
 		this.contas.add(conta);
 	}
 
-	
+	public String retornarInformacoesDoCliente()
+	{
+		return "Nome completo:" + this.getNome() + " " + this.getSobrenome() + "\nCPF: " + this.getCpf()  +"\nData de Nascimento: "
+				+ this.getDataDeNascimento();
+	}
+
 }

@@ -4,7 +4,7 @@ import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.banco.Conta;
 import br.com.gpm22.banco.Data;
 
-class Main {
+class MainTest {
 	public static void main(String[] args) {
 		try {
 			Data data1 = new Data(1, 10, 2020);

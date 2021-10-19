@@ -133,9 +133,9 @@ public class BancoView {
 
 		System.out.println("Digite o nome da Agência:");
 		nomeAgencia = entrada.next();
-		System.out.println("Digite o número da conta:");
-		numeroConta = Integer.parseInt(entrada.next());
 
+		System.out.println("Digite o número da conta:");
+		numeroConta = entrada.nextInt();
 		return BancoRepositorio.retornarContaPeloNumeroEAgencia(nomeAgencia, numeroConta);
 
 	}
@@ -153,15 +153,30 @@ public class BancoView {
 
 		Data dataDeCriacao;
 		Conta conta;
-		Cliente cliente;
+		Cliente cliente = null;
 		String nomeDaAgencia;
+		String opcao;
 		double limiteDaConta;
 
 		try {
+	
+			while (true) {
+				System.out.println("Já é cliente?\n1-Sim\n2-Não");
+				opcao = entrada.next();
+				if (opcao.equals("1")) {
+					cliente = this.menuRetornarCliente();
+					System.out.println("Cliente é o: " + cliente.retornarInformacoesDoCliente());
+					break;
+				} else if (opcao.equals("2")) {
+					cliente = this.criarCliente();
+					BancoRepositorio.adicionarCliente(cliente);
+					break;
+				} else {
+					System.out.println("Entrada Inválida");
+				}
+			}
+			
 			dataDeCriacao = this.criarDataDeCriacao();
-			cliente = this.criarCliente();
-
-			BancoRepositorio.adicionarCliente(cliente);
 
 			System.out.println("Digite o nome da Agência: ");
 			nomeDaAgencia = entrada.next();
@@ -177,6 +192,15 @@ public class BancoView {
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+
+	private Cliente menuRetornarCliente() {
+		String opcao;
+
+		System.out.println("Informe o nome completo do cliente:");
+		opcao = entrada.next();
+
+		return BancoRepositorio.retornarClientePeloNomeCompleto(opcao);
 	}
 
 	private Data criarDataDeCriacao() throws Exception {
@@ -200,6 +224,7 @@ public class BancoView {
 		String cpfDoCliente;
 		String[] entradaDataDeNascimento;
 		Data dataDeNascimentoDoCliente;
+		Cliente cliente;
 
 		System.out.println("Digite o nome do Cliente:");
 		nomeDoCliente = entrada.next();
@@ -217,7 +242,11 @@ public class BancoView {
 			throw e;
 		}
 
-		return new Cliente(nomeDoCliente, sobrenomeDoCliente, cpfDoCliente, dataDeNascimentoDoCliente);
+		cliente = new Cliente(nomeDoCliente, sobrenomeDoCliente, cpfDoCliente, dataDeNascimentoDoCliente);
+
+		System.out.println("Criado o cliente: " + cliente.retornarInformacoesDoCliente());
+
+		return cliente;
 	}
 
 	private void sair() {
