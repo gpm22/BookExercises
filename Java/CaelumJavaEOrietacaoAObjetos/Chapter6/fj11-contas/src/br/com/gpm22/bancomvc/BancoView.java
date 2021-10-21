@@ -9,7 +9,8 @@ import br.com.gpm22.banco.Data;
 
 public class BancoView {
 
-	private Scanner entrada = new Scanner(System.in);
+	private Scanner entrada = new Scanner(System.in).useDelimiter(";|\r?\n|\r");
+
 
 	public void menuInicial() throws Exception {
 		String resposta = "";
@@ -142,7 +143,8 @@ public class BancoView {
 
 	public void menuCriarConta() throws Exception {
 		try {
-			BancoRepositorio.adicionarConta(this.criarConta());
+			Conta conta = this.criarConta();
+			System.out.println("Conta criada: " + conta.recuperarDadosParaImpressão());
 		} catch (Exception e) {
 			System.out.println("Impossível criar a conta.");
 			throw e;
@@ -165,7 +167,7 @@ public class BancoView {
 				opcao = entrada.next();
 				if (opcao.equals("1")) {
 					cliente = this.menuRetornarCliente();
-					System.out.println("Cliente é o: " + cliente.retornarInformacoesDoCliente());
+					System.out.println("Cliente é o:\n" + cliente.retornarInformacoesDoCliente());
 					break;
 				} else if (opcao.equals("2")) {
 					cliente = this.criarCliente();
@@ -184,9 +186,9 @@ public class BancoView {
 			limiteDaConta = entrada.nextDouble();
 
 			conta = new Conta(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
-
 			cliente.addConta(conta);
 
+			BancoRepositorio.adicionarConta(conta);
 			return conta;
 
 		} catch (Exception e) {

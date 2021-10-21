@@ -78,8 +78,8 @@ public class BancoRepositorio {
 			
 			//Conta(Cliente titular, String agencia, Data dataDeAbertura, double limite)
 			
-			Conta conta1 = new Conta(retornarClientePeloNomeCompleto("Usuário1 Teste1"), "Girassol-1", dataDeInicioConta1, 1000);
-			Conta conta2 = new Conta(retornarClientePeloNomeCompleto("Usuário2 Teste2"), "Girassol-1", dataDeInicioConta2, 1000);
+			Conta conta1 = new Conta(retornarClientePeloNomeCompleto("Usuário1 Teste1"), "Girassol 1", dataDeInicioConta1, 1000);
+			Conta conta2 = new Conta(retornarClientePeloNomeCompleto("Usuário2 Teste2"), "Girassol 1", dataDeInicioConta2, 1000);
 			
 			adicionarConta(conta1);
 			adicionarConta(conta2);
