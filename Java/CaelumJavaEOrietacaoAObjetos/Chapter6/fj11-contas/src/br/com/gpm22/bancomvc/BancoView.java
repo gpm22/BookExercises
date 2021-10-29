@@ -11,7 +11,6 @@ public class BancoView {
 
 	private Scanner entrada = new Scanner(System.in).useDelimiter(";|\r?\n|\r");
 
-
 	public void menuInicial() throws Exception {
 		String resposta = "";
 		while (true) {
@@ -39,9 +38,15 @@ public class BancoView {
 	}
 
 	private void menuAcessarConta() {
-		Conta conta = this.acessarConta();
-
-		this.menuOpcoesConta(conta);
+		try {
+			Conta conta = this.acessarConta();
+			if (conta == null) {
+				return;
+			}
+			this.menuOpcoesConta(conta);
+		} catch (Exception e) {
+			System.out.println("Cancelado.");
+		}
 
 	}
 
@@ -88,11 +93,19 @@ public class BancoView {
 		Conta contaAReceber;
 		Double valorTransferencia;
 
-		System.out.println("Informe os dados sobre a conta que irá receber a transferência:");
+		System.out.println("Informe os dados sobre a conta que irá receber a transferência (ou digite x para sair):");
 		contaAReceber = this.acessarConta();
 
-		System.out.println("Digite o valor a ser transferido");
+		if (contaAReceber.equals("x") || contaAReceber.equals("X")) {
+			return;
+		}
+
+		System.out.println("Digite o valor a ser transferido (ou digite 0 para sair):");
 		valorTransferencia = entrada.nextDouble();
+
+		if (valorTransferencia.equals(0)) {
+			return;
+		}
 
 		conta.transferirPara(contaAReceber, valorTransferencia);
 
@@ -101,8 +114,12 @@ public class BancoView {
 	private void menuSacar(Conta conta) {
 		Double valorSaque;
 
-		System.out.println("Digite o valor a ser sacado:");
+		System.out.println("Digite o valor a ser sacado (ou digite 0 para sair):");
 		valorSaque = entrada.nextDouble();
+
+		if (valorSaque.equals(0)) {
+			return;
+		}
 
 		conta.sacar(valorSaque);
 
@@ -111,9 +128,12 @@ public class BancoView {
 	private void menuDepositar(Conta conta) {
 		Double valorDeposito;
 
-		System.out.println("Digite o valor a ser depositado:");
+		System.out.println("Digite o valor a ser depositado (ou digite 0 para sair):");
 		valorDeposito = entrada.nextDouble();
 
+		if (valorDeposito.equals(0)) {
+			return;
+		}
 		conta.depositar(valorDeposito);
 
 	}
@@ -132,11 +152,17 @@ public class BancoView {
 		String nomeAgencia;
 		int numeroConta;
 
-		System.out.println("Digite o nome da Agência:");
+		System.out.println("Digite o nome da Agência (ou digite x para sair):");
 		nomeAgencia = entrada.next();
+		if (nomeAgencia.equals("x") || nomeAgencia.equals("X")) {
+			return null;
+		}
 
-		System.out.println("Digite o número da conta:");
+		System.out.println("Digite o número da conta (ou digite 0 para sair):");
 		numeroConta = entrada.nextInt();
+		if (numeroConta == 0) {
+			return null;
+		}
 		return BancoRepositorio.retornarContaPeloNumeroEAgencia(nomeAgencia, numeroConta);
 
 	}
@@ -144,6 +170,10 @@ public class BancoView {
 	public void menuCriarConta() throws Exception {
 		try {
 			Conta conta = this.criarConta();
+			if (conta == null) {
+				return;
+			}
+
 			System.out.println("Conta criada: " + conta.recuperarDadosParaImpressão());
 		} catch (Exception e) {
 			System.out.println("Impossível criar a conta.");
@@ -161,29 +191,45 @@ public class BancoView {
 		double limiteDaConta;
 
 		try {
-	
+
 			while (true) {
 				System.out.println("Já é cliente?\n1-Sim\n2-Não");
 				opcao = entrada.next();
 				if (opcao.equals("1")) {
 					cliente = this.menuRetornarCliente();
+					if (cliente == null) {
+						return null;
+					}
 					System.out.println("Cliente é o:\n" + cliente.retornarInformacoesDoCliente());
 					break;
 				} else if (opcao.equals("2")) {
 					cliente = this.criarCliente();
+					if (cliente == null) {
+						return null;
+					}
 					BancoRepositorio.adicionarCliente(cliente);
 					break;
 				} else {
 					System.out.println("Entrada Inválida");
 				}
 			}
-			
+
 			dataDeCriacao = this.criarDataDeCriacao();
 
-			System.out.println("Digite o nome da Agência: ");
+			if (dataDeCriacao == null) {
+				return null;
+			}
+
+			System.out.println("Digite o nome da Agência (ou x para sair): ");
 			nomeDaAgencia = entrada.next();
-			System.out.println("Digite o limite da conta: ");
+			if (nomeDaAgencia.equals("x") || nomeDaAgencia.equals("X")) {
+				return null;
+			}
+			System.out.println("Digite o limite da conta (ou 0 apra sair): ");
 			limiteDaConta = entrada.nextDouble();
+			if (limiteDaConta == 0) {
+				return null;
+			}
 
 			conta = new Conta(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
 			cliente.addConta(conta);
@@ -199,18 +245,24 @@ public class BancoView {
 	private Cliente menuRetornarCliente() {
 		String opcao;
 
-		System.out.println("Informe o nome completo do cliente:");
+		System.out.println("Informe o nome completo do cliente (ou digite x para sair):");
 		opcao = entrada.next();
 
+		if (opcao.equals("x") || opcao.equals("X")) {
+			return null;
+		}
 		return BancoRepositorio.retornarClientePeloNomeCompleto(opcao);
 	}
 
 	private Data criarDataDeCriacao() throws Exception {
 		int[] dataDeCriacaoEntrada;
 
-		System.out.println("Digite a data de hoje (dd/mm/aaaa):");
+		System.out.println("Digite a data de hoje (dd/mm/aaaa) (ou 0 para sair) :");
 		dataDeCriacaoEntrada = Stream.of(entrada.next().split("/")).mapToInt(Integer::parseInt).toArray();
 
+		if (dataDeCriacaoEntrada[0] == 0) {
+			return null;
+		}
 		try {
 			return new Data(dataDeCriacaoEntrada[0], dataDeCriacaoEntrada[1], dataDeCriacaoEntrada[2]);
 		} catch (Exception e) {
@@ -228,14 +280,29 @@ public class BancoView {
 		Data dataDeNascimentoDoCliente;
 		Cliente cliente;
 
-		System.out.println("Digite o nome do Cliente:");
+		System.out.println("Digite o nome do Cliente (ou x para sair):");
 		nomeDoCliente = entrada.next();
-		System.out.println("Digite o sobrenome do Cliente:");
+		if (nomeDoCliente.equals("x") || nomeDoCliente.equals("X")) {
+			return null;
+		}
+
+		System.out.println("Digite o sobrenome do Cliente (ou x para sair):");
 		sobrenomeDoCliente = entrada.next();
-		System.out.println("Digite o cpf do Cliente:");
+		if (sobrenomeDoCliente.equals("x") || sobrenomeDoCliente.equals("X")) {
+			return null;
+		}
+
+		System.out.println("Digite o cpf do Cliente (ou x para sair):");
 		cpfDoCliente = entrada.next();
-		System.out.println("Digite a data de nascimento do Cliente (dd/mm/aaaa):");
+		if (cpfDoCliente.equals("x") || cpfDoCliente.equals("X")) {
+			return null;
+		}
+
+		System.out.println("Digite a data de nascimento do Cliente (dd/mm/aaaa) (ou x para sair):");
 		entradaDataDeNascimento = entrada.next().split("/");
+		if (entradaDataDeNascimento[0].equals("x") || entradaDataDeNascimento[0].equals("X")) {
+			return null;
+		}
 		try {
 			dataDeNascimentoDoCliente = new Data(Integer.parseInt(entradaDataDeNascimento[0]),
 					Integer.parseInt(entradaDataDeNascimento[1]), Integer.parseInt(entradaDataDeNascimento[2]));

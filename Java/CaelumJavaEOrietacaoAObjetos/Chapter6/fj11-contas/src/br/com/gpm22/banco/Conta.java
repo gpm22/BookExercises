@@ -1,7 +1,7 @@
 package br.com.gpm22.banco;
 
 public class Conta {
-	private static int numeros = 0;
+	private static int numeros = 1;
 	private int numero;
 	private Cliente titular;
 	private String agencia;
@@ -18,7 +18,7 @@ public class Conta {
 	}
 
 	public boolean sacar(double valor) {
-		
+
 		if (valor < 0) {
 			System.out.println("Impossível Sacar ou Transferir um Valor Negativo!");
 			return false;
@@ -28,7 +28,7 @@ public class Conta {
 			System.out.println("\nValor indisponível para Saque ou Transferência");
 			System.out.println("Sua conta possui saldo de: " + this.saldo);
 			return false;
-		}	
+		}
 
 		this.saldo -= valor;
 		return true;
@@ -57,27 +57,26 @@ public class Conta {
 		return this.saldo * 0.1;
 	}
 
-	public String recuperarDadosParaImpressão() throws Exception{
+	public String recuperarDadosParaImpressão() throws Exception {
 
 		Data diaAtual;
 		try {
 			diaAtual = new Data(30, 4, 2030);
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw e;
 		}
 
-
 		return "\nNome completo do titular: " + this.titular.getNome() + " " + this.titular.getSobrenome()
-				+ "\nCPF do titular: " + this.titular.getCpf() + "\nIdade: " + this.titular.getIdade(diaAtual) + "\nNúmero da conta: " + this.numero + "\nAgencia: "
-				+ this.agencia + "\nSaldo: " + this.saldo + "\nLimite: " + this.limite + "\nData de Abertura: "
-				+ this.dataDeAbertura.retornarData() + "\n";
+				+ "\nCPF do titular: " + this.titular.getCpf() + "\nIdade: " + this.titular.getIdade(diaAtual)
+				+ "\nNúmero da conta: " + this.numero + "\nAgencia: " + this.agencia + "\nSaldo: " + this.saldo
+				+ "\nLimite: " + this.limite + "\nData de Abertura: " + this.dataDeAbertura.retornarData() + "\n";
 
 	}
-	
+
 	public String getAgencia() {
 		return this.agencia;
 	}
-	
+
 	public int getNumero() {
 		return this.numero;
 	}
