@@ -1,13 +1,20 @@
 body {
   font: 40px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
   background-color: #111;
   color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 ol,
 ul {
-  padding-left: 30px;
+  padding-left: 100px;
+  font-size: 34px;
+}
+
+.winner {
+  color: green;
 }
 
 .board-row:after {
@@ -44,10 +51,32 @@ ul {
 }
 
 .game {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
+}
+
+.game-board {
+  display: flex;
 }
 
 .game-info {
-  margin-left: 20px;
+  margin: 20px;
+}
+
+.tied {
+  color: yellow;
+}
+
+p {
+  margin: 0px;
+  margin-bottom:10px;
+}
+
+@media  (max-width: 650px) {
+
+  
+  .game-board {
+    flex-direction: column;
+  }
 }
