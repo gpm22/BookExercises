@@ -27,6 +27,11 @@ ul {
   margin-bottom: 10px;
 }
 
+.board-row > .square-winner {
+  background-color: green;
+  color: #fff;
+}
+
 .square {
   background: #eee;
   border: 1px solid #999;
@@ -34,7 +39,7 @@ ul {
   font-size: 80px;
   font-weight: bold;
   line-height: 34px;
-  height: 100px;/*34px;*/
+  height: 100px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
