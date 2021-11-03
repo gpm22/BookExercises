@@ -42,19 +42,19 @@ class Board extends React.Component {
     return (
       <div>
         <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
+          {this.renderSquare((0, 0))}
+          {this.renderSquare((0, 1))}
+          {this.renderSquare((0, 2))}
         </div>
         <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
+          {this.renderSquare((1, 0))}
+          {this.renderSquare((1, 1))}
+          {this.renderSquare((1, 2))}
         </div>
         <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
+          {this.renderSquare((2, 0))}
+          {this.renderSquare((2, 1))}
+          {this.renderSquare((2, 2))}
         </div>
       </div>
     );
@@ -161,7 +161,7 @@ class Game extends React.Component {
 }
 
 function calculateWinner(squares) {
-  const lines = [
+  /*const lines = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -170,12 +170,23 @@ function calculateWinner(squares) {
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6],
+  ];*/
+
+  const lines = [
+    [(0, 0), (0, 1), (0, 2)],
+    [(1, 0), (1, 1), (1, 2)],
+    [(2, 0), (2, 1), (2, 2)],
+    [(0, 0), (1, 0), (2, 0)],
+    [(0, 1), (1, 1), (2 ,1)],
+    [(0, 2), (1, 2), (2, 2)],
+    [(0, 0), (1, 1), (2, 2)],
+    [(0, 2), (1, 1), (2, 0)],
   ];
 
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+  for (let j = 0; j < lines.length; j++) {
+    const [a, b, c] = lines[j];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return [squares[a], lines[i]];
+      return [squares[a], lines[j]];
     }
   }
 
