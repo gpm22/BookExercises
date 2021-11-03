@@ -12,10 +12,12 @@ This repository contains codes of solved exercises from books and tutorials and 
   * **Classic Computer Science Problems in Python** by David Kopec;
 * **JavaScript**
   * **JavaScript for Python Programmers** by Brad Miller;
+* **React**
+  * **Tutorial: Intro to React** by ReactJs;
 * **Java**
   * **Introduction to Programming with Java** by Linda Seiter and Dan Palmer;
   * **Java e Orientação a Objetos** by [Caelum;](https://www.caelum.com.br/apostila-java-orientacao-objetos/)
-  * **Spring Security Tutorials** by different authors.
+  * **Spring Security Tutorials** by different authors;
 * **Web Development**
   * **Desenvolvimente WEB com HTML, CSS e JavaScript** by [Caelum](https://www.caelum.com.br/apostila-html-css-javascript/);
 
