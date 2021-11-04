@@ -1,5 +1,3 @@
 # Node Modules
 /node_modules
 
-# json files
-*.json
