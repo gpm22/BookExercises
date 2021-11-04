@@ -95,6 +95,12 @@ class Game extends React.Component {
           squares: [[null, null, null], [null, null, null], [null, null, null]]
         }
       ],
+      lastPosition: [
+        {
+          position: [null, null]
+        }
+      ]
+      ,
       stepNumber: 0,
       xIsNext: true,
     };
@@ -102,6 +108,8 @@ class Game extends React.Component {
 
   handleClick(i) {
     const history = this.state.history.slice(0,this.state.stepNumber + 1);
+    const lastPosition = this.state.lastPosition.slice(0,this.state.stepNumber + 1);
+    //const currentPosition = lastPosition[lastPosition.length - 1];
     const current = history[history.length - 1];
     const squares = current.squares.slice().map(i => i.slice());
 
@@ -119,6 +127,11 @@ class Game extends React.Component {
       history: history.concat([
         {
           squares: squares
+        }
+      ]),
+      lastPosition: lastPosition.concat([
+        {
+          position: i
         }
       ]),
       stepNumber: history.length,
@@ -141,7 +154,7 @@ class Game extends React.Component {
     const [winner, moveWinner] = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
-      const desc = move ? "Go to move #" + move : "Go to game start";
+      const desc = move ? "Go to move #" + move +" position (" + this.state.lastPosition[move].position +")" : "Go to game start";
 
       return (
         <li key={move}>
