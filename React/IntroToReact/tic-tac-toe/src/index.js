@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
+const squareSide = 3;
+
 function Square(props) {
   let classNameLocal;
   if(props.classValue){
@@ -35,6 +37,19 @@ function isInclude(array , i){
   }
 }
 
+function squareGenerator(){
+  let square =[]
+
+  for(let i=0; i< squareSide; i++){
+    square.push([]);
+    for(let j=0; j< squareSide; j++){
+      square[i].push(null);
+    }
+  }
+
+  return square;
+}
+
 class Board extends React.Component {
 
   renderSquare(i) {
@@ -61,7 +76,7 @@ class Board extends React.Component {
     const boardRowGenerator = (i) => {
 
       let boardRow = [];
-      for(let j=0; j<3; j++){
+      for(let j=0; j<squareSide; j++){
         boardRow.push(this.renderSquare([i,  j]));
       }
 
@@ -74,7 +89,7 @@ class Board extends React.Component {
 
     let boardComplete = [];
 
-    for(let i=0; i<3; i++){
+    for(let i=0; i<squareSide; i++){
       boardComplete.push(boardRowGenerator(i));
     }
 
@@ -92,7 +107,7 @@ class Game extends React.Component {
     this.state = {
       history: [
         {
-          squares: [[null, null, null], [null, null, null], [null, null, null]]
+          squares: squareGenerator()
         }
       ],
       lastPosition: [
@@ -174,7 +189,7 @@ class Game extends React.Component {
         </div>
       );
       winnerSet=moveWinner.slice();
-    } else if (this.state.stepNumber === 9){
+    } else if (this.state.stepNumber === squareSide*squareSide){
       status = (
         <div>
           <p className="tied">You Tied!</p>
