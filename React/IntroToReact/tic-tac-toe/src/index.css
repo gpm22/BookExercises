@@ -7,13 +7,6 @@ body {
   align-items: center;
 }
 
-ol,
-ul {
-  padding-left: 100px;
-  font-size: 34px;
-  list-style-type:none;
-}
-
 .winner {
   color: green;
 }
@@ -91,6 +84,19 @@ p {
   margin-bottom:10px;
 }
 
+ol,
+ul {
+  padding: 0;
+  margin: 0;
+  padding-left: 100px;
+  font-size: 34px;
+  list-style-type:none;
+}
+
+ul > button, li > button {
+  width: 222px;
+}
+
 @media  (max-width: 650px) {
 
   ul {
@@ -100,6 +106,12 @@ p {
 
   .game-info {
     margin: 20px 0;
+    width: 360px;
+    text-align: center;
+  }
+
+  ul > button, li > button {
+    width: 360px;
   }
   
   .game-board {
