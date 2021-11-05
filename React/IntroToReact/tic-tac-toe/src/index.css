@@ -93,8 +93,17 @@ p {
 
 @media  (max-width: 650px) {
 
+  ul {
+    margin: 20px 0;
+    padding: 0;
+  }
+
+  .game-info {
+    margin: 20px 0;
+  }
   
   .game-board {
     flex-direction: column;
+    justify-content: left;
   }
 }
