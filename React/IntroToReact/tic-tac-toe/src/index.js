@@ -31,11 +31,7 @@ function isInclude(array, i) {
     }
   });
 
-  if (answer) {
-    return true;
-  } else {
-    return false;
-  }
+  return answer;
 }
 
 function squareGenerator() {
