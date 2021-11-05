@@ -175,8 +175,9 @@ class Game extends React.Component {
   }
 
   reorder() {
-    this.state.order = !this.state.order;
-    this.forceUpdate();
+    this.setState({
+      order: !this.state.order,
+    });
   }
 
   render() {
