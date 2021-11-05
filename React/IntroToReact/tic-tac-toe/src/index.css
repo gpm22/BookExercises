@@ -11,6 +11,7 @@ ol,
 ul {
   padding-left: 100px;
   font-size: 34px;
+  list-style-type:none;
 }
 
 .winner {
@@ -32,19 +33,26 @@ ul {
   color: #fff;
 }
 
+.square-position {
+  position: absolute;
+  top: 0;
+  font-size: 20px;
+}
+
 .square {
+  position: relative;
   background: #eee;
   border: 1px solid #999;
   float: left;
   font-size: 80px;
   font-weight: bold;
   line-height: 34px;
-  height: 100px;
+  height: 120px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 100px;
+  width: 120px;
 }
 
 .square:focus {
@@ -59,6 +67,11 @@ ul {
   position: relative;
   display: flex;
   flex-direction: column-reverse;
+}
+
+.li-hist-last {
+  background-color: green;
+  color: #eee;
 }
 
 .game-board {
