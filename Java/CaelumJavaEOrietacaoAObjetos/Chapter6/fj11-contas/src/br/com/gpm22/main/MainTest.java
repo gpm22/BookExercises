@@ -1,8 +1,10 @@
 package br.com.gpm22.main;
 
 import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.Conta;
 import br.com.gpm22.banco.Data;
+import br.com.gpm22.banco.contas.Conta;
+import br.com.gpm22.banco.contas.ContaCorrente;
+import br.com.gpm22.banco.contas.ContaPoupanca;
 
 class MainTest {
 	public static void main(String[] args) {
@@ -16,8 +18,8 @@ class MainTest {
 			Cliente cliente1 = new Cliente("Alberto", "Alves", "10", dataDeNascimento1);
 			Cliente cliente2 = new Cliente("Alexandro", "Santos", "20", dataDeNascimento2);
 
-			Conta conta1 = new Conta(cliente1, "A", data1, 1000.5);
-			Conta conta2 = new Conta(cliente2, "B", data2, 2000);
+			Conta conta1 = new ContaPoupanca(cliente1, "A", data1, 1000.5);
+			Conta conta2 = new ContaCorrente(cliente2, "B", data2, 2000);
 
 			conta1.depositar(1000);
 

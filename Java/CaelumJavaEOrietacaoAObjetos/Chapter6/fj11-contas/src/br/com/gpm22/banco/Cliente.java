@@ -3,6 +3,8 @@ package br.com.gpm22.banco;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.gpm22.banco.contas.Conta;
+
 public class Cliente {
 	private String nome;
 	private String sobrenome;

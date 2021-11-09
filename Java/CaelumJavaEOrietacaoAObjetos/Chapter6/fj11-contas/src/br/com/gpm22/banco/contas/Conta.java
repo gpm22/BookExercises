@@ -1,4 +1,7 @@
-package br.com.gpm22.banco;
+package br.com.gpm22.banco.contas;
+
+import br.com.gpm22.banco.Cliente;
+import br.com.gpm22.banco.Data;
 
 public class Conta {
 	private static int numeros = 1;

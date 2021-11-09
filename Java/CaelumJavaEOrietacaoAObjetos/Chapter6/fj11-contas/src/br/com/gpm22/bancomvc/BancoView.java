@@ -4,8 +4,10 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.Conta;
 import br.com.gpm22.banco.Data;
+import br.com.gpm22.banco.contas.Conta;
+import br.com.gpm22.banco.contas.ContaCorrente;
+import br.com.gpm22.banco.contas.ContaPoupanca;
 
 public class BancoView {
 
@@ -231,7 +233,17 @@ public class BancoView {
 				return null;
 			}
 
-			conta = new Conta(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
+			System.out.println("Escolha o tipo da conta (ou digite 0 para sair):");
+			System.out.println("1 - Conta Corrente\n2 - Conta Poupança");
+
+			if (entrada.next().equals("1")) {
+				conta = new ContaCorrente(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
+			} else if (entrada.next().equals("2")) {
+				conta = new ContaPoupanca(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
+			} else {
+				return null;
+			}
+
 			cliente.addConta(conta);
 
 			BancoRepositorio.adicionarConta(conta);
