@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.banco.Data;
 import br.com.gpm22.banco.contas.Conta;
+import br.com.gpm22.banco.contas.ContaCorrente;
 
 public class BancoRepositorio {
 	private static ArrayList<Conta> contas = new ArrayList<Conta>();
@@ -79,9 +80,9 @@ public class BancoRepositorio {
 
 			// Conta(Cliente titular, String agencia, Data dataDeAbertura, double limite)
 
-			Conta conta1 = new Conta(retornarClientePeloNomeCompleto("Usuário1 Teste1"), "Girassol 1",
+			Conta conta1 = new ContaCorrente(retornarClientePeloNomeCompleto("Usuário1 Teste1"), "Girassol 1",
 					dataDeInicioConta1, 1000);
-			Conta conta2 = new Conta(retornarClientePeloNomeCompleto("Usuário2 Teste2"), "Girassol 1",
+			Conta conta2 = new ContaCorrente(retornarClientePeloNomeCompleto("Usuário2 Teste2"), "Girassol 1",
 					dataDeInicioConta2, 1000);
 
 			adicionarConta(conta1);

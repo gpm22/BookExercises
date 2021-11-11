@@ -18,8 +18,8 @@ class MainTest {
 			Cliente cliente1 = new Cliente("Alberto", "Alves", "10", dataDeNascimento1);
 			Cliente cliente2 = new Cliente("Alexandro", "Santos", "20", dataDeNascimento2);
 
-			Conta conta1 = new ContaPoupanca(cliente1, "A", data1, 1000.5);
-			Conta conta2 = new ContaCorrente(cliente2, "B", data2, 2000);
+			Conta conta1 = new ContaCorrente(cliente1, "A", data1, 1000.5);
+			Conta conta2 = new ContaPoupanca(cliente2, "B", data2, 2000);
 
 			conta1.depositar(1000);
 
@@ -39,4 +39,5 @@ class MainTest {
 		}
 
 	}
+
 }

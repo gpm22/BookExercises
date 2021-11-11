@@ -16,7 +16,7 @@ public class MainTeste {
         funcionario1.setSalario(5000.0);
         controle.registra(funcionario1);
 
-        Funcionario funcionario2 = new Funcionario();
+        Funcionario funcionario2 = new Secretario();
         funcionario2.setSalario(1000.0);
         controle.registra(funcionario2);
 

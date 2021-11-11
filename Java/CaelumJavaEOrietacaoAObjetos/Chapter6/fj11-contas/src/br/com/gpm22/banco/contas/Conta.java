@@ -3,7 +3,7 @@ package br.com.gpm22.banco.contas;
 import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.banco.Data;
 
-public class Conta {
+public abstract class Conta {
 	private static int numeros = 1;
 	private int numero;
 	private Cliente titular;
@@ -19,6 +19,8 @@ public class Conta {
 		this.dataDeAbertura = dataDeAbertura;
 		this.limite = limite;
 	}
+
+	public abstract String getTipo();
 
 	public boolean sacar(double valor) {
 
@@ -38,6 +40,12 @@ public class Conta {
 	}
 
 	public boolean transferirPara(Conta destino, double valor) {
+
+		if (!destino.getTipo().equals(this.getTipo())) {
+			System.out.println("Não é possível transferir de uma conta do tipo " + this.getTipo()
+					+ " para uma conta do tipo " + destino.getTipo() + ".\n");
+			return false;
+		}
 
 		if (this.sacar(valor)) {
 			destino.depositar(valor);
@@ -69,10 +77,11 @@ public class Conta {
 			throw e;
 		}
 
-		return "\nNome completo do titular: " + this.titular.getNome() + " " + this.titular.getSobrenome()
-				+ "\nCPF do titular: " + this.titular.getCpf() + "\nIdade: " + this.titular.getIdade(diaAtual)
-				+ "\nNúmero da conta: " + this.numero + "\nAgencia: " + this.agencia + "\nSaldo: " + this.saldo
-				+ "\nLimite: " + this.limite + "\nData de Abertura: " + this.dataDeAbertura.retornarData() + "\n";
+		return "\nTipo da conta:" + this.getTipo() + "Nome completo do titular: " + this.titular.getNome() + " "
+				+ this.titular.getSobrenome() + "\nCPF do titular: " + this.titular.getCpf() + "\nIdade: "
+				+ this.titular.getIdade(diaAtual) + "\nNúmero da conta: " + this.numero + "\nAgencia: " + this.agencia
+				+ "\nSaldo: " + this.saldo + "\nLimite: " + this.limite + "\nData de Abertura: "
+				+ this.dataDeAbertura.retornarData() + "\n";
 
 	}
 
