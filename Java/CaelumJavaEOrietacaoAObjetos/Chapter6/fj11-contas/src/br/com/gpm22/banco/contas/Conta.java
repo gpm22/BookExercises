@@ -2,8 +2,9 @@ package br.com.gpm22.banco.contas;
 
 import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.banco.Data;
+import br.com.gpm22.interfaces.Tipavel;
 
-public abstract class Conta {
+public abstract class Conta implements Tipavel {
 	private static int numeros = 1;
 	private int numero;
 	private Cliente titular;
@@ -20,7 +21,13 @@ public abstract class Conta {
 		this.limite = limite;
 	}
 
-	public abstract String getTipo();
+	public Conta(Conta conta) {
+		this.titular = conta.getTitular();
+		this.numero = conta.getNumero();
+		this.agencia = conta.getAgencia();
+		this.limite = conta.getLimite();
+		this.dataDeAbertura = conta.getDataDeAbertura();
+	}
 
 	public boolean sacar(double valor) {
 
@@ -70,19 +77,10 @@ public abstract class Conta {
 
 	public String recuperarDadosParaImpressão() throws Exception {
 
-		Data diaAtual;
-		try {
-			diaAtual = new Data(30, 4, 2030);
-		} catch (Exception e) {
-			throw e;
-		}
-
-		return "\nTipo da conta:" + this.getTipo() + "Nome completo do titular: " + this.titular.getNome() + " "
-				+ this.titular.getSobrenome() + "\nCPF do titular: " + this.titular.getCpf() + "\nIdade: "
-				+ this.titular.getIdade(diaAtual) + "\nNúmero da conta: " + this.numero + "\nAgencia: " + this.agencia
-				+ "\nSaldo: " + this.saldo + "\nLimite: " + this.limite + "\nData de Abertura: "
-				+ this.dataDeAbertura.retornarData() + "\n";
-
+		return "\n\nInformações da Conta:\n\n" + "\nTipo da conta: " + this.getTipo() + "\nNúmero da conta: "
+				+ this.numero + "\nAgencia: " + this.agencia + "\nSaldo: " + this.saldo + "\nLimite: " + this.limite
+				+ "\nData de Abertura: " + this.dataDeAbertura.retornarData() + "\n\nInformações do titular\n\n"
+				+ this.titular.retornarInformacoesDoCliente() + "\n";
 	}
 
 	public String getAgencia() {
@@ -91,6 +89,22 @@ public abstract class Conta {
 
 	public int getNumero() {
 		return this.numero;
+	}
+
+	public double getSaldo() {
+		return this.saldo;
+	}
+
+	public Cliente getTitular() {
+		return this.titular;
+	}
+
+	public double getLimite() {
+		return this.limite;
+	}
+
+	public Data getDataDeAbertura() {
+		return this.dataDeAbertura;
 	}
 
 }

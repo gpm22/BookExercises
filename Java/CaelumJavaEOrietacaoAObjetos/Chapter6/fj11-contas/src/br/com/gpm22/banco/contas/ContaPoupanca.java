@@ -11,6 +11,10 @@ public class ContaPoupanca extends Conta {
         super(titular, agencia, dataDeAbertura, limite);
     }
 
+    public ContaPoupanca(Conta conta) {
+        super(conta);
+    }
+
     @Override
     public String getTipo() {
         return this.tipo;

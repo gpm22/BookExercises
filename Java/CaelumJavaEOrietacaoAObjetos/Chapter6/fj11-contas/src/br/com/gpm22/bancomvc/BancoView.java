@@ -8,6 +8,7 @@ import br.com.gpm22.banco.Data;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.ContaPoupanca;
+import br.com.gpm22.banco.contas.SeguroDeVida;
 
 public class BancoView {
 
@@ -63,6 +64,7 @@ public class BancoView {
 			System.out.println("2 - Depositar");
 			System.out.println("3 - Sacar");
 			System.out.println("4 - Transferir");
+			System.out.println("5 - Criar Seguro de Vida");
 			System.out.println("X - Sair");
 
 			opcao = entrada.next();
@@ -79,6 +81,9 @@ public class BancoView {
 			} else if (opcao.equals("4")) {
 				this.menuTransferir(conta);
 
+			} else if (opcao.equals("5")) {
+				this.menuCriarSeguroDeVida(conta);
+
 			} else if (opcao.equals("x") || opcao.equals("X")) {
 				this.sair();
 				break;
@@ -89,6 +94,28 @@ public class BancoView {
 
 		}
 
+	}
+
+	private void menuCriarSeguroDeVida(Conta conta) {
+
+		try {
+			System.out.println("Vamos criar o seu seguro De vida: ");
+
+			Data dataDeAbertura = this.criarDataDeCriacao();
+
+			System.out.println("Digite o valor do seguro: ");
+
+			double valor = entrada.nextDouble();
+
+			SeguroDeVida seguroDeVida = new SeguroDeVida(conta.getTitular(), dataDeAbertura, valor);
+
+			BancoRepositorio.adicionarSeguroDeVida(seguroDeVida);
+			conta.getTitular().setSeguroDeVida(seguroDeVida);
+			conta.getTitular().getTributaveis().add(seguroDeVida);
+		} catch (Exception e) {
+			System.out.println("Impossível Criar Seguro de Vida");
+			System.out.println(e);
+		}
 	}
 
 	private void menuTransferir(Conta conta) {
@@ -237,7 +264,9 @@ public class BancoView {
 			System.out.println("1 - Conta Corrente\n2 - Conta Poupança");
 
 			if (entrada.next().equals("1")) {
-				conta = new ContaCorrente(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
+				ContaCorrente contaCorrente = new ContaCorrente(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
+				cliente.getTributaveis().add(contaCorrente);
+				conta = contaCorrente;
 			} else if (entrada.next().equals("2")) {
 				conta = new ContaPoupanca(cliente, nomeDaAgencia, dataDeCriacao, limiteDaConta);
 			} else {

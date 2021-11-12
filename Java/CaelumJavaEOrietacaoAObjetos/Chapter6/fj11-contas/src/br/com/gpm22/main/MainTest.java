@@ -5,6 +5,7 @@ import br.com.gpm22.banco.Data;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.ContaPoupanca;
+import br.com.gpm22.interfaces.Tributavel;
 
 class MainTest {
 	public static void main(String[] args) {
@@ -34,6 +35,19 @@ class MainTest {
 
 			System.out.println(conta1.recuperarDadosParaImpressão());
 			System.out.println(conta2.recuperarDadosParaImpressão());
+
+			System.out.println("\n\n\nTestando Tributavel:\n");
+
+			ContaCorrente cc = new ContaCorrente(cliente1, "A", data1, 6000);
+
+			cc.depositar(10000);
+
+			System.out.println("Imposto Conta Corrente: " + cc.getValorImposto());
+
+			// testando polimorfismo:
+			Tributavel t = cc;
+			System.out.println("Imposto Tributavel: " + t.getValorImposto());
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gpm22.banco.contas.Conta;
+import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.interfaces.Tributavel;
+import br.servicos.TributavelServico;
 
 public class Cliente {
 	private String nome;
@@ -11,6 +14,8 @@ public class Cliente {
 	private String cpf;
 	private Data dataDeNascimento;
 	private List<Conta> contas;
+	private SeguroDeVida seguroDeVida;
+	private List<Tributavel> tributaveis;
 
 	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento) {
 		if (this.validarCPF(cpf)) {
@@ -19,6 +24,7 @@ public class Cliente {
 			this.cpf = cpf;
 			this.dataDeNascimento = dataDeNascimento;
 			this.contas = new ArrayList<>();
+			this.tributaveis = new ArrayList<>();
 		}
 	}
 
@@ -72,9 +78,33 @@ public class Cliente {
 		this.contas.add(conta);
 	}
 
-	public String retornarInformacoesDoCliente() {
-		return "Nome completo:" + this.getNome() + " " + this.getSobrenome() + "\nCPF: " + this.getCpf()
-				+ "\nData de Nascimento: " + this.getDataDeNascimento().retornarData();
+	public List<Tributavel> getTributaveis() {
+		return this.tributaveis;
+	}
+
+	public void setSeguroDeVida(SeguroDeVida seguroDeVida) {
+		this.seguroDeVida = seguroDeVida;
+	}
+
+	public SeguroDeVida getSeguroDeVida() {
+		return this.seguroDeVida;
+	}
+
+	public String retornarInformacoesDoCliente() throws Exception {
+
+		Data diaAtual;
+		try {
+			diaAtual = new Data(30, 4, 2030);
+		} catch (Exception e) {
+			throw e;
+		}
+
+		return "Nome completo: " + this.getNome() + " " + this.getSobrenome() + "\nCPF: " + this.getCpf() + "\nIdade: "
+				+ this.getDataDeNascimento().calcularIdade(diaAtual) + "\nQuantidade de Contas: " + this.contas.size()
+				+ "\nPossui Seguro de vida? " + (this.seguroDeVida == null ? "Não" : "Sim")
+				+ "\nNúmero de Tributáveis: " + this.tributaveis.size() + "\nImposto total: "
+				+ TributavelServico.calculaImpostos(this.tributaveis);
+
 	}
 
 }
