@@ -7,4 +7,5 @@ This repository contains codes of solved exercises from books and tutorials abou
 ## Contents
 
 * **Tutorial: Intro to React** by ReactJs;
+* **Tutorial: Getting started with React** by MDN Web Docs;
 

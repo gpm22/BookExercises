@@ -14,6 +14,7 @@ This repository contains codes of solved exercises from books and tutorials and 
   * **JavaScript for Python Programmers** by Brad Miller;
 * **React**
   * **Tutorial: Intro to React** by ReactJs;
+  * **Tutorial: Getting started with React** by MDN Web Docs;
 * **Java**
   * **Introduction to Programming with Java** by Linda Seiter and Dan Palmer;
   * **Java e Orientação a Objetos** by [Caelum;](https://www.caelum.com.br/apostila-java-orientacao-objetos/)
