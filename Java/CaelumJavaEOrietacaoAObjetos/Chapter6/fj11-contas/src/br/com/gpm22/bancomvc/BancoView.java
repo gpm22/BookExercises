@@ -9,12 +9,16 @@ import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.ContaPoupanca;
 import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.exceptions.DataInvalidaException;
+import br.com.gpm22.exceptions.SaldoInsuficienteException;
+import br.com.gpm22.exceptions.TipoDiferenteException;
+import br.com.gpm22.exceptions.ValorNegativoException;
 
 public class BancoView {
 
 	private Scanner entrada = new Scanner(System.in).useDelimiter(";|\r?\n|\r");
 
-	public void menuInicial() throws Exception {
+	public void menuInicial() throws DataInvalidaException {
 		String resposta = "";
 		while (true) {
 			System.out.println("Seja bem-vindo(a) ao banco Girassol!");
@@ -147,7 +151,7 @@ public class BancoView {
 			double saldo = conta.transferirPara(contaAReceber, valorTransferencia);
 			System.out.println("Valor " + valorTransferencia + " transferido!");
 			System.out.println("Saldo atualizado: " + saldo);
-		} catch (Exception e) {
+		} catch (TipoDiferenteException | ValorNegativoException | SaldoInsuficienteException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -167,7 +171,7 @@ public class BancoView {
 			double saldo = conta.sacar(valorSaque);
 			System.out.println("Valor " + valorSaque + " sacado!");
 			System.out.println("Saldo atualizado: " + saldo);
-		} catch (Exception e) {
+		} catch (ValorNegativoException | SaldoInsuficienteException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -187,7 +191,7 @@ public class BancoView {
 			double saldo = conta.depositar(valorDeposito);
 			System.out.println("Valor " + valorDeposito + " depositado!");
 			System.out.println("Saldo atualizado: " + saldo);
-		} catch (Exception e) {
+		} catch (ValorNegativoException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -222,7 +226,7 @@ public class BancoView {
 
 	}
 
-	public void menuCriarConta() throws Exception {
+	public void menuCriarConta() throws DataInvalidaException {
 		try {
 			Conta conta = this.criarConta();
 			if (conta == null) {
@@ -230,13 +234,13 @@ public class BancoView {
 			}
 
 			System.out.println("Conta criada: " + conta.recuperarDadosParaImpressao());
-		} catch (Exception e) {
+		} catch (DataInvalidaException e) {
 			System.out.println("Impossível criar a conta.");
 			throw e;
 		}
 	}
 
-	private Conta criarConta() throws Exception {
+	private Conta criarConta() throws DataInvalidaException {
 
 		Data dataDeCriacao;
 		Conta conta;
@@ -304,7 +308,7 @@ public class BancoView {
 			BancoRepositorio.adicionarConta(conta);
 			return conta;
 
-		} catch (Exception e) {
+		} catch (DataInvalidaException e) {
 			throw e;
 		}
 	}
@@ -321,7 +325,7 @@ public class BancoView {
 		return BancoRepositorio.retornarClientePeloNomeCompleto(opcao);
 	}
 
-	private Data criarDataDeCriacao() throws Exception {
+	private Data criarDataDeCriacao() throws DataInvalidaException {
 		int[] dataDeCriacaoEntrada;
 
 		System.out.println("Digite a data de hoje (dd/mm/aaaa) (ou 0 para sair) :");
@@ -332,14 +336,14 @@ public class BancoView {
 		}
 		try {
 			return new Data(dataDeCriacaoEntrada[0], dataDeCriacaoEntrada[1], dataDeCriacaoEntrada[2]);
-		} catch (Exception e) {
+		} catch (DataInvalidaException e) {
 			System.out.println("Impossível criar a data.");
 			throw e;
 		}
 
 	}
 
-	private Cliente criarCliente() throws Exception {
+	private Cliente criarCliente() throws DataInvalidaException {
 		String nomeDoCliente;
 		String sobrenomeDoCliente;
 		String cpfDoCliente;
@@ -373,7 +377,7 @@ public class BancoView {
 		try {
 			dataDeNascimentoDoCliente = new Data(Integer.parseInt(entradaDataDeNascimento[0]),
 					Integer.parseInt(entradaDataDeNascimento[1]), Integer.parseInt(entradaDataDeNascimento[2]));
-		} catch (Exception e) {
+		} catch (DataInvalidaException e) {
 			System.out.println("Impossível criar a data");
 			throw e;
 		}

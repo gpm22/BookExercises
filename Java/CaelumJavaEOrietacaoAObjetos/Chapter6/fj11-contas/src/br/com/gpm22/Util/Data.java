@@ -1,5 +1,7 @@
 package br.com.gpm22.Util;
 
+import br.com.gpm22.exceptions.DataInvalidaException;
+
 public class Data {
 	int dia;
 	int mes;
@@ -11,7 +13,7 @@ public class Data {
 			this.mes = mes;
 			this.ano = ano;
 		} else {
-			throw new DataInvalidaException(this.formatarDiaOuMes(dia)+ "/" + this.formatarDiaOuMes(mes) + "/" + ano);
+			throw new DataInvalidaException(this.formatarDiaOuMes(dia) + "/" + this.formatarDiaOuMes(mes) + "/" + ano);
 		}
 	}
 
@@ -48,24 +50,17 @@ public class Data {
 		return (ano % 4 == 0 && !(ano % 100 == 0 && ano % 400 != 0)) ? true : false;
 	}
 
-	public int calcularIdade(Data diaAtual){
+	public int calcularIdade(Data diaAtual) {
 		int idade = diaAtual.ano - this.ano;
 
-		if(diaAtual.mes > this.mes){
+		if (diaAtual.mes > this.mes) {
 			return idade;
 		}
 
-		if(diaAtual.mes == this.mes && diaAtual.dia >= this.dia){
+		if (diaAtual.mes == this.mes && diaAtual.dia >= this.dia) {
 			return idade;
 		}
 
-		return idade-1;
-	}
-
-	class DataInvalidaException extends Exception{
-
-		public DataInvalidaException(String data){
-			super("\nA data " + data +" é inválida!");
-		}
+		return idade - 1;
 	}
 }

@@ -2,6 +2,7 @@ package br.com.gpm22.banco.contas;
 
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.Cliente;
+import br.com.gpm22.exceptions.DataInvalidaException;
 import br.com.gpm22.exceptions.SaldoInsuficienteException;
 import br.com.gpm22.exceptions.TipoDiferenteException;
 import br.com.gpm22.exceptions.ValorNegativoException;
@@ -76,7 +77,7 @@ public abstract class Conta implements Tipavel {
 		return this.saldo * 0.1;
 	}
 
-	public String recuperarDadosParaImpressao() throws Exception {
+	public String recuperarDadosParaImpressao() throws DataInvalidaException {
 
 		return "\n\nInformações da Conta:\n\n" + "\nTipo da conta: " + this.getTipo() + "\nNúmero da conta: "
 				+ this.numero + "\nAgencia: " + this.agencia + "\nSaldo: " + this.saldo + "\nLimite: " + this.limite

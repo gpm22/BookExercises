@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.exceptions.DataInvalidaException;
 import br.com.gpm22.interfaces.Tributavel;
 import br.com.gpm22.services.TributavelServico;
 
@@ -91,12 +92,12 @@ public class Cliente {
 		return this.seguroDeVida;
 	}
 
-	public String retornarInformacoesDoCliente() throws Exception {
+	public String retornarInformacoesDoCliente() throws DataInvalidaException {
 
 		Data diaAtual;
 		try {
 			diaAtual = new Data(30, 4, 2030);
-		} catch (Exception e) {
+		} catch (DataInvalidaException e) {
 			throw e;
 		}
 
