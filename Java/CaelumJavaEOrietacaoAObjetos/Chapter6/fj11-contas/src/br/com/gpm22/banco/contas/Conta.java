@@ -2,6 +2,9 @@ package br.com.gpm22.banco.contas;
 
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.Cliente;
+import br.com.gpm22.exceptions.SaldoInsuficienteException;
+import br.com.gpm22.exceptions.TipoDiferenteException;
+import br.com.gpm22.exceptions.ValorNegativoException;
 import br.com.gpm22.interfaces.Tipavel;
 
 public abstract class Conta implements Tipavel {
@@ -29,45 +32,43 @@ public abstract class Conta implements Tipavel {
 		this.dataDeAbertura = conta.getDataDeAbertura();
 	}
 
-	public boolean sacar(double valor) {
+	public double sacar(double valor) throws ValorNegativoException, SaldoInsuficienteException {
 
 		if (valor < 0) {
-			System.out.println("Impossível Sacar ou Transferir um Valor Negativo!");
-			return false;
+			throw new ValorNegativoException("sacar");
 		}
 
 		if (this.saldo < valor) {
-			System.out.println("\nValor indisponível para Saque ou Transferência");
-			System.out.println("Sua conta possui saldo de: " + this.saldo);
-			return false;
+			throw new SaldoInsuficienteException(this.saldo);
 		}
 
 		this.saldo -= valor;
-		return true;
+		return this.saldo;
 	}
 
-	public boolean transferirPara(Conta destino, double valor) {
+	public double transferirPara(Conta destino, double valor)
+			throws TipoDiferenteException, ValorNegativoException, SaldoInsuficienteException {
 
 		if (!destino.getTipo().equals(this.getTipo())) {
-			System.out.println("Não é possível transferir de uma conta do tipo " + this.getTipo()
-					+ " para uma conta do tipo " + destino.getTipo() + ".\n");
-			return false;
+			throw new TipoDiferenteException(this, destino);
 		}
 
-		if (this.sacar(valor)) {
-			destino.depositar(valor);
-			return true;
+		if (valor < 0) {
+			throw new ValorNegativoException("transferir");
 		}
 
-		return false;
+		this.sacar(valor);
+		return destino.depositar(valor);
+
 	}
 
-	public void depositar(double valor) {
+	public double depositar(double valor) throws ValorNegativoException {
 
 		if (valor > 0) {
 			this.saldo += valor;
+			return this.saldo;
 		} else {
-			System.out.println("\nImpossível depositar valores negativos.");
+			throw new ValorNegativoException("depositar");
 		}
 	}
 

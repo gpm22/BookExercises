@@ -2,6 +2,8 @@ package br.com.gpm22.banco.contas;
 
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.Cliente;
+import br.com.gpm22.exceptions.SaldoInsuficienteException;
+import br.com.gpm22.exceptions.ValorNegativoException;
 import br.com.gpm22.interfaces.Tributavel;
 
 public class ContaCorrente extends Conta implements Tributavel {
@@ -23,7 +25,7 @@ public class ContaCorrente extends Conta implements Tributavel {
     }
 
     @Override
-    public boolean sacar(double valor) {
+    public double sacar(double valor) throws ValorNegativoException, SaldoInsuficienteException {
         return super.sacar(valor + this.valorOperacao);
     }
 

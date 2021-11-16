@@ -44,6 +44,7 @@ public class BancoView {
 		try {
 			Conta conta = this.acessarConta();
 			if (conta == null) {
+				System.out.println("Conta inexistente!");
 				return;
 			}
 			this.menuOpcoesConta(conta);
@@ -126,17 +127,29 @@ public class BancoView {
 		contaAReceber = this.acessarConta();
 
 		if (contaAReceber == null) {
+			System.out.println("Conta inexistente!");
+			return;
+		}
+
+		if (contaAReceber == conta) {
+			System.out.println("Impossível transferir para a mesma conta!");
 			return;
 		}
 
 		System.out.println("Digite o valor a ser transferido (ou digite 0 para sair):");
 		valorTransferencia = entrada.nextDouble();
 
-		if (valorTransferencia.equals(0)) {
+		if (valorTransferencia == 0) {
 			return;
 		}
 
-		conta.transferirPara(contaAReceber, valorTransferencia);
+		try {
+			double saldo = conta.transferirPara(contaAReceber, valorTransferencia);
+			System.out.println("Valor " + valorTransferencia + " transferido!");
+			System.out.println("Saldo atualizado: " + saldo);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 
@@ -150,7 +163,13 @@ public class BancoView {
 			return;
 		}
 
-		conta.sacar(valorSaque);
+		try {
+			double saldo = conta.sacar(valorSaque);
+			System.out.println("Valor " + valorSaque + " sacado!");
+			System.out.println("Saldo atualizado: " + saldo);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 
@@ -163,7 +182,14 @@ public class BancoView {
 		if (valorDeposito.equals(0)) {
 			return;
 		}
-		conta.depositar(valorDeposito);
+
+		try {
+			double saldo = conta.depositar(valorDeposito);
+			System.out.println("Valor " + valorDeposito + " depositado!");
+			System.out.println("Saldo atualizado: " + saldo);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 
