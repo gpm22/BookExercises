@@ -3,8 +3,8 @@ package br.com.gpm22.bancomvc;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.Data;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.ContaPoupanca;
@@ -122,10 +122,10 @@ public class BancoView {
 		Conta contaAReceber;
 		Double valorTransferencia;
 
-		System.out.println("Informe os dados sobre a conta que irá receber a transferência (ou digite x para sair):");
+		System.out.println("Informe os dados sobre a conta que irá receber a transferência:");
 		contaAReceber = this.acessarConta();
 
-		if (contaAReceber.equals("x") || contaAReceber.equals("X")) {
+		if (contaAReceber == null) {
 			return;
 		}
 
@@ -169,7 +169,7 @@ public class BancoView {
 
 	private void mostrarInformacoesConta(Conta conta) {
 		try {
-			System.out.println(conta.recuperarDadosParaImpressão());
+			System.out.println(conta.recuperarDadosParaImpressao());
 		} catch (Exception e) {
 			System.out.println("Impossível imprimir dados");
 			System.out.println(e);
@@ -203,7 +203,7 @@ public class BancoView {
 				return;
 			}
 
-			System.out.println("Conta criada: " + conta.recuperarDadosParaImpressão());
+			System.out.println("Conta criada: " + conta.recuperarDadosParaImpressao());
 		} catch (Exception e) {
 			System.out.println("Impossível criar a conta.");
 			throw e;

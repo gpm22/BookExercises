@@ -3,8 +3,8 @@ package br.com.gpm22.bancomvc;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.Data;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.SeguroDeVida;

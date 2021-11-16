@@ -1,7 +1,7 @@
 package br.com.gpm22.banco.contas;
 
+import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.Data;
 import br.com.gpm22.interfaces.Tributavel;
 
 public class ContaCorrente extends Conta implements Tributavel {

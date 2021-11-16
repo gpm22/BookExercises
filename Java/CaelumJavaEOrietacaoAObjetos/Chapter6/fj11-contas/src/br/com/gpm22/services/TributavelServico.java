@@ -1,4 +1,4 @@
-package br.servicos;
+package br.com.gpm22.services;
 
 import java.util.List;
 

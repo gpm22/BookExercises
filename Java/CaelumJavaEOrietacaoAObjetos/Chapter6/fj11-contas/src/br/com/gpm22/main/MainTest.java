@@ -1,7 +1,7 @@
 package br.com.gpm22.main;
 
+import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.Data;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.ContaPoupanca;
@@ -14,7 +14,7 @@ class MainTest {
 			Data data2 = new Data(30, 4, 2001);
 
 			Data dataDeNascimento1 = new Data(1, 10, 1978);
-			Data dataDeNascimento2 = new Data(30, 4, 2000);
+			Data dataDeNascimento2 = new Data(2, 4, 2000);
 
 			Cliente cliente1 = new Cliente("Alberto", "Alves", "10", dataDeNascimento1);
 			Cliente cliente2 = new Cliente("Alexandro", "Santos", "20", dataDeNascimento2);
@@ -24,17 +24,17 @@ class MainTest {
 
 			conta1.depositar(1000);
 
-			System.out.println(conta1.recuperarDadosParaImpressão());
+			System.out.println(conta1.recuperarDadosParaImpressao());
 
 			conta1.transferirPara(conta2, 1001);
 
-			System.out.println(conta1.recuperarDadosParaImpressão());
-			System.out.println(conta2.recuperarDadosParaImpressão());
+			System.out.println(conta1.recuperarDadosParaImpressao());
+			System.out.println(conta2.recuperarDadosParaImpressao());
 
 			conta1.transferirPara(conta2, 500);
 
-			System.out.println(conta1.recuperarDadosParaImpressão());
-			System.out.println(conta2.recuperarDadosParaImpressão());
+			System.out.println(conta1.recuperarDadosParaImpressao());
+			System.out.println(conta2.recuperarDadosParaImpressao());
 
 			System.out.println("\n\n\nTestando Tributavel:\n");
 

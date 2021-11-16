@@ -1,17 +1,17 @@
-package br.com.gpm22.banco;
+package br.com.gpm22.Util;
 
 public class Data {
 	int dia;
 	int mes;
 	int ano;
 
-	public Data(int dia, int mes, int ano) throws Exception {
+	public Data(int dia, int mes, int ano) throws DataInvalidaException {
 		if (this.validarData(dia, mes, ano)) {
 			this.dia = dia;
 			this.mes = mes;
 			this.ano = ano;
 		} else {
-			throw new Exception("\nData inválida!");
+			throw new DataInvalidaException(this.formatarDiaOuMes(dia)+ "/" + this.formatarDiaOuMes(mes) + "/" + ano);
 		}
 	}
 
@@ -60,5 +60,12 @@ public class Data {
 		}
 
 		return idade-1;
+	}
+
+	class DataInvalidaException extends Exception{
+
+		public DataInvalidaException(String data){
+			super("\nA data " + data +" é inválida!");
+		}
 	}
 }
