@@ -81,8 +81,39 @@ public abstract class Conta implements Tipavel {
 
 		return "\n\nInformações da Conta:\n\n" + "\nTipo da conta: " + this.getTipo() + "\nNúmero da conta: "
 				+ this.numero + "\nAgencia: " + this.agencia + "\nSaldo: " + this.saldo + "\nLimite: " + this.limite
-				+ "\nData de Abertura: " + this.dataDeAbertura.retornarData() + "\n\nInformações do titular\n\n"
+				+ "\nData de Abertura: " + this.dataDeAbertura + "\n\nInformações do titular\n\n"
 				+ this.titular.retornarInformacoesDoCliente() + "\n";
+	}
+
+	@Override
+	public String toString() {
+		return "Conta: [ tipo: " + this.getTipo() + ", agencia: " + this.agencia + ", numero: " + this.numero
+				+ " titular: " + this.titular + ", dataDeAbertura: " + this.dataDeAbertura + ", saldo: " + this.saldo
+				+ ", limite: " + this.limite + " ]";
+	}
+
+	@Override
+	public boolean equals(Object object) {
+
+		if (object == null) {
+			return false;
+		}
+
+		Conta conta = (Conta) object;
+
+		if (!this.getTipo().equals(conta.getTipo())) {
+			return false;
+		}
+
+		if (!this.agencia.equals(conta.getAgencia())) {
+			return false;
+		}
+
+		if (this.numero != conta.getNumero()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public String getAgencia() {

@@ -14,6 +14,10 @@ public class BancoRepositorio {
 	private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 	private static ArrayList<SeguroDeVida> segurosDeVida = new ArrayList<SeguroDeVida>();
 
+	public static List<Cliente> retornarClientes() {
+		return clientes;
+	}
+
 	public static void adicionarSeguroDeVida(SeguroDeVida seguroDeVida) {
 		segurosDeVida.add(seguroDeVida);
 	}

@@ -9,6 +9,7 @@ import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.ContaPoupanca;
 import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.exceptions.CpfInvalidoException;
 import br.com.gpm22.exceptions.DataInvalidaException;
 import br.com.gpm22.exceptions.SaldoInsuficienteException;
 import br.com.gpm22.exceptions.TipoDiferenteException;
@@ -226,7 +227,7 @@ public class BancoView {
 
 	}
 
-	public void menuCriarConta() throws DataInvalidaException {
+	public void menuCriarConta() {
 		try {
 			Conta conta = this.criarConta();
 			if (conta == null) {
@@ -234,13 +235,12 @@ public class BancoView {
 			}
 
 			System.out.println("Conta criada: " + conta.recuperarDadosParaImpressao());
-		} catch (DataInvalidaException e) {
-			System.out.println("Impossível criar a conta.");
-			throw e;
+		} catch (DataInvalidaException | CpfInvalidoException e) {
+			System.out.println("Impossível criar conta!\n:" + e.getMessage());
 		}
 	}
 
-	private Conta criarConta() throws DataInvalidaException {
+	private Conta criarConta() throws DataInvalidaException, CpfInvalidoException {
 
 		Data dataDeCriacao;
 		Conta conta;
@@ -308,7 +308,7 @@ public class BancoView {
 			BancoRepositorio.adicionarConta(conta);
 			return conta;
 
-		} catch (DataInvalidaException e) {
+		} catch (DataInvalidaException | CpfInvalidoException e) {
 			throw e;
 		}
 	}
@@ -343,7 +343,7 @@ public class BancoView {
 
 	}
 
-	private Cliente criarCliente() throws DataInvalidaException {
+	private Cliente criarCliente() throws DataInvalidaException, CpfInvalidoException {
 		String nomeDoCliente;
 		String sobrenomeDoCliente;
 		String cpfDoCliente;
@@ -363,7 +363,7 @@ public class BancoView {
 			return null;
 		}
 
-		System.out.println("Digite o cpf do Cliente (ou x para sair):");
+		System.out.println("Digite o cpf do Cliente no formato ###.###.###-## (ou x para sair):");
 		cpfDoCliente = entrada.next();
 		if (cpfDoCliente.equals("x") || cpfDoCliente.equals("X")) {
 			return null;
@@ -382,7 +382,12 @@ public class BancoView {
 			throw e;
 		}
 
-		cliente = new Cliente(nomeDoCliente, sobrenomeDoCliente, cpfDoCliente, dataDeNascimentoDoCliente);
+		try {
+			cliente = new Cliente(nomeDoCliente, sobrenomeDoCliente, cpfDoCliente, dataDeNascimentoDoCliente);
+		} catch (CpfInvalidoException e) {
+			System.out.println("Impossível criar o cliente");
+			throw e;
+		}
 
 		System.out.println("Criado o cliente: " + cliente.retornarInformacoesDoCliente());
 

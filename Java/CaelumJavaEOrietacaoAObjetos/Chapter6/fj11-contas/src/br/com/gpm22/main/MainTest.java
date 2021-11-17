@@ -5,6 +5,7 @@ import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
 import br.com.gpm22.banco.contas.ContaPoupanca;
+import br.com.gpm22.bancomvc.BancoRepositorio;
 import br.com.gpm22.interfaces.Tributavel;
 
 class MainTest {
@@ -16,8 +17,11 @@ class MainTest {
 			Data dataDeNascimento1 = new Data(1, 10, 1978);
 			Data dataDeNascimento2 = new Data(2, 4, 2000);
 
-			Cliente cliente1 = new Cliente("Alberto", "Alves", "10", dataDeNascimento1);
-			Cliente cliente2 = new Cliente("Alexandro", "Santos", "20", dataDeNascimento2);
+			Cliente cliente1 = new Cliente("Alberto", "Alves", "529.982.247-25", dataDeNascimento1);
+
+			BancoRepositorio.adicionarCliente(cliente1);
+			Cliente cliente2 = new Cliente("Alexandro", "Santos", "529.982.247-25", dataDeNascimento2);
+			BancoRepositorio.adicionarCliente(cliente2);
 
 			Conta conta1 = new ContaCorrente(cliente1, "A", data1, 1000.5);
 			Conta conta2 = new ContaPoupanca(cliente2, "B", data2, 2000);

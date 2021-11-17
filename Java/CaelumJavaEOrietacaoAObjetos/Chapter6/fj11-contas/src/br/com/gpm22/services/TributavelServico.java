@@ -11,7 +11,7 @@ public class TributavelServico {
 
         for (Tributavel tributavel : tributaveis) {
 
-            if (tributavel.equals(null)) {
+            if (tributavel == null) {
                 continue;
             }
 

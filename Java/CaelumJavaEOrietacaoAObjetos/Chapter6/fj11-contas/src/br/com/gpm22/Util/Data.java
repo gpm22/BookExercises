@@ -17,7 +17,8 @@ public class Data {
 		}
 	}
 
-	public String retornarData() {
+	@Override
+	public String toString() {
 
 		return this.formatarDiaOuMes(this.dia) + "/" + this.formatarDiaOuMes(this.mes) + "/" + this.ano;
 
@@ -62,5 +63,16 @@ public class Data {
 		}
 
 		return idade - 1;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == null) {
+			return false;
+		}
+
+		Data data = (Data) object;
+
+		return this.toString().equals(data.toString());
 	}
 }

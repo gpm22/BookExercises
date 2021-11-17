@@ -6,8 +6,10 @@ import java.util.List;
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.exceptions.CpfInvalidoException;
 import br.com.gpm22.exceptions.DataInvalidaException;
 import br.com.gpm22.interfaces.Tributavel;
+import br.com.gpm22.services.ClienteServico;
 import br.com.gpm22.services.TributavelServico;
 
 public class Cliente {
@@ -19,25 +21,27 @@ public class Cliente {
 	private SeguroDeVida seguroDeVida;
 	private List<Tributavel> tributaveis;
 
-	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento) {
-		if (this.validarCPF(cpf)) {
-			this.nome = nome;
-			this.sobrenome = sobrenome;
-			this.cpf = cpf;
-			this.dataDeNascimento = dataDeNascimento;
-			this.contas = new ArrayList<>();
-			this.tributaveis = new ArrayList<>();
+	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento) throws CpfInvalidoException {
+		if (!ClienteServico.validarCPF(cpf)) {
+			throw new CpfInvalidoException(cpf);
 		}
+
+		if (!ClienteServico.validarCPFUnico(cpf)) {
+			throw new CpfInvalidoException();
+		}
+
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.cpf = cpf;
+		this.dataDeNascimento = dataDeNascimento;
+		this.contas = new ArrayList<>();
+		this.tributaveis = new ArrayList<>();
 	}
 
 	public void mudarCPF(String cpf) {
-		if (validarCPF(cpf)) {
+		if (ClienteServico.validarCPF(cpf)) {
 			this.cpf = cpf;
 		}
-	}
-
-	private boolean validarCPF(String cpf) {
-		return true;
 	}
 
 	public void setNome(String nome) {
@@ -90,6 +94,24 @@ public class Cliente {
 
 	public SeguroDeVida getSeguroDeVida() {
 		return this.seguroDeVida;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente: [ nome: " + this.getNome() + ", sobrenome: " + this.sobrenome + ", cpf: " + this.cpf
+				+ ", dataDeNascimento: " + this.getDataDeNascimento() + "]";
+	}
+
+	@Override
+	public boolean equals(Object object) {
+
+		if (object == null) {
+			return false;
+		}
+
+		Cliente cliente = (Cliente) object;
+
+		return this.cpf.equals(cliente.getCpf());
 	}
 
 	public String retornarInformacoesDoCliente() throws DataInvalidaException {
