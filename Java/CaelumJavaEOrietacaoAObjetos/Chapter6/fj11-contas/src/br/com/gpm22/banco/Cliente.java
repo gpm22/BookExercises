@@ -109,6 +109,10 @@ public class Cliente {
 			return false;
 		}
 
+		if (!(object instanceof Cliente)) {
+			return false;
+		}
+
 		Cliente cliente = (Cliente) object;
 
 		return this.cpf.equals(cliente.getCpf());

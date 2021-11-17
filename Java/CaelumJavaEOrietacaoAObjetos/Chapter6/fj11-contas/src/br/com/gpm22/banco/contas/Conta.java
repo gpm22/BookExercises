@@ -99,21 +99,14 @@ public abstract class Conta implements Tipavel {
 			return false;
 		}
 
+		if (!(object instanceof Conta)) {
+			return false;
+		}
+
 		Conta conta = (Conta) object;
 
-		if (!this.getTipo().equals(conta.getTipo())) {
-			return false;
-		}
-
-		if (!this.agencia.equals(conta.getAgencia())) {
-			return false;
-		}
-
-		if (this.numero != conta.getNumero()) {
-			return false;
-		}
-
-		return true;
+		return this.getTipo().equals(conta.getTipo()) && this.agencia.equals(conta.getAgencia())
+				&& this.numero == conta.getNumero();
 	}
 
 	public String getAgencia() {

@@ -71,6 +71,10 @@ public class Data {
 			return false;
 		}
 
+		if (!(object instanceof Data)) {
+			return false;
+		}
+
 		Data data = (Data) object;
 
 		return this.toString().equals(data.toString());
