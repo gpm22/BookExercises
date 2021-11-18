@@ -19,7 +19,7 @@ public class BancoView {
 
 	private Scanner entrada = new Scanner(System.in).useDelimiter(";|\r?\n|\r");
 
-	public void menuInicial() throws DataInvalidaException {
+	public void menuInicial() {
 		String resposta = "";
 		while (true) {
 			System.out.println("Seja bem-vindo(a) ao banco Girassol!");
