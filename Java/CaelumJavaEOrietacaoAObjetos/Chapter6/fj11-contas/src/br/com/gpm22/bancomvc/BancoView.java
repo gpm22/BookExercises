@@ -164,7 +164,7 @@ public class BancoView {
 		System.out.println("Digite o valor a ser sacado (ou digite 0 para sair):");
 		valorSaque = entrada.nextDouble();
 
-		if (valorSaque.equals(0)) {
+		if (valorSaque == 0) {
 			return;
 		}
 
@@ -184,7 +184,7 @@ public class BancoView {
 		System.out.println("Digite o valor a ser depositado (ou digite 0 para sair):");
 		valorDeposito = entrada.nextDouble();
 
-		if (valorDeposito.equals(0)) {
+		if (valorDeposito == 0) {
 			return;
 		}
 

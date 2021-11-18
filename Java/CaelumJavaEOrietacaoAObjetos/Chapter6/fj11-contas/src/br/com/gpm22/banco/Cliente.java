@@ -21,7 +21,7 @@ public class Cliente {
 	private SeguroDeVida seguroDeVida;
 	private List<Tributavel> tributaveis;
 
-	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento) throws CpfInvalidoException {
+	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento1) throws CpfInvalidoException {
 		if (!ClienteServico.validarCPF(cpf)) {
 			throw new CpfInvalidoException(cpf);
 		}
@@ -33,7 +33,7 @@ public class Cliente {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cpf = cpf;
-		this.dataDeNascimento = dataDeNascimento;
+		this.dataDeNascimento = dataDeNascimento1;
 		this.contas = new ArrayList<>();
 		this.tributaveis = new ArrayList<>();
 	}

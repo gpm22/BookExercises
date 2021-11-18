@@ -1,6 +1,7 @@
 package br.com.gpm22.main;
 
 import br.com.gpm22.Util.Data;
+import br.com.gpm22.banco.Banco;
 import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.banco.contas.Conta;
 import br.com.gpm22.banco.contas.ContaCorrente;
@@ -20,25 +21,28 @@ class MainTest {
 			Cliente cliente1 = new Cliente("Alberto", "Alves", "529.982.247-25", dataDeNascimento1);
 
 			BancoRepositorio.adicionarCliente(cliente1);
-			Cliente cliente2 = new Cliente("Alexandro", "Santos", "529.982.247-25", dataDeNascimento2);
+			Cliente cliente2 = new Cliente("Alexandro", "Santos", "157.802.000-09", dataDeNascimento2);
 			BancoRepositorio.adicionarCliente(cliente2);
 
 			Conta conta1 = new ContaCorrente(cliente1, "A", data1, 1000.5);
 			Conta conta2 = new ContaPoupanca(cliente2, "B", data2, 2000);
 
-			conta1.depositar(1000);
+			conta1.depositar(2000);
 
 			System.out.println(conta1.recuperarDadosParaImpressao());
+			try {
+				conta1.transferirPara(conta2, 1000);
 
-			conta1.transferirPara(conta2, 1001);
+				System.out.println(conta1.recuperarDadosParaImpressao());
+				System.out.println(conta2.recuperarDadosParaImpressao());
 
-			System.out.println(conta1.recuperarDadosParaImpressao());
-			System.out.println(conta2.recuperarDadosParaImpressao());
+				conta1.transferirPara(conta2, 500);
 
-			conta1.transferirPara(conta2, 500);
+				System.out.println(conta1.recuperarDadosParaImpressao());
+				System.out.println(conta2.recuperarDadosParaImpressao());
+			} catch (Exception e) {
 
-			System.out.println(conta1.recuperarDadosParaImpressao());
-			System.out.println(conta2.recuperarDadosParaImpressao());
+			}
 
 			System.out.println("\n\n\nTestando Tributavel:\n");
 
@@ -51,6 +55,26 @@ class MainTest {
 			// testando polimorfismo:
 			Tributavel t = cc;
 			System.out.println("Imposto Tributavel: " + t.getValorImposto());
+
+			// testando classe banco
+
+			System.out.println("\n\n\nTestando Banco:\n");
+			Banco banco = new Banco("CaelumBank", 999);
+
+			banco.adiciona(conta1);
+
+			for (int i = 0; i < 14; i++) {
+				banco.adiciona(conta2);
+			}
+
+			System.out.println("\nQuantidade de contas do banco " + banco.getNome() + ":" + banco.getContas().length);
+			// banco.mostraContas();
+
+			System.out.println("O Banco:" + banco.getNome() + " contém a conta \n" + conta1 + "? \n"
+					+ (banco.contem(conta1) > -1 ? "sim" : "não"));
+
+			System.out.println("O Banco:" + banco.getNome() + " contém a conta \n" + conta2 + "? \n"
+					+ (banco.contem(conta2) > -1 ? "sim" : "não"));
 
 		} catch (Exception e) {
 			System.out.println(e);

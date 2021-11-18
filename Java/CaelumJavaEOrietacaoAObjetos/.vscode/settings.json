@@ -1,6 +1,7 @@
 {
     "java.project.sourcePaths": [
         "Chapter4/Banco",
-        "Chapter9"
+        "Chapter6\\fj11-contas\\src",
+        "Chapter14"
     ]
 }

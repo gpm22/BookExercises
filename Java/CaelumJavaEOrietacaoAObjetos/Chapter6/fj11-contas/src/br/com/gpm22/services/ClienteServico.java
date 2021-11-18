@@ -40,6 +40,8 @@ public class ClienteServico {
 
         int digitoPosicao = 0;
 
+        int valorComparacao;
+
         if (digito == 1) {
             digitoPosicao = 9;
         }
@@ -54,11 +56,13 @@ public class ClienteServico {
             soma += cpf[i] * (digitoPosicao + 1 - i);
         }
 
-        if (cpf[digitoPosicao] != ((soma * 10) % 11)) {
-            return false;
+        valorComparacao = ((soma * 10) % 11);
+
+        if (valorComparacao == 10) {
+            valorComparacao = 0;
         }
 
-        return true;
+        return cpf[digitoPosicao] == valorComparacao;
     }
 
     public static boolean validarCPFUnico(String cpf) {
