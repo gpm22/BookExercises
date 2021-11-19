@@ -14,8 +14,8 @@ public class Fibonacci {
         }
 
         BigInteger resultado = new BigInteger("0");
-        BigInteger numero_1 = new BigInteger("1");
-        BigInteger numero_2 = new BigInteger("0");
+        BigInteger numero_1;
+        BigInteger numero_2;
 
         if (posicao == 1 || posicao == 2) {
             resultado = new BigInteger("1");
