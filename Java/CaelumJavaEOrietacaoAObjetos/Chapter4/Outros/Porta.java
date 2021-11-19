@@ -1,3 +1,5 @@
+package Outros;
+
 public class Porta {
     boolean aberta;
     String cor;
