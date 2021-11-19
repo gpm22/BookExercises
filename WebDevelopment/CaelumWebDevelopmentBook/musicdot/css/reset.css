@@ -109,12 +109,6 @@ section {
 }
 body {
   line-height: 1;
-
-  width: 80%;
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-
   font-size: 16px;
   line-height: 1.5;
   font-family: "Roboto", "Heveltica", "Lucida Grande", sans-serif;
@@ -150,11 +144,6 @@ a {
 a:hover {
   color: #fff;
   text-decoration: underline;
-}
-
-p {
-  text-indent: 2em;
-  text-align: justify;
 }
 
 figure {
