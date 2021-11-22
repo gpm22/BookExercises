@@ -29,6 +29,11 @@
     width: 100%;
 }
 
+.rodape__item-midias-sociais img:hover {
+    background-color: #fff;
+    border-radius: 50%;
+}
+
 .rodape__titulo {
     margin-bottom: 1em;
 

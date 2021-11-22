@@ -31,5 +31,9 @@
     font-weight: 600;
 
     background-color: #e93d50;
-    color:  #fff;
+    color:  #ddd;
+}
+
+#email-newsletter{
+    background-color: #ddd;
 }
