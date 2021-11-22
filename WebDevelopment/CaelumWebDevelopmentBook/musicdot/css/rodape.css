@@ -30,8 +30,8 @@
 }
 
 .rodape__item-midias-sociais img:hover {
-    background-color: #fff;
-    border-radius: 50%;
+    background-color: #ddd;
+    border-radius: 100%;
 }
 
 .rodape__titulo {
