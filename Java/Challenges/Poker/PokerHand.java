@@ -1,9 +1,9 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Arrays;
 
 public class PokerHand {
-    public enum Result {
-        TIE, WIN, LOSS
-    }
 
     private ArrayList<Card> cards = new ArrayList<>();
 
@@ -17,7 +17,6 @@ public class PokerHand {
         Collections.sort(this.cards, new Comparator<Card>() {
             @Override
             public int compare(Card lhs, Card rhs) {
-                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
                 return lhs.getValue() - rhs.getValue();
             }
         });
@@ -42,12 +41,12 @@ public class PokerHand {
             return this.isAStraightFlush();
         }
 
-        if (this.is4OfAKind() != -1) {
-            return this.is4OfAKind();
+        if (this.isAFourOfAKind() != -1) {
+            return this.isAFourOfAKind();
         }
 
-        if (this.isFullHouseOr3OfAKind() != -1) {
-            return this.isFullHouseOr3OfAKind();
+        if (this.isAFullHouseOrAThreeOfAKind() != -1) {
+            return this.isAFullHouseOrAThreeOfAKind();
         }
 
         if (this.isAFLush() != -1) {
@@ -58,8 +57,8 @@ public class PokerHand {
             return this.isAStraight();
         }
 
-        if (this.isA2PairOrA1Pair() != -1) {
-            return this.isA2PairOrA1Pair();
+        if (this.isADoublePairOrAPair() != -1) {
+            return this.isADoublePairOrAPair();
         }
 
         return this.cards.get(4).getValue();
@@ -81,7 +80,7 @@ public class PokerHand {
         return Result.TIE;
     }
 
-    private int isA2PairOrA1Pair() {
+    private int isADoublePairOrAPair() {
         int equalValueCards;
 
         ArrayList<Integer> cardsPositions;
@@ -158,7 +157,7 @@ public class PokerHand {
         return 500000;
     }
 
-    private int isFullHouseOr3OfAKind() {
+    private int isAFullHouseOrAThreeOfAKind() {
 
         int equalValueCards;
 
@@ -198,7 +197,7 @@ public class PokerHand {
         return -1;
     }
 
-    private int is4OfAKind() {
+    private int isAFourOfAKind() {
 
         int equalValueCards;
 
@@ -238,54 +237,6 @@ public class PokerHand {
 
     public ArrayList<Card> getCards() {
         return this.cards;
-    }
-
-    private class Card {
-        private int value;
-        private String suit;
-
-        Card(String card) {
-            String[] values = card.split("");
-
-            try {
-                value = Integer.parseInt(values[0]);
-            } catch (Exception e) {
-                if (values[0].equals("T")) {
-                    value = 10;
-                }
-
-                if (values[0].equals("J")) {
-                    value = 11;
-                }
-
-                if (values[0].equals("Q")) {
-                    value = 12;
-                }
-
-                if (values[0].equals("K")) {
-                    value = 13;
-                }
-
-                if (values[0].equals("A")) {
-                    value = 14;
-                }
-            }
-
-            suit = values[1];
-        }
-
-        public int getValue() {
-            return this.value;
-        }
-
-        public String getSuit() {
-            return this.suit;
-        }
-
-        @Override
-        public String toString() {
-            return "Card: " + this.value + this.suit;
-        }
     }
 
 }
