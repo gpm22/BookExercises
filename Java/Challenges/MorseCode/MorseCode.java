@@ -12,13 +12,12 @@ public class MorseCode {
 
         morseCodes.forEach((i) -> possibleLetters.add(possibleLettersMap.get(i)));
 
-        while (possibleLetters.remove(null))
-            ;
+        while (possibleLetters.remove(null));
 
         return possibleLetters;
     }
-
-    private static HashMap<String, String> possibleLettersMap() {
+	
+	 private static HashMap<String, String> possibleLettersMap() {
         HashMap<String, String> possibleLetters = new HashMap<String, String>();
         possibleLetters.put(".", "E");
         possibleLetters.put("-", "T");
@@ -89,13 +88,13 @@ public class MorseCode {
 
         return possibleLetters;
     }
-
-    private static List<String> generateMorsePossibilites(String signal) {
+	
+	private static List<String> generateMorsePossibilites(String signal) {
         List<String> morsePossibilities = new ArrayList<>();
 
         morsePossibilities = generateMorseCode(signal, morsePossibilities);
 
-        while (isMorseListWithinterrogation(morsePossibilities)) {
+        while (morseListContainsInterrogation(morsePossibilities)) {
 
             List<String> morsePossibilitiesClone = new ArrayList<>(morsePossibilities);
 
@@ -107,19 +106,8 @@ public class MorseCode {
 
         return morsePossibilities;
     }
-
-    private static boolean isMorseListWithinterrogation(List<String> morseList) {
-
-        for (String morseCode : morseList) {
-            if (morseCode.contains("?")) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static List<String> generateMorseCode(String signal, List<String> morseList) {
+	
+	private static List<String> generateMorseCode(String signal, List<String> morseList) {
         List<String> morseCodes = new ArrayList<>(morseList);
 
         if (signal.contains("?")) {
@@ -158,4 +146,16 @@ public class MorseCode {
         morseCodes.add(morseCode2);
         return morseCodes;
     }
+
+    private static boolean morseListContainsInterrogation(List<String> morseList) {
+
+        for (String morseCode : morseList) {
+            if (morseCode.contains("?")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
