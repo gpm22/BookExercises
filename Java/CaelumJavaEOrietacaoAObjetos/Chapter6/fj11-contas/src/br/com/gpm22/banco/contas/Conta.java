@@ -8,7 +8,7 @@ import br.com.gpm22.exceptions.TipoDiferenteException;
 import br.com.gpm22.exceptions.ValorNegativoException;
 import br.com.gpm22.interfaces.Tipavel;
 
-public abstract class Conta implements Tipavel {
+public abstract class Conta implements Tipavel, Comparable<Conta> {
 	private static int numeros = 1;
 	private int numero;
 	private Cliente titular;
@@ -107,6 +107,16 @@ public abstract class Conta implements Tipavel {
 
 		return this.getTipo().equals(conta.getTipo()) && this.agencia.equals(conta.getAgencia())
 				&& this.numero == conta.getNumero();
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getTipo().hashCode() + this.getAgencia().hashCode() + this.getNumero();
+	}
+
+	@Override
+	public int compareTo(Conta conta) {
+		return this.titular.compareTo(conta.titular);
 	}
 
 	public String getAgencia() {

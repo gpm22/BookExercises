@@ -6,7 +6,6 @@ function defaultArguments(func, params) {
     
     let paramsArray = /\(([^)]+)\)/.exec(func.toString().replace(/\/\/.+?(?=\n|\r|$)|\/\*[\s\S]+?\*\//g, ''));
     
-
     if (paramsArray == null) {
         return func;
     }
@@ -18,42 +17,50 @@ function defaultArguments(func, params) {
         element = element.trim();
         if (params.hasOwnProperty(element)) {
             result[element] = params[element];
-        } else if (element == 'arg') {
-            for (i in params) {
-                if (params.hasOwnProperty(i)) {
-                    result[i] = params[i];
-                }
-            }
-        }
+        } 
     });
     
     return function(arg) {
         
         let resultArray = [];
+
         let args = Array.prototype.slice.call(arguments);
-        
-        if (paramArgumentFunc == 'arg') {
-            args.forEach((element, index) => {
-                if (isNaN(element)) {
-                    return NaN;
-                }
-                result[index] = element;
-            });
-        }
 
         args.forEach((element, index) => {
-            result[paramArgumentFunc[index]] = element;
+            result[paramArgumentFunc[index].trim()] = element;
         });
         
-        for (i in result) {
-            if (result.hasOwnProperty(i)) {
-                delete resultArray;
-                resultArray.push(result[i]);
-            }
-        }
+        paramArgumentFunc.forEach(element => {
+            resultArray.push(result[element.trim()]);
+        });
+
         if (arg == undefined && Object.keys(result).length == 0) {
             return NaN;
         }
+
         return func.apply(this, resultArray);
     }
 }
+
+function add(a, b){
+    return a + b;
+}
+
+const add_ = defaultArguments(add, {b: 0});
+
+console.log(add_(10));
+
+console.log(add_(10, 5));
+
+function junta(a, b, c){
+
+    return a + " " + b + " " + c;
+}
+
+const junta_ = defaultArguments(junta, {c: "tchau", b: "oi"});
+
+console.log(junta_("hey"));
+
+console.log(junta_("au", "pei"));
+
+console.log(junta_("eie", "asas", "asasoa"));

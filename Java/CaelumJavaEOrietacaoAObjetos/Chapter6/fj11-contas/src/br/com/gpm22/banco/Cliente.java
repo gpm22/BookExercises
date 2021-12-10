@@ -12,7 +12,7 @@ import br.com.gpm22.interfaces.Tributavel;
 import br.com.gpm22.services.ClienteServico;
 import br.com.gpm22.services.TributavelServico;
 
-public class Cliente {
+public class Cliente implements Comparable<Cliente> {
 	private String nome;
 	private String sobrenome;
 	private String cpf;
@@ -118,6 +118,11 @@ public class Cliente {
 		return this.cpf.equals(cliente.getCpf());
 	}
 
+	@Override
+	public int hashCode() {
+		return this.cpf.hashCode();
+	}
+
 	public String retornarInformacoesDoCliente() throws DataInvalidaException {
 
 		Data diaAtual;
@@ -133,6 +138,10 @@ public class Cliente {
 				+ "\nNúmero de Tributáveis: " + this.tributaveis.size() + "\nImposto total: "
 				+ TributavelServico.calculaImpostos(this.tributaveis);
 
+	}
+
+	public int compareTo(Cliente cliente) {
+		return (this.nome + " " + this.sobrenome).compareTo((cliente.nome + " " + cliente.sobrenome));
 	}
 
 }
