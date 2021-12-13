@@ -1,11 +1,11 @@
-package br.com.gpm22.banco;
+package br.com.gpm22.entidades;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gpm22.Util.Data;
-import br.com.gpm22.banco.contas.Conta;
-import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.entidades.contas.Conta;
+import br.com.gpm22.entidades.contas.SeguroDeVida;
 import br.com.gpm22.exceptions.CpfInvalidoException;
 import br.com.gpm22.exceptions.DataInvalidaException;
 import br.com.gpm22.interfaces.Tributavel;

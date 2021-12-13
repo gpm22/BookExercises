@@ -1,6 +1,6 @@
 package br.com.gpm22.interfaces;
 
-import br.com.gpm22.banco.Cliente;
+import br.com.gpm22.entidades.Cliente;
 
 public interface Tributavel {
 

@@ -1,7 +1,7 @@
-package br.com.gpm22.banco.contas;
+package br.com.gpm22.entidades.contas;
 
 import br.com.gpm22.Util.Data;
-import br.com.gpm22.banco.Cliente;
+import br.com.gpm22.entidades.Cliente;
 
 public class ContaPoupanca extends Conta {
 

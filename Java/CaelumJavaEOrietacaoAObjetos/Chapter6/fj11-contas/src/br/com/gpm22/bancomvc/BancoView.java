@@ -4,11 +4,11 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import br.com.gpm22.Util.Data;
-import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.contas.Conta;
-import br.com.gpm22.banco.contas.ContaCorrente;
-import br.com.gpm22.banco.contas.ContaPoupanca;
-import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.entidades.Cliente;
+import br.com.gpm22.entidades.contas.Conta;
+import br.com.gpm22.entidades.contas.ContaCorrente;
+import br.com.gpm22.entidades.contas.ContaPoupanca;
+import br.com.gpm22.entidades.contas.SeguroDeVida;
 import br.com.gpm22.exceptions.CpfInvalidoException;
 import br.com.gpm22.exceptions.DataInvalidaException;
 import br.com.gpm22.exceptions.SaldoInsuficienteException;

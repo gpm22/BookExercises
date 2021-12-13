@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import br.com.gpm22.banco.Cliente;
 import br.com.gpm22.bancomvc.BancoRepositorio;
+import br.com.gpm22.entidades.Cliente;
 
 public class ClienteServico {
 

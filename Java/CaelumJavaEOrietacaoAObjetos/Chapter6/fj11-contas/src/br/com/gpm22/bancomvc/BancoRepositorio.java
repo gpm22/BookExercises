@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gpm22.Util.Data;
-import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.contas.Conta;
-import br.com.gpm22.banco.contas.ContaCorrente;
-import br.com.gpm22.banco.contas.SeguroDeVida;
+import br.com.gpm22.entidades.Cliente;
+import br.com.gpm22.entidades.contas.Conta;
+import br.com.gpm22.entidades.contas.ContaCorrente;
+import br.com.gpm22.entidades.contas.SeguroDeVida;
 
 public class BancoRepositorio {
 	private static ArrayList<Conta> contas = new ArrayList<Conta>();

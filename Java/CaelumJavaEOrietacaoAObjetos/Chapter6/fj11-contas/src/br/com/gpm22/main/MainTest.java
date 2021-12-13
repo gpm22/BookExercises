@@ -1,12 +1,12 @@
 package br.com.gpm22.main;
 
 import br.com.gpm22.Util.Data;
-import br.com.gpm22.banco.Banco;
-import br.com.gpm22.banco.Cliente;
-import br.com.gpm22.banco.contas.Conta;
-import br.com.gpm22.banco.contas.ContaCorrente;
-import br.com.gpm22.banco.contas.ContaPoupanca;
 import br.com.gpm22.bancomvc.BancoRepositorio;
+import br.com.gpm22.entidades.Banco;
+import br.com.gpm22.entidades.Cliente;
+import br.com.gpm22.entidades.contas.Conta;
+import br.com.gpm22.entidades.contas.ContaCorrente;
+import br.com.gpm22.entidades.contas.ContaPoupanca;
 import br.com.gpm22.interfaces.Tributavel;
 
 class MainTest {

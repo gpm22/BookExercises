@@ -1,6 +1,6 @@
-package br.com.gpm22.banco;
+package br.com.gpm22.entidades;
 
-import br.com.gpm22.banco.contas.Conta;
+import br.com.gpm22.entidades.contas.Conta;
 import br.com.gpm22.exceptions.DataInvalidaException;
 
 public class Banco {
