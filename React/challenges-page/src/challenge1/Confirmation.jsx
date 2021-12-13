@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Notification from "./Notification";
+import "./Confirmation.css";
 
 const Confirmation = ({type, message, accept, decline}) => {
   let [notRender, setNotRender] = useState(false);
@@ -16,11 +17,11 @@ const Confirmation = ({type, message, accept, decline}) => {
   
   const buttons = (
     <>
-        <button className="btn btn-primary" onClick={handleYes} >
+        <button className="btn btn-yes" onClick={handleYes} >
           Yes
       </button>
       <br />
-      <button className="btn btn-danger" onClick={handleNo}>
+      <button className="btn btn-no" onClick={handleNo}>
         No
       </button>
     </>

@@ -1,0 +1,28 @@
+.btn {
+    width: 100px;
+    height: 30px;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 15px;
+    margin: 0 0 10px 0;
+    cursor: pointer;
+    border-color: #222;
+}
+
+.btn-yes {
+    background-color: lime;
+    color: #222; 
+}
+
+.btn-yes:hover {
+    background-color: limegreen;
+}
+
+.btn-no {
+    background-color: #ff4040;
+    color: #ddd;
+}
+
+.btn-no:hover {
+    background-color: red;
+}

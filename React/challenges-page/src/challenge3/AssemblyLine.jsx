@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "./AssemblyLine.css";
 
 const AssemblyLine = (props) => {
   let [itensInput, setItensInput] = useState("");
@@ -9,9 +10,14 @@ const AssemblyLine = (props) => {
 
   const columnsInitiator = {};
 
-  stagesNames.forEach((stage) => columnsInitiator[stage] = []);
-
   const [columns, setColumns] = useState(columnsInitiator);
+
+  useEffect(() => {
+    stagesNames.forEach((stage) => columnsInitiator[stage] = []);
+    setColumns(columnsInitiator);
+  }, [props.stages]);
+
+  console.log(columns);
 
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -51,11 +57,11 @@ const AssemblyLine = (props) => {
     stagesNames.map((stage) => (
       <section key={stage} id={stage} className="assembly-stage">
         <h1 key={stage} className="title">{stage}</h1>
-        {columns[stage].map((value) => (
+        {columns[stage]? columns[stage].map((value) => (
           <button key={value} onClick={(e) => handleStageClick(e)} onContextMenu={handleContextMenu} title={stage} className="assembly-item" value={value}>
             {value}
           </button>
-        ))}
+        )): null}
       </section>
     ));
 

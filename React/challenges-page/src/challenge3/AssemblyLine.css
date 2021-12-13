@@ -1,0 +1,29 @@
+#kanban {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#kanban .assembly-stage{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+#kanban .assembly-item {
+    margin: 25px 0 0 0;
+    width: 80%;
+    height: 50px;
+    background-color: #000;
+    color: #ddd;
+    border-color: lime;
+    font-weight: bold;
+    font-size: large;
+}
+
+#kanban .assembly-item:hover {
+    background-color: lime;
+    color: #000;
+}

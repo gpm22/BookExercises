@@ -1,0 +1,26 @@
+#principal-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  text-align: right;
+  padding: 0 5%;
+  margin: 0;
+  border-top: 2px solid lime;
+  box-sizing: border-box;
+  background-color: #222;
+  color: #ddd;
+}
+
+#principal-footer p {
+  margin: 37px 0;
+}
+
+#principal-footer a {
+  color: lime;
+  text-decoration: none;
+}
+
+#principal-footer a:hover {
+  color: limegreen;
+}

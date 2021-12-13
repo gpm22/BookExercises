@@ -1,13 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "./Header.css";
 
 const Header = () => {
 
     return (
-        <header>
+        <header id="principal-header">
             <h1>Challenges</h1>
             <nav>
-                <NavLink to="/" > Home</NavLink>
+                <NavLink to="/" >Home</NavLink>
                 <NavLink to="/challenge-1" >Challenge 1</NavLink>
                 <NavLink to="/challenge-2" >Challenge 2</NavLink>
                 <NavLink to="/challenge-3">Challenge 3</NavLink>

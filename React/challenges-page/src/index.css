@@ -5,9 +5,50 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #ddd;
+  background-color: #191919;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body input[type="text"],
+body textarea {
+  margin-top: 10px;
+  background-color: #111;
+  color: limegreen;
+  text-align: center;
+  font-weight: bold;
+  transition: 0.3s;
+  box-sizing: border-box;
+  display: inline-block;
+  border-radius: 15px;
+}
+
+body input[type="text"]{
+  width: 200px;
+  height: 30px;
+}
+
+body input[type="text"]:focus,
+body input[type="text"]:hover,
+body textarea:focus,
+body textarea:hover {
+  border-style: solid;
+  border-width: 2px;
+  background-color: #fff;
+  color: #000;
+  border-color: lime;
+}
+
+body mark {
+  background-color: lime;
+  color: #000;
+}
+
+body .block > main {
+  margin: 0 50px 0 50px;
+}
+
