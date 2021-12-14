@@ -1,7 +1,12 @@
 package br.com.gpm22.bancomvc;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.entidades.Cliente;
@@ -19,7 +24,9 @@ public class BancoRepositorio {
 	}
 
 	public static void adicionarSeguroDeVida(SeguroDeVida seguroDeVida) {
-		segurosDeVida.add(seguroDeVida);
+		if (ConexaoBancoDeDados.persistirSeguroDeVida(seguroDeVida)) {
+			segurosDeVida.add(seguroDeVida);
+		}
 	}
 
 	public static void removerTributavel(SeguroDeVida seguroDeVida) {
@@ -31,15 +38,21 @@ public class BancoRepositorio {
 	}
 
 	public static void adicionarConta(Conta conta) {
-		contas.add(conta);
+		if (ConexaoBancoDeDados.persistirConta(conta)) {
+			contas.add(conta);
+		}
 	}
 
 	public static void adicionarCliente(Cliente cliente) {
-		clientes.add(cliente);
+		if (ConexaoBancoDeDados.persistirCliente(cliente)) {
+			clientes.add(cliente);
+		}
 	}
 
 	public static void removerConta(Conta conta) {
-		contas.remove(conta);
+		if (ConexaoBancoDeDados.deletarConta(conta)) {
+			contas.remove(conta);
+		}
 	}
 
 	public static void removerCliente(Cliente cliente) {
@@ -74,8 +87,8 @@ public class BancoRepositorio {
 			Data dataDeNascimentoUsuario1 = new Data(10, 10, 2000);
 			Data dataDeNascimentoUsuario2 = new Data(9, 9, 1998);
 
-			Cliente usuario1 = new Cliente("Usuário1", "Teste1", "097969231", dataDeNascimentoUsuario1);
-			Cliente usuario2 = new Cliente("Usuário2", "Teste2", "097969232", dataDeNascimentoUsuario2);
+			Cliente usuario1 = new Cliente("Usuário1", "Teste1", "268.202.460-21", dataDeNascimentoUsuario1);
+			Cliente usuario2 = new Cliente("Usuário2", "Teste2", "459.521.200-32", dataDeNascimentoUsuario2);
 
 			adicionarCliente(usuario1);
 			adicionarCliente(usuario2);

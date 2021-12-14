@@ -17,6 +17,14 @@ public abstract class Conta implements Tipavel, Comparable<Conta> {
 	private double saldo;
 	private double limite;
 
+	public Conta(int numero, Cliente titular, String agencia, Data dataDeAbertura, double limite) {
+		this.numero = numero;
+		this.titular = titular;
+		this.agencia = agencia;
+		this.dataDeAbertura = dataDeAbertura;
+		this.limite = limite;
+	}
+
 	public Conta(Cliente titular, String agencia, Data dataDeAbertura, double limite) {
 		this.numero = Conta.numeros++;
 		this.titular = titular;

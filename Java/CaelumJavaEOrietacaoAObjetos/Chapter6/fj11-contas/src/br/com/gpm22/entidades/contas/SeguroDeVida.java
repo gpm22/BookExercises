@@ -21,6 +21,13 @@ public class SeguroDeVida implements Tipavel, Tributavel {
         this.numeroApolice = SeguroDeVida.numeroApolices++;
     }
 
+    public SeguroDeVida(int numeroApolice, Cliente titular, Data dataDeAbertura, double valor) {
+        this.titular = titular;
+        this.dataDeAbertura = dataDeAbertura;
+        this.valor = valor;
+        this.numeroApolice = numeroApolice;
+    }
+
     @Override
     public String getTipo() {
         return this.tipo;
