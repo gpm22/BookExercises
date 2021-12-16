@@ -1,3 +1,1 @@
 nome, sobrenome, cpf, dataDeNascimento, seguroDeVida
-Alberto,Alves,529.982.247-25,01/10/1978,
-Alexandro,Santos,157.802.000-09,02/04/2000,

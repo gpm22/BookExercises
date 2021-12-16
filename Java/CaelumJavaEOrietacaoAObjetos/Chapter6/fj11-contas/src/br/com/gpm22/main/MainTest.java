@@ -7,6 +7,7 @@ import br.com.gpm22.entidades.Cliente;
 import br.com.gpm22.entidades.contas.Conta;
 import br.com.gpm22.entidades.contas.ContaCorrente;
 import br.com.gpm22.entidades.contas.ContaPoupanca;
+import br.com.gpm22.entidades.contas.SeguroDeVida;
 import br.com.gpm22.interfaces.Tributavel;
 
 class MainTest {
@@ -70,6 +71,14 @@ class MainTest {
 				banco.adiciona(conta2);
 			}
 
+			SeguroDeVida seguroDeVida = new SeguroDeVida(cliente2, dataDeNascimento2, 1000.0);
+			BancoRepositorio.adicionarSeguroDeVida(seguroDeVida);
+
+			cliente2.setSeguroDeVida(seguroDeVida);
+			cliente2.getContas().add(conta2);
+
+			BancoRepositorio.atualizarCliente(cliente2);
+
 			System.out.println("\nQuantidade de contas do banco " + banco.getNome() + ":" + banco.getContas().length);
 			// banco.mostraContas();
 
@@ -79,8 +88,6 @@ class MainTest {
 			System.out.println("O Banco:" + banco.getNome() + " contém a conta \n" + conta2 + "? \n"
 					+ (banco.contem(conta2) > -1 ? "sim" : "não"));
 
-			System.out.println("Remover conta1");
-			BancoRepositorio.removerConta(conta1);
 			System.out.println("Remover cliente1");
 			BancoRepositorio.removerCliente(cliente1);
 

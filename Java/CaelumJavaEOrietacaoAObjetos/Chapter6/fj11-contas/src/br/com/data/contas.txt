@@ -1,2 +1,1 @@
 numero, agencia, titular, dataDeAbertura, saldo, limite, tipo
-2,B,157.802.000-09,30/04/2001,0.0,2000.0,Poupanca

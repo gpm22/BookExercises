@@ -1,12 +1,7 @@
 package br.com.gpm22.bancomvc;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.entidades.Cliente;
@@ -49,6 +44,13 @@ public class BancoRepositorio {
 		}
 	}
 
+	public static void atualizarCliente(Cliente cliente) {
+		if (ConexaoBancoDeDados.alterarCliente(cliente)) {
+			System.out.println(
+					"Cliente " + cliente.getNome() + " " + cliente.getSobrenome() + " atualizado com sucesso!");
+		}
+	}
+
 	public static void removerConta(Conta conta) {
 		if (ConexaoBancoDeDados.deletarConta(conta)) {
 			contas.remove(conta);
@@ -56,7 +58,9 @@ public class BancoRepositorio {
 	}
 
 	public static void removerCliente(Cliente cliente) {
-		clientes.remove(cliente);
+		if (ConexaoBancoDeDados.deletarCliente(cliente)) {
+			clientes.remove(cliente);
+		}
 	}
 
 	public static Cliente retornarClientePeloNomeCompleto(String nomeCLiente) {
