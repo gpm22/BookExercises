@@ -29,6 +29,13 @@ public class SeguroDeVida implements Tipavel, Tributavel {
     }
 
     @Override
+    public String toString() {
+        return "SeguroDeVida: [ numeroApolice" + this.numeroApolice + ", titular: " + this.titular.getCpf()
+                + ", dataDeAvertura: " + this.dataDeAbertura
+                + ", valor: " + this.valor + " ]";
+    }
+
+    @Override
     public String getTipo() {
         return this.tipo;
     }
@@ -71,6 +78,10 @@ public class SeguroDeVida implements Tipavel, Tributavel {
     @Override
     public double getValorImposto() {
         return this.valor * 0.02 + 42;
+    }
+
+    public void setTitular(Cliente cliente) {
+        this.titular = cliente;
     }
 
 }

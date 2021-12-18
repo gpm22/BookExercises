@@ -88,6 +88,10 @@ class MainTest {
 			System.out.println("O Banco:" + banco.getNome() + " contém a conta \n" + conta2 + "? \n"
 					+ (banco.contem(conta2) > -1 ? "sim" : "não"));
 
+			BancoRepositorio.retornarClientes().forEach(System.out::println);
+			BancoRepositorio.retornarContas().forEach(System.out::println);
+			BancoRepositorio.retornarSegurosDeVida().forEach(System.out::println);
+
 			System.out.println("Remover cliente1");
 			BancoRepositorio.removerCliente(cliente1);
 

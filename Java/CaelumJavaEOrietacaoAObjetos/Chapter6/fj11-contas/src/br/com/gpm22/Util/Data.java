@@ -17,6 +17,23 @@ public class Data {
 		}
 	}
 
+	public Data(String data) throws DataInvalidaException {
+		String[] dataSplited = data.split("/");
+
+		int dia = Integer.parseInt(dataSplited[0]);
+		int mes = Integer.parseInt(dataSplited[1]);
+		int ano = Integer.parseInt(dataSplited[2]);
+
+		if (this.validarData(dia, mes, ano)) {
+			this.dia = dia;
+			this.mes = mes;
+			this.ano = ano;
+		} else {
+			throw new DataInvalidaException(this.formatarDiaOuMes(dia) + "/" + this.formatarDiaOuMes(mes) + "/" + ano);
+		}
+
+	}
+
 	@Override
 	public String toString() {
 

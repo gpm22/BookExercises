@@ -2,9 +2,11 @@ package br.com.gpm22.entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.gpm22.Util.Data;
 import br.com.gpm22.entidades.contas.Conta;
+import br.com.gpm22.entidades.contas.ContaCorrente;
 import br.com.gpm22.entidades.contas.SeguroDeVida;
 import br.com.gpm22.exceptions.CpfInvalidoException;
 import br.com.gpm22.exceptions.DataInvalidaException;
@@ -19,7 +21,6 @@ public class Cliente implements Comparable<Cliente> {
 	private Data dataDeNascimento;
 	private List<Conta> contas;
 	private SeguroDeVida seguroDeVida;
-	private List<Tributavel> tributaveis;
 
 	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento1) throws CpfInvalidoException {
 		if (!ClienteServico.validarCPF(cpf)) {
@@ -35,7 +36,16 @@ public class Cliente implements Comparable<Cliente> {
 		this.cpf = cpf;
 		this.dataDeNascimento = dataDeNascimento1;
 		this.contas = new ArrayList<>();
-		this.tributaveis = new ArrayList<>();
+	}
+
+	public Cliente(String nome, String sobrenome, String cpf, Data dataDeNascimento1, SeguroDeVida seguroDeVida,
+			List<Conta> contas) {
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.cpf = cpf;
+		this.dataDeNascimento = dataDeNascimento1;
+		this.seguroDeVida = seguroDeVida;
+		this.contas = contas;
 	}
 
 	public void mudarCPF(String cpf) {
@@ -85,7 +95,24 @@ public class Cliente implements Comparable<Cliente> {
 	}
 
 	public List<Tributavel> getTributaveis() {
-		return this.tributaveis;
+
+		List<Tributavel> tributaveis;
+
+		if (contas.size() > 0) {
+			List<ContaCorrente> contasCorrentes = contas.stream()
+					.filter((conta) -> conta.getTipo().equals("Corrente"))
+					.map((conta) -> (ContaCorrente) conta)
+					.collect(Collectors.toList());
+			tributaveis = new ArrayList<Tributavel>(contasCorrentes);
+		} else {
+			tributaveis = new ArrayList<Tributavel>();
+		}
+
+		if (seguroDeVida != null) {
+			tributaveis.add(seguroDeVida);
+		}
+
+		return tributaveis;
 	}
 
 	public void setSeguroDeVida(SeguroDeVida seguroDeVida) {
@@ -99,7 +126,8 @@ public class Cliente implements Comparable<Cliente> {
 	@Override
 	public String toString() {
 		return "Cliente: [ nome: " + this.getNome() + ", sobrenome: " + this.sobrenome + ", cpf: " + this.cpf
-				+ ", dataDeNascimento: " + this.getDataDeNascimento() + "]";
+				+ ", dataDeNascimento: " + this.getDataDeNascimento() + ", seguroDeVida: " + this.seguroDeVida
+				+ ", contas: " + this.contas + ", tributaveis: " + this.getTributaveis() + "]";
 	}
 
 	@Override
@@ -135,8 +163,8 @@ public class Cliente implements Comparable<Cliente> {
 		return "Nome completo: " + this.getNome() + " " + this.getSobrenome() + "\nCPF: " + this.getCpf() + "\nIdade: "
 				+ this.getDataDeNascimento().calcularIdade(diaAtual) + "\nQuantidade de Contas: " + this.contas.size()
 				+ "\nPossui Seguro de vida? " + (this.seguroDeVida == null ? "Não" : "Sim")
-				+ "\nNúmero de Tributáveis: " + this.tributaveis.size() + "\nImposto total: "
-				+ TributavelServico.calculaImpostos(this.tributaveis);
+				+ "\nNúmero de Tributáveis: " + this.getTributaveis().size() + "\nImposto total: "
+				+ TributavelServico.calculaImpostos(this.getTributaveis());
 
 	}
 

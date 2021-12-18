@@ -1,6 +1,5 @@
 package br.com.gpm22.bancomvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.gpm22.Util.Data;
@@ -10,38 +9,29 @@ import br.com.gpm22.entidades.contas.ContaCorrente;
 import br.com.gpm22.entidades.contas.SeguroDeVida;
 
 public class BancoRepositorio {
-	private static ArrayList<Conta> contas = new ArrayList<Conta>();
-	private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	private static ArrayList<SeguroDeVida> segurosDeVida = new ArrayList<SeguroDeVida>();
 
 	public static List<Cliente> retornarClientes() {
-		return clientes;
+		return ConexaoBancoDeDados.retornarClientes();
 	}
 
 	public static void adicionarSeguroDeVida(SeguroDeVida seguroDeVida) {
-		if (ConexaoBancoDeDados.persistirSeguroDeVida(seguroDeVida)) {
-			segurosDeVida.add(seguroDeVida);
-		}
-	}
-
-	public static void removerTributavel(SeguroDeVida seguroDeVida) {
-		segurosDeVida.remove(seguroDeVida);
+		ConexaoBancoDeDados.persistirSeguroDeVida(seguroDeVida);
 	}
 
 	public static List<SeguroDeVida> retornarSegurosDeVida() {
-		return segurosDeVida;
+		return ConexaoBancoDeDados.retornarSegurosDeVidas();
+	}
+
+	public static List<Conta> retornarContas() {
+		return ConexaoBancoDeDados.retornarContas();
 	}
 
 	public static void adicionarConta(Conta conta) {
-		if (ConexaoBancoDeDados.persistirConta(conta)) {
-			contas.add(conta);
-		}
+		ConexaoBancoDeDados.persistirConta(conta);
 	}
 
 	public static void adicionarCliente(Cliente cliente) {
-		if (ConexaoBancoDeDados.persistirCliente(cliente)) {
-			clientes.add(cliente);
-		}
+		ConexaoBancoDeDados.persistirCliente(cliente);
 	}
 
 	public static void atualizarCliente(Cliente cliente) {
@@ -52,18 +42,15 @@ public class BancoRepositorio {
 	}
 
 	public static void removerConta(Conta conta) {
-		if (ConexaoBancoDeDados.deletarConta(conta)) {
-			contas.remove(conta);
-		}
+		ConexaoBancoDeDados.deletarConta(conta);
 	}
 
 	public static void removerCliente(Cliente cliente) {
-		if (ConexaoBancoDeDados.deletarCliente(cliente)) {
-			clientes.remove(cliente);
-		}
+		ConexaoBancoDeDados.deletarCliente(cliente);
 	}
 
 	public static Cliente retornarClientePeloNomeCompleto(String nomeCLiente) {
+		List<Cliente> clientes = retornarClientes();
 		String nomeCompleto;
 		for (Cliente cliente : clientes) {
 			nomeCompleto = cliente.getNome() + " " + cliente.getSobrenome();
@@ -76,6 +63,7 @@ public class BancoRepositorio {
 	}
 
 	public static Conta retornarContaPeloNumeroEAgencia(String agencia, int numeroDaConta) {
+		List<Conta> contas = retornarContas();
 		for (Conta conta : contas) {
 			if (conta.getAgencia().equals(agencia) && conta.getNumero() == numeroDaConta) {
 				return conta;

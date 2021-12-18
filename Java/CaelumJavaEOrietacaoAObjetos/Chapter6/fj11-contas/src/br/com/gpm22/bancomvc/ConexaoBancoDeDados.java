@@ -12,15 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import br.com.gpm22.Util.Data;
 import br.com.gpm22.entidades.Cliente;
 import br.com.gpm22.entidades.contas.Conta;
+import br.com.gpm22.entidades.contas.ContaCorrente;
+import br.com.gpm22.entidades.contas.ContaPoupanca;
 import br.com.gpm22.entidades.contas.SeguroDeVida;
 
 public class ConexaoBancoDeDados {
 
-    private static String CLIENTES_DB = "src/br/com/data/clientes.txt";
-    private static String CONTAS_DB = "src/br/com/data/contas.txt";
-    private static String SEGUROS_DB = "src/br/com/data/seguros-de-vida.txt";
+    private static String CLIENTES_DB = "fj11-contas/src/br/com/data/clientes.txt";
+    private static String CONTAS_DB = "fj11-contas/src/br/com/data/contas.txt";
+    private static String SEGUROS_DB = "fj11-contas/src/br/com/data/seguros-de-vida.txt";
 
     public static List<Cliente> retornarClientes() {
         try (Scanner s = new Scanner(new FileReader(CLIENTES_DB, Charset.forName("UTF8")))) {
@@ -29,13 +32,62 @@ public class ConexaoBancoDeDados {
             s.nextLine();
 
             while (s.hasNextLine()) {
-                String[] valores = s.nextLine().split(",");
+                String[] valores = s.nextLine().split(", ");
+
+                SeguroDeVida seguroDeVida = valores[4].equals("-") ? null
+                        : retornarSeguroDeVidaPorId(Integer.parseInt(valores[4]));
+                List<Conta> contas = retornarContasPorCpf(valores[2]);
+                Cliente cliente = new Cliente(valores[0], valores[1], valores[2], new Data(valores[3]),
+                        seguroDeVida,
+                        contas);
+
+                if (seguroDeVida != null) {
+                    seguroDeVida.setTitular(cliente);
+                }
+                contas.forEach((conta) -> conta.setTitular(cliente));
+                ret.add(cliente);
             }
 
             return ret;
 
-        } catch (IOException e) {
-            System.out.println("Erro ao retornar a lista clientes!");
+        } catch (Exception e) {
+            System.out.println("Erro ao retornar a lista de clientes!");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Cliente retornarClientePorCpf(String cpf) {
+        try (Scanner s = new Scanner(new FileReader(CLIENTES_DB, Charset.forName("UTF8")))) {
+
+            s.nextLine();
+
+            while (s.hasNextLine()) {
+
+                String line = s.nextLine();
+                if (line.contains(cpf + ", ")) {
+                    String[] valores = line.split(", ");
+
+                    SeguroDeVida seguroDeVida = valores[4].equals("-") ? null
+                            : retornarSeguroDeVidaPorId(Integer.parseInt(valores[4]));
+                    List<Conta> contas = retornarContasPorCpf(valores[2]);
+                    Cliente cliente = new Cliente(valores[0], valores[1], valores[2], new Data(valores[3]),
+                            seguroDeVida,
+                            contas);
+
+                    if (seguroDeVida != null) {
+                        seguroDeVida.setTitular(cliente);
+                    }
+                    contas.forEach((conta) -> conta.setTitular(cliente));
+                    return cliente;
+                }
+
+            }
+            System.out.println("Cliente com cpf " + cpf + " não encontrado!");
+            return null;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao retornar cliente!");
             e.printStackTrace();
             return null;
         }
@@ -51,29 +103,15 @@ public class ConexaoBancoDeDados {
             return false;
         }
 
-        if (cliente.getContas().size() > 0) {
-            for (Conta conta : cliente.getContas()) {
-                if (!persistirConta(conta)) {
-                    return false;
-                }
-            }
-        }
-
-        if (cliente.getSeguroDeVida() != null) {
-            if (!persistirSeguroDeVida(cliente.getSeguroDeVida())) {
-                return false;
-            }
-        }
-
         return true;
     }
 
     public static boolean persistirCliente(Cliente cliente) {
 
         try (FileWriter fw = new FileWriter(CLIENTES_DB, true)) {
-            fw.append("\n" + cliente.getNome() + "," + cliente.getSobrenome() + "," + cliente.getCpf() + ","
-                    + cliente.getDataDeNascimento() + ","
-                    + (cliente.getSeguroDeVida() != null ? cliente.getSeguroDeVida().getNumeroApolice() : ""));
+            fw.append("\n" + cliente.getNome() + ", " + cliente.getSobrenome() + ", " + cliente.getCpf() + ", "
+                    + cliente.getDataDeNascimento() + ", "
+                    + (cliente.getSeguroDeVida() != null ? cliente.getSeguroDeVida().getNumeroApolice() : "-"));
             if (cliente.getContas().size() > 0) {
                 for (Conta conta : cliente.getContas()) {
                     if (!persistirConta(conta)) {
@@ -134,17 +172,14 @@ public class ConexaoBancoDeDados {
         try (FileWriter dest = new FileWriter(new File(CLIENTES_DB + ".tmp"));
                 Scanner src = new Scanner(new FileInputStream(CLIENTES_DB))) {
 
+            dest.append(src.nextLine());
+
             while (src.hasNextLine()) {
                 String line = src.nextLine();
-                if (line.contains(cliente.getCpf())) {
-                    continue;
-                }
-                dest.append(line);
-                if (src.hasNextLine()) {
-                    dest.append("\n");
+                if (!line.contains(cliente.getCpf())) {
+                    dest.append("\n" + line);
                 }
             }
-
             criarDBTempContaCpf(cliente);
             criarDBTempSeguroDeVidaCpf(cliente);
 
@@ -159,14 +194,12 @@ public class ConexaoBancoDeDados {
         try (FileWriter dest = new FileWriter(new File(CONTAS_DB + ".tmp"));
                 Scanner src = new Scanner(new FileInputStream(CONTAS_DB))) {
 
+            dest.append(src.nextLine());
+
             while (src.hasNextLine()) {
                 String line = src.nextLine();
-                if (line.contains(cliente.getCpf())) {
-                    continue;
-                }
-                dest.append(line);
-                if (src.hasNextLine()) {
-                    dest.append("\n");
+                if (!line.contains(cliente.getCpf() + ", ")) {
+                    dest.append("\n" + line);
                 }
             }
 
@@ -181,14 +214,12 @@ public class ConexaoBancoDeDados {
         try (FileWriter dest = new FileWriter(new File(SEGUROS_DB + ".tmp"));
                 Scanner src = new Scanner(new FileInputStream(SEGUROS_DB))) {
 
+            dest.append(src.nextLine());
+
             while (src.hasNextLine()) {
                 String line = src.nextLine();
-                if (line.contains(cliente.getCpf() + ",")) {
-                    continue;
-                }
-                dest.append(line);
-                if (src.hasNextLine()) {
-                    dest.append("\n");
+                if (!line.contains(cliente.getCpf() + ", ")) {
+                    dest.append("\n" + line);
                 }
             }
 
@@ -198,9 +229,82 @@ public class ConexaoBancoDeDados {
         }
     }
 
-    public List<Conta> retornarContas() {
-        List<Conta> ret = new ArrayList<>();
-        return ret;
+    public static List<Conta> retornarContas() {
+        try (Scanner s = new Scanner(new FileReader(CONTAS_DB, Charset.forName("UTF8")))) {
+
+            List<Conta> ret = new ArrayList<>();
+            s.nextLine();
+
+            while (s.hasNextLine()) {
+                String[] valores = s.nextLine().split(", ");
+
+                Conta conta = null;
+
+                Cliente cliente = retornarClientePorCpf(valores[2]);
+
+                if (valores[6].equals("Poupanca")) {
+                    conta = new ContaPoupanca(Integer.parseInt(valores[0]), cliente, valores[1],
+                            new Data(valores[3]),
+                            Double.parseDouble(valores[4]), Double.parseDouble(valores[5]));
+                }
+
+                if (valores[6].equals("Corrente")) {
+                    conta = new ContaCorrente(Integer.parseInt(valores[0]), cliente, valores[1],
+                            new Data(valores[3]),
+                            Double.parseDouble(valores[4]), Double.parseDouble(valores[5]));
+                }
+
+                ret.add(conta);
+            }
+
+            return ret;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao retornar a lista de contas!");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<Conta> retornarContasPorCpf(String cpf) {
+        try (Scanner s = new Scanner(new FileReader(CONTAS_DB, Charset.forName("UTF8")))) {
+
+            List<Conta> ret = new ArrayList<>();
+            s.nextLine();
+
+            while (s.hasNextLine()) {
+                String line = s.nextLine();
+
+                if (line.contains(cpf + ", ")) {
+                    String[] valores = line.split(", ");
+
+                    Conta conta = null;
+
+                    Cliente cliente = null; // valores[2]
+
+                    if (valores[6].equals("Poupanca")) {
+                        conta = new ContaPoupanca(Integer.parseInt(valores[0]), cliente, valores[1],
+                                new Data(valores[3]),
+                                Double.parseDouble(valores[4]), Double.parseDouble(valores[5]));
+                    }
+
+                    if (valores[6].equals("Corrente")) {
+                        conta = new ContaCorrente(Integer.parseInt(valores[0]), cliente, valores[1],
+                                new Data(valores[3]),
+                                Double.parseDouble(valores[4]), Double.parseDouble(valores[5]));
+                    }
+
+                    ret.add(conta);
+                }
+            }
+
+            return ret;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao retornar a lista de contas!");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static boolean alterarConta(Conta conta) {
@@ -217,8 +321,8 @@ public class ConexaoBancoDeDados {
 
     public static boolean persistirConta(Conta conta) {
         try (FileWriter fw = new FileWriter(CONTAS_DB, true)) {
-            fw.append("\n" + conta.getNumero() + "," + conta.getAgencia() + "," + conta.getTitular().getCpf() + ","
-                    + conta.getDataDeAbertura() + "," + conta.getSaldo() + "," + conta.getLimite() + ","
+            fw.append("\n" + conta.getNumero() + ", " + conta.getAgencia() + ", " + conta.getTitular().getCpf() + ", "
+                    + conta.getDataDeAbertura() + ", " + conta.getSaldo() + ", " + conta.getLimite() + ", "
                     + conta.getTipo());
         } catch (IOException e) {
             System.out.println("Problema ao adicionar conta ao banco de dados");
@@ -256,14 +360,12 @@ public class ConexaoBancoDeDados {
         try (FileWriter dest = new FileWriter(new File(CONTAS_DB + ".tmp"));
                 Scanner src = new Scanner(new FileInputStream(CONTAS_DB))) {
 
+            dest.append(src.nextLine());
+
             while (src.hasNextLine()) {
                 String line = src.nextLine();
-                if (line.contains(conta.getNumero() + "," + conta.getAgencia())) {
-                    continue;
-                }
-                dest.append(line);
-                if (src.hasNextLine()) {
-                    dest.append("\n");
+                if (!line.contains(conta.getNumero() + ", " + conta.getAgencia())) {
+                    dest.append("\n" + line);
                 }
             }
 
@@ -273,9 +375,63 @@ public class ConexaoBancoDeDados {
         }
     }
 
-    public static List<SeguroDeVida> retornarSegurosDeVida() {
-        List<SeguroDeVida> ret = new ArrayList<>();
-        return ret;
+    public static List<SeguroDeVida> retornarSegurosDeVidas() {
+        try (Scanner s = new Scanner(new FileReader(SEGUROS_DB, Charset.forName("UTF8")))) {
+
+            List<SeguroDeVida> ret = new ArrayList<>();
+            s.nextLine();
+
+            while (s.hasNextLine()) {
+                String[] valores = s.nextLine().split(", ");
+
+                Cliente cliente = retornarClientePorCpf(valores[1]);
+
+                SeguroDeVida seguroDeVida = new SeguroDeVida(Integer.parseInt(valores[0]), cliente,
+                        new Data(valores[2]),
+                        Double.parseDouble(valores[3]));
+
+                ret.add(seguroDeVida);
+            }
+
+            return ret;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao retornar a lista de seguros de vida!");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static SeguroDeVida retornarSeguroDeVidaPorId(int id) {
+        try (Scanner s = new Scanner(new FileReader(SEGUROS_DB, Charset.forName("UTF8")))) {
+
+            s.nextLine();
+
+            while (s.hasNextLine()) {
+
+                String line = s.nextLine();
+
+                if (line.contains(id + ", ")) {
+                    String[] valores = line.split(", ");
+
+                    Cliente cliente = null; // valores[1]
+
+                    SeguroDeVida seguroDeVida = new SeguroDeVida(Integer.parseInt(valores[0]), cliente,
+                            new Data(valores[2]),
+                            Double.parseDouble(valores[3]));
+
+                    return seguroDeVida;
+                }
+
+            }
+
+            return null;
+
+        } catch (Exception e) {
+            System.out.println("Erro ao retornar a lista de seguros de vida!");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static boolean alterarSeguroDeVida(SeguroDeVida seguroDeVida) {
@@ -292,8 +448,8 @@ public class ConexaoBancoDeDados {
 
     public static boolean persistirSeguroDeVida(SeguroDeVida seguroDeVida) {
         try (FileWriter fw = new FileWriter(SEGUROS_DB, true)) {
-            fw.append("\n" + seguroDeVida.getNumeroApolice() + "," + seguroDeVida.getTitular().getCpf() + ","
-                    + seguroDeVida.getDataDeAbertura() + "," + seguroDeVida.getValor());
+            fw.append("\n" + seguroDeVida.getNumeroApolice() + ", " + seguroDeVida.getTitular().getCpf() + ", "
+                    + seguroDeVida.getDataDeAbertura() + ", " + seguroDeVida.getValor());
         } catch (IOException e) {
             System.out.println("Problema ao adicionar o seguro de vida ao banco de dados");
             e.printStackTrace();
@@ -330,14 +486,12 @@ public class ConexaoBancoDeDados {
         try (FileWriter dest = new FileWriter(new File(SEGUROS_DB + ".tmp"));
                 Scanner src = new Scanner(new FileInputStream(SEGUROS_DB))) {
 
+            dest.append(src.nextLine());
+
             while (src.hasNextLine()) {
                 String line = src.nextLine();
-                if (line.contains(seguroDeVida.getNumeroApolice() + ",")) {
-                    continue;
-                }
-                dest.append(line);
-                if (src.hasNextLine()) {
-                    dest.append("\n");
+                if (!line.contains(seguroDeVida.getNumeroApolice() + ", ")) {
+                    dest.append("\n" + line);
                 }
             }
 

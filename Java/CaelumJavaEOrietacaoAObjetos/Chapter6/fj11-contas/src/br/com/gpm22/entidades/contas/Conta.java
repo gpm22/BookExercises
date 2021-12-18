@@ -17,11 +17,12 @@ public abstract class Conta implements Tipavel, Comparable<Conta> {
 	private double saldo;
 	private double limite;
 
-	public Conta(int numero, Cliente titular, String agencia, Data dataDeAbertura, double limite) {
+	public Conta(int numero, Cliente titular, String agencia, Data dataDeAbertura, double saldo, double limite) {
 		this.numero = numero;
 		this.titular = titular;
 		this.agencia = agencia;
 		this.dataDeAbertura = dataDeAbertura;
+		this.saldo = saldo;
 		this.limite = limite;
 	}
 
@@ -71,6 +72,10 @@ public abstract class Conta implements Tipavel, Comparable<Conta> {
 
 	}
 
+	public void setTitular(Cliente titular) {
+		this.titular = titular;
+	}
+
 	public double depositar(double valor) throws ValorNegativoException {
 
 		if (valor > 0) {
@@ -96,7 +101,8 @@ public abstract class Conta implements Tipavel, Comparable<Conta> {
 	@Override
 	public String toString() {
 		return "Conta: [ tipo: " + this.getTipo() + ", agencia: " + this.agencia + ", numero: " + this.numero
-				+ " titular: " + this.titular + ", dataDeAbertura: " + this.dataDeAbertura + ", saldo: " + this.saldo
+				+ " titular: " + this.titular.getCpf() + ", dataDeAbertura: " + this.dataDeAbertura + ", saldo: "
+				+ this.saldo
 				+ ", limite: " + this.limite + " ]";
 	}
 
