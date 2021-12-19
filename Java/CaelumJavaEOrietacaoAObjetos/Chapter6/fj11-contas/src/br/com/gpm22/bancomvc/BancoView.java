@@ -118,6 +118,7 @@ public class BancoView {
 			BancoRepositorio.adicionarSeguroDeVida(seguroDeVida);
 			conta.getTitular().setSeguroDeVida(seguroDeVida);
 			conta.getTitular().getTributaveis().add(seguroDeVida);
+			BancoRepositorio.atualizarCliente(conta.getTitular());
 		} catch (Exception e) {
 			System.out.println("Impossível Criar Seguro de Vida");
 			System.out.println(e);

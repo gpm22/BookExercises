@@ -1,2 +1,2 @@
 numeroApolice, titular, dataDeAbertura, valor
-1, 268.202.460-21, 21/12/2021, 212100.0
+1, 268.202.460-21, 21/06/2022, 89890.0
