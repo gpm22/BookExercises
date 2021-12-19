@@ -1,2 +1,3 @@
 numero, agencia, titular, dataDeAbertura, saldo, limite, tipo
-2, B, 157.802.000-09, 30/04/2001, 0.0, 2000.0, Poupanca
+1, Girassol 1, 268.202.460-21, 09/09/2020, 199.79999999999995, 1000.0, Corrente
+2, Girassol 1, 459.521.200-32, 10/10/2018, 700.0, 1000.0, Corrente

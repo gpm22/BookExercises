@@ -41,6 +41,14 @@ public class BancoRepositorio {
 		}
 	}
 
+	public static void atualizarConta(Conta conta) {
+		if (ConexaoBancoDeDados.alterarConta(conta)) {
+			System.out.println(
+					"Conta de número" + conta.getNumero() + " da agencia " + conta.getAgencia()
+							+ " atualizada com sucesso!");
+		}
+	}
+
 	public static void removerConta(Conta conta) {
 		ConexaoBancoDeDados.deletarConta(conta);
 	}
@@ -90,6 +98,8 @@ public class BancoRepositorio {
 		}
 
 	}
+
+	// public static atualizar
 
 	public static void iniciarContasDeTeste() throws Exception {
 		try {

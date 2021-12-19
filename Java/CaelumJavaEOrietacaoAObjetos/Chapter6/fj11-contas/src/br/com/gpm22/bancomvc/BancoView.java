@@ -150,6 +150,8 @@ public class BancoView {
 
 		try {
 			double saldo = conta.transferirPara(contaAReceber, valorTransferencia);
+			BancoRepositorio.atualizarConta(conta);
+			BancoRepositorio.atualizarConta(contaAReceber);
 			System.out.println("Valor " + valorTransferencia + " transferido!");
 			System.out.println("Saldo atualizado: " + saldo);
 		} catch (TipoDiferenteException | ValorNegativoException | SaldoInsuficienteException e) {
@@ -170,6 +172,7 @@ public class BancoView {
 
 		try {
 			double saldo = conta.sacar(valorSaque);
+			BancoRepositorio.atualizarConta(conta);
 			System.out.println("Valor " + valorSaque + " sacado!");
 			System.out.println("Saldo atualizado: " + saldo);
 		} catch (ValorNegativoException | SaldoInsuficienteException e) {
@@ -190,6 +193,7 @@ public class BancoView {
 
 		try {
 			double saldo = conta.depositar(valorDeposito);
+			BancoRepositorio.atualizarConta(conta);
 			System.out.println("Valor " + valorDeposito + " depositado!");
 			System.out.println("Saldo atualizado: " + saldo);
 		} catch (ValorNegativoException e) {

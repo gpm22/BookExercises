@@ -1,6 +1,6 @@
 package br.com.gpm22.main;
 
-import br.com.gpm22.bancomvc.BancoRepositorio;
+//import br.com.gpm22.bancomvc.BancoRepositorio;
 import br.com.gpm22.bancomvc.BancoView;
 
 public class MainComView {
@@ -10,11 +10,11 @@ public class MainComView {
 		BancoView bancoView = new BancoView();
 
 		try {
-			BancoRepositorio.iniciarContasDeTeste();
+			// BancoRepositorio.iniciarContasDeTeste();
 			bancoView.menuInicial();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+
 	}
 }
