@@ -1,11 +1,14 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Iniciando teste...");
+        System.out.println("Starting thet test...");
 
         // String stringVals = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14";
         String stringVals = "0 1 2 null 4 5 6 7 8 9 10 11 null 13 14";
-        System.out.println("Valores: \n" + stringVals);
+        System.out.println("Values: \n" + stringVals);
 
         String[] stringArrayVals = stringVals.split(" ");
 
@@ -22,14 +25,23 @@ public class Main {
 
         BinaryTree binaryTree = BinaryTree.createBinaryTree(testVals);
 
-        System.out.println("Filhos únicos: \n" + binaryTree.onlyChildren());
+        System.out.println("Only Children: \n" + binaryTree.onlyChildren());
 
-        System.out.println("recursive traverse:\n");
+        System.out.println("DFS recursive traverse:\n");
 
-        binaryTree.traverseRecursive(binaryTree.getRoot());
+        binaryTree.traverseDFSRecursive(binaryTree.getRoot());
 
-        System.out.println("\nlevel order traverse:\n");
-        binaryTree.traverseLevelOrder();
+        System.out.println("\nDFS iterative traverse:\n");
+
+        binaryTree.traverseDFSIterative();
+
+        System.out.println("\nBFS iterative traverse:\n");
+        binaryTree.traverseBFSIterative();
+
+        System.out.println("\nBFS recursive traverse:\n");
+        Queue<TreeNode> nodes = new LinkedList<>();
+        nodes.add(binaryTree.getRoot());
+        binaryTree.traverseBFSRecursive(nodes);
 
     }
 }

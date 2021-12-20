@@ -10,11 +10,11 @@ public class BinaryTree {
     public List<Integer> onlyChildren() {
         ArrayList<Integer> onlyChildren = new ArrayList<>();
 
-        traversePrivate(root, onlyChildren);
+        traverseDFSPrivate(root, onlyChildren);
         return onlyChildren;
     }
 
-    private void traversePrivate(TreeNode node, List<Integer> list) {
+    private void traverseDFSPrivate(TreeNode node, List<Integer> list) {
         if (node != null) {
 
             if (node.getLeftChild() != null) {
@@ -33,23 +33,82 @@ public class BinaryTree {
                 }
             }
 
-            traversePrivate(node.getLeftChild(), list);
-            traversePrivate(node.getRightChild(), list);
+            traverseDFSPrivate(node.getLeftChild(), list);
+            traverseDFSPrivate(node.getRightChild(), list);
         }
     }
 
-    public void traverseRecursive(TreeNode node) {
+    public void traverseDFSRecursive(TreeNode node) {
         if (node != null) {
             if (node.getVal() != null) {
                 System.out.println(node + " - left: " + node.getLeftChild() + "- right: "
                         + node.getRightChild());
-                traverseRecursive(node.getLeftChild());
-                traverseRecursive(node.getRightChild());
+                traverseDFSRecursive(node.getLeftChild());
+                traverseDFSRecursive(node.getRightChild());
             }
         }
     }
 
-    public void traverseLevelOrder() {
+    public void traverseDFSIterative() {
+        if (root == null) {
+            return;
+        }
+
+        LinkedList<TreeNode> nodes = new LinkedList<>();
+        nodes.addLast(root);
+
+        while (!nodes.isEmpty()) {
+
+            TreeNode node = nodes.removeLast();
+
+            System.out.println(node + " - left: " + node.getLeftChild() + "- right: "
+                    + node.getRightChild());
+
+            if (node.getRightChild() != null) {
+                if (node.getRightChild().getVal() != null) {
+                    nodes.add(node.getRightChild());
+                }
+            }
+
+            if (node.getLeftChild() != null) {
+                if (node.getLeftChild().getVal() != null) {
+                    nodes.add(node.getLeftChild());
+                }
+            }
+        }
+    }
+
+    public void traverseBFSRecursive(Queue<TreeNode> nodes) {
+
+        if (nodes.isEmpty()) {
+            return;
+        }
+
+        TreeNode node = nodes.remove();
+
+        if (node != null) {
+            if (node.getVal() != null) {
+                System.out.println(node + " - left: " + node.getLeftChild() + "- right: "
+                        + node.getRightChild());
+
+                if (node.getLeftChild() != null) {
+                    if (node.getLeftChild().getVal() != null) {
+                        nodes.add(node.getLeftChild());
+                    }
+                }
+
+                if (node.getRightChild() != null) {
+                    if (node.getRightChild().getVal() != null) {
+                        nodes.add(node.getRightChild());
+                    }
+                }
+
+                traverseBFSRecursive(nodes);
+            }
+        }
+    }
+
+    public void traverseBFSIterative() {
         if (root == null) {
             return;
         }
