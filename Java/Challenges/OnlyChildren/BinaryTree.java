@@ -38,13 +38,42 @@ public class BinaryTree {
         }
     }
 
-    public void traverse(TreeNode node) {
+    public void traverseRecursive(TreeNode node) {
         if (node != null) {
             if (node.getVal() != null) {
-                traverse(node.getLeftChild());
                 System.out.println(node + " - left: " + node.getLeftChild() + "- right: "
                         + node.getRightChild());
-                traverse(node.getRightChild());
+                traverseRecursive(node.getLeftChild());
+                traverseRecursive(node.getRightChild());
+            }
+        }
+    }
+
+    public void traverseLevelOrder() {
+        if (root == null) {
+            return;
+        }
+
+        Queue<TreeNode> nodes = new LinkedList<>();
+        nodes.add(root);
+
+        while (!nodes.isEmpty()) {
+
+            TreeNode node = nodes.remove();
+
+            System.out.println(node + " - left: " + node.getLeftChild() + "- right: "
+                    + node.getRightChild());
+
+            if (node.getLeftChild() != null) {
+                if (node.getLeftChild().getVal() != null) {
+                    nodes.add(node.getLeftChild());
+                }
+            }
+
+            if (node.getRightChild() != null) {
+                if (node.getRightChild().getVal() != null) {
+                    nodes.add(node.getRightChild());
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ public class Main {
         System.out.println("Iniciando teste...");
 
         // String stringVals = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14";
-        String stringVals = "0 1 2 null 4 5 6 7 8 9 10 null 12 13 14";
+        String stringVals = "0 1 2 null 4 5 6 7 8 9 10 11 null 13 14";
         System.out.println("Valores: \n" + stringVals);
 
         String[] stringArrayVals = stringVals.split(" ");
@@ -24,7 +24,12 @@ public class Main {
 
         System.out.println("Filhos únicos: \n" + binaryTree.onlyChildren());
 
-        binaryTree.traverse(binaryTree.getRoot());
+        System.out.println("recursive traverse:\n");
+
+        binaryTree.traverseRecursive(binaryTree.getRoot());
+
+        System.out.println("\nlevel order traverse:\n");
+        binaryTree.traverseLevelOrder();
 
     }
 }
