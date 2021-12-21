@@ -1,14 +1,15 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Starting thet test...");
 
-        // String stringVals = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14";
-        String stringVals = "0 1 2 null 4 5 6 7 8 9 10 11 null 13 14";
-        System.out.println("Values: \n" + stringVals);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the values to create the binary tree:");
+        String stringVals = scanner.nextLine();
+        scanner.close();
 
         String[] stringArrayVals = stringVals.split(" ");
 
@@ -25,9 +26,9 @@ public class Main {
 
         BinaryTree binaryTree = BinaryTree.createBinaryTree(testVals);
 
-        System.out.println("Only Children: \n" + binaryTree.onlyChildren());
+        System.out.println("\nBinary Tree Created...\nTraversing the tree with different methods:");
 
-        System.out.println("DFS recursive traverse:\n");
+        System.out.println("\nDFS recursive traverse:\n");
 
         binaryTree.traverseDFSRecursive(binaryTree.getRoot());
 
@@ -42,6 +43,8 @@ public class Main {
         Queue<TreeNode> nodes = new LinkedList<>();
         nodes.add(binaryTree.getRoot());
         binaryTree.traverseBFSRecursive(nodes);
+
+        System.out.println("\nOnly Children: \n" + binaryTree.onlyChildren());
 
     }
 }

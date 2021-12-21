@@ -18,18 +18,22 @@ public class BinaryTree {
         if (node != null) {
 
             if (node.getLeftChild() != null) {
-                if (node.getRightChild() == null) {
-                    list.add(node.getLeftChild().getVal());
-                } else if (node.getRightChild().getVal() == null) {
-                    list.add(node.getLeftChild().getVal());
+                if (node.getLeftChild().getVal() != null) {
+                    if (node.getRightChild() == null) {
+                        list.add(node.getLeftChild().getVal());
+                    } else if (node.getRightChild().getVal() == null) {
+                        list.add(node.getLeftChild().getVal());
+                    }
                 }
             }
 
             if (node.getRightChild() != null) {
-                if (node.getLeftChild() == null) {
-                    list.add(node.getRightChild().getVal());
-                } else if (node.getLeftChild().getVal() == null) {
-                    list.add(node.getRightChild().getVal());
+                if (node.getRightChild().getVal() != null) {
+                    if (node.getLeftChild() == null) {
+                        list.add(node.getRightChild().getVal());
+                    } else if (node.getLeftChild().getVal() == null) {
+                        list.add(node.getRightChild().getVal());
+                    }
                 }
             }
 
@@ -51,6 +55,10 @@ public class BinaryTree {
 
     public void traverseDFSIterative() {
         if (root == null) {
+            return;
+        }
+
+        if (root.getVal() == null) {
             return;
         }
 
@@ -110,6 +118,10 @@ public class BinaryTree {
 
     public void traverseBFSIterative() {
         if (root == null) {
+            return;
+        }
+
+        if (root.getVal() == null) {
             return;
         }
 
