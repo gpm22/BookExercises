@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import AssemblyLine from "./AssemblyLine";
 import Header from "../commons/Header";
 import Footer from "../commons/Footer";
@@ -13,9 +13,11 @@ const Challenge3 = (props) => {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && stageInput !== "") {
-      let modifier = [...stages, stageInput.trim()];
-      setStages([...modifier]);
-      setStageInput("");
+      if (!stages.includes(stageInput.trim())) {
+        let modifier = [...stages, stageInput.trim()];
+        setStages([...modifier]);
+        setStageInput("");
+      }
     }
   };
 
@@ -24,16 +26,21 @@ const Challenge3 = (props) => {
       <Header />
       <main>
         <h1>Challenge 3 - Assembly Line</h1>
+        <section className="description">
+          <h4>Creates stages of an Assembly Line flowchart and then creates items to be added to this flowchart.</h4>
+          <h4>Left click on the item will move it to the next stage at right.</h4>
+          <h4>Right click on the item will move it to the previous stage at left.</h4>
+        </section>
         Add an stage:{" "}
-      <input
-        value={stageInput}
-        onKeyPress={handleKeyDown}
-        onChange={(e) => {
-          setStageInput(e.target.value);
-        }}
-        type="text"
-      />
-      <br/>
+        <input
+          value={stageInput}
+          onKeyPress={handleKeyDown}
+          onChange={(e) => {
+            setStageInput(e.target.value);
+          }}
+          type="text"
+        />
+        <br />
         <AssemblyLine stages={stages} />
       </main>
       <Footer />

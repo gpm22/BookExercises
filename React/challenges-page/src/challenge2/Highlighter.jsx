@@ -17,11 +17,11 @@ const Highlighter = () => {
     return searchTerm === ""
       ? sourceInsideText
       : sourceInsideText
-          .split(" ")
-          .map((word) =>
-            word.replace(searchInsideTerm, (i) => "<mark>" + i + "</mark>")
-          )
-          .join(" ");
+        .split(" ")
+        .map((word) =>
+          word.replace(searchInsideTerm, (i) => "<mark>" + i + "</mark>")
+        )
+        .join(" ");
   };
 
   return (
@@ -29,6 +29,9 @@ const Highlighter = () => {
       <Header />
       <main>
         <h1>Challenge 2 - Highlighter</h1>
+        <section className="description">
+          <h4>Highlights a specific term in a given text.</h4>
+        </section>
         <p>Enter the text:</p>
         <textarea
           value={sourceText}

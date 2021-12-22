@@ -1,4 +1,6 @@
 #principal-header {
+  position: fixed;
+  top: 0;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -43,6 +45,16 @@
 
   border-style: none;
   color: lime;
+}
+
+#principal-header .active {
+  margin: auto 0;
+
+  background-color: inherit;
+  border-radius: 50%;
+
+  border-style: none;
+  color: green;
 }
 
 @media(max-width: 1040px){

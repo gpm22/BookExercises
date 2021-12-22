@@ -26,3 +26,31 @@
 .btn-no:hover {
     background-color: red;
 }
+
+.inputs {
+    border-bottom: 1px solid lime;
+}
+
+.alert-success p,
+.alert-info p,
+.alert-warning p,
+.alert-danger p{
+    color: #222;
+}
+
+.alert-danger p{
+    background-color: #ff4040;
+}
+
+.alert-warning p{
+    background-color: yellow;
+}
+
+.alert-info p{
+    background-color: lightblue;
+}
+
+.alert-success p{
+    background-color: lime;
+}
+
