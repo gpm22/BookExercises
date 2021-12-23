@@ -1,0 +1,3 @@
+(Opcional) E se você quisesse, em vez de enviar tudo o que o cliente digitou, transferir um arquivo texto do micro do cliente para o servidor? Seria difícil?
+
+Use bastante o polimorfismo! Faça o cliente ler de um arquivo chamado arquivo.txt (crie-o!) e o servidor gravar tudo o que receber em um arquivo chamado recebido.txt.
