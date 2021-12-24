@@ -1,0 +1,16 @@
+.my-bg-dark {
+    background-color: #222 !important;
+}
+
+.header-navbar-logo {
+    width: 8rem;
+    margin-right: 1rem;
+}
+
+.header-matricula h1 {
+    font-weight: 300;
+}
+
+.rounded-top {
+    overflow: hidden;
+}

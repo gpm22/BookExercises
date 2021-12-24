@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Matriculas</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/matricula.css" rel="stylesheet" />
+    <link href="img/favicon.ico" rel="icon" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm navbar-dark my-bg-dark">
+        <a class="navbar-brand" href="index.html"
+          ><img
+            class="header-navbar-logo"
+            src="img/musicdot-logo-light.svg"
+            alt="Logo da Musicdot"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Cursos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Matriculas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Emails</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main class="container mb-4">
+      <div class="jumbotron my-bg-dark header-matricula text-light mt-3">
+        <div class="container">
+          <h1>Escolher Cursos</h1>
+          <p class="lead">Escolha os cursos que gostaria de se matricular</p>
+        </div>
+      </div>
+      <table class="table table-hover roundend-top">
+        <thead class="my-bg-dark text-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Curso</th>
+            <th scope="col">Tempo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox" name="curso" value="20" /></td>
+            <td>Curso de Violão</td>
+            <td>20h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="40" /></td>
+            <td>Curso de Violino</td>
+            <td>40h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="12" /></td>
+            <td>Curso de Berimbau</td>
+            <td>12h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="200" /></td>
+            <td>Curso de Piano</td>
+            <td>200h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="10" /></td>
+            <td>Curso de Pandeiro</td>
+            <td>10h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="300" /></td>
+            <td>Curso de Órgão</td>
+            <td>300h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="5" /></td>
+            <td>Curso de Triângulo</td>
+            <td>5h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="234" /></td>
+            <td>Curso de Sanfona</td>
+            <td>234h</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="curso" value="220" /></td>
+            <td>Curso de Bateria</td>
+            <td>220h</td>
+          </tr>
+          <tr class="my-bg-dark text-light">
+            <td>Total</td>
+            <td class="js-total-de-cursos">0 curso(s)</td>
+            <td class="js-total-de-horas">0h</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+  </body>
+</html>
