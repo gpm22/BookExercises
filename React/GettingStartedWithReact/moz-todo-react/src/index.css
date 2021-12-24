@@ -7,7 +7,7 @@
 }
 
 *:focus {
-  outline: 3px dashed #228bec;
+  outline: 3px dashed lime;
   outline-offset: 0;
 }
 
@@ -69,8 +69,8 @@ body {
   max-width: 68rem;
   margin: 0 auto;
   font: 1.6rem/1.25 Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #4d4d4d;
+  background-color: #111;
+  color: #eee;
 }
 
 @media screen and (min-width: 620px){
@@ -179,7 +179,7 @@ body {
 /* END GLOBAL STYLES */
 
 .todoapp {
-  background:  #fff;
+  background:  #222;
   margin: 2rem 0 4rem 0;
   padding:  1rem;
   position: relative;
@@ -329,7 +329,7 @@ body {
 
 .c-cb > input[type="checkbox"]:focus + label::before {
   border-width: 4px ;
-  outline: 3px dashed #228bec;
+  outline: 3px dashed lime;
 }
 
 .c-cb > label::after {
@@ -348,6 +348,11 @@ body {
   background: transparent;
 }
 
+.c-cb > input[type="checkbox"]:checked + label::before {
+  border-color: lime;
+}
+
 .c-cb > input[type="checkbox"]:checked + label::after {
   opacity: 1;
+  color: lime;
 }
