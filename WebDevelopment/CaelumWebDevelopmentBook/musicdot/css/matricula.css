@@ -1,16 +1,40 @@
 .my-bg-dark {
-    background-color: #222 !important;
+  background-color: #222 !important;
 }
 
 .header-navbar-logo {
-    width: 8rem;
-    margin-right: 1rem;
+  width: 8rem;
+  margin-right: 1rem;
 }
 
 .header-matricula h1 {
-    font-weight: 300;
+  font-weight: 300;
 }
 
 .rounded-top {
-    overflow: hidden;
+  overflow: hidden;
+}
+
+input[name="curso"] {
+  -webkit-appearance: none;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  padding: 9px;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+}
+
+input[name="curso"]:checked {
+	background-color: #000;
+	color: #fff;
+}
+
+input[name="curso"]:checked:after {
+	content: '\2713';
+	font-size: 25px;
+	position: absolute;
+	top: -10px;
+	left: 0px;
+	color: #fff;
 }
