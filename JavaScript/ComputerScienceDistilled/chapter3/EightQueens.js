@@ -1,38 +1,25 @@
 function queens(board) {
-  counter++;
+  numberOfCalls++;
   let solution = [];
   if (numberOfQueens(board) === 8) {
     return board;
   }
 
-  let unattackedPositionsArray = unattackedPositions(board);
-
-  for (let i = 0; i < unattackedPositionsArray.length; i++) {
-    placeQueen(unattackedPositionsArray[i], board);
+  for (const position of unattackedPositions(board)) {
+    placeQueen(position, board);
     solution = queens(board);
     if (solution != false) {
       if (numberOfQueens(solution) === 8) {
         return solution;
       }
     }
-    removeQueen(unattackedPositionsArray[i], board);
+    removeQueen(position, board);
   }
 
   return false;
 }
 
-let counter = 0;
-
-let initialBoard = [
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-];
+let numberOfCalls = 0;
 
 function numberOfQueens(board) {
   let numberOfQueens = 0;
@@ -125,8 +112,19 @@ function unattackedPositions(board) {
   return unattackedPositions;
 }
 
+let initialBoard = [
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+];
+
 console.log("initial board: ");
 console.log(initialBoard);
 console.log("final board: ");
 console.log(queens(initialBoard));
-console.log("number of executions:" + counter);
+console.log("number of calls:" + numberOfCalls);
