@@ -7,3 +7,4 @@
 * **Default Arguments**
 * **HealthRecord**
 * **UndoRedo**
+* **MoviesSequence**
