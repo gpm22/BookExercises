@@ -11,10 +11,10 @@ function merge_sort(array) {
     return array;
   }
 
-  let meio = Math.floor(array.length / 2);
+  let mid_index = Math.floor(array.length / 2);
 
-  let left = merge_sort(array.slice(0, meio));
-  let right = merge_sort(array.slice(meio));
+  let left = merge_sort(array.slice(0, mid_index));
+  let right = merge_sort(array.slice(mid_index));
   let final = [];
 
   while (left.length > 0 && right.length > 0) {
@@ -41,6 +41,13 @@ function merge_sort(array) {
 console.log(
   "merge_sort([10, 1, 2, 4, 5]) == [1, 2, 4, 5, 10] ? " +
     (is_arrays_equals(merge_sort([10, 1, 2, 4, 5]), [1, 2, 4, 5, 10])
+      ? "Yes"
+      : "No")
+);
+
+console.log(
+  "merge_sort([10, 1, 2, 4, 5]) == [1, 2, 4, 5, 10] ? " +
+    (is_arrays_equals(merge_sort([10, 5, 4, 2, 1]), [1, 2, 4, 5, 10])
       ? "Yes"
       : "No")
 );
