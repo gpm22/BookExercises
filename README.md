@@ -19,6 +19,8 @@ This repository contains codes of solved exercises from books and tutorials and 
   * **Introduction to Programming with Java** by Linda Seiter and Dan Palmer;
   * **Java e Orientação a Objetos** by [Caelum;](https://www.caelum.com.br/apostila-java-orientacao-objetos/)
   * **Spring Security Tutorials** by different authors;
+* **Ruby**
+  * **Ruby Koans** by [Edge Case;](http://rubykoans.com/)
 * **Web Development**
   * **Desenvolvimente WEB com HTML, CSS e JavaScript** by [Caelum](https://www.caelum.com.br/apostila-html-css-javascript/);
 
