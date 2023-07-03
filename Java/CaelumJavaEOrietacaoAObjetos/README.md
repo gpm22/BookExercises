@@ -6,7 +6,7 @@ A java introdutory book in portuguese.
 
 ## About the Authors
 
- **Caelum** is a brazilian school of technology.
+ **Caelum** is a Brazilian school of technology.
 
 ## Contents
 
