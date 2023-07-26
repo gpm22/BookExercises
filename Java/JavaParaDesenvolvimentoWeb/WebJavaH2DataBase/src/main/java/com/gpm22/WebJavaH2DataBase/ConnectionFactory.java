@@ -8,7 +8,7 @@ public class ConnectionFactory {
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(
-          "jdbc:h2:file:./data/mydb", "sa", "");
+          "jdbc:h2:tcp://localhost:9092/./data/mydb", "sa", "");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
