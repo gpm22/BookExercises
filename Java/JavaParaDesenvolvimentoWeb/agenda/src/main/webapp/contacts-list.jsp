@@ -1,7 +1,7 @@
 <%@ page import="java.util.*,
-java.text.SimpleDateFormat,
- daos.*,
- models.*" %>
+                 java.text.SimpleDateFormat,
+                 daos.*,
+                 models.*" %>
 
 <html>
     <body>
@@ -13,13 +13,13 @@ java.text.SimpleDateFormat,
                 <th>Data de Nascimento</th>
             </tr>
             <%
-      ContatoDAO dao = new ContatoDAO();
-      List<Contato> contatos = dao.getTodosOsContatos();
+                ContatoDAO dao = new ContatoDAO();
+                List<Contato> contatos = dao.getTodosOsContatos();
 
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-      for (Contato contato : contatos ) {
-    %>
+                for (Contato contato : contatos ) {
+            %>
                 <tr>
                     <td><%=contato.getNome() %></td>
                     <td><%=contato.getEmail() %></td>
@@ -27,8 +27,8 @@ java.text.SimpleDateFormat,
                     <td><%=formatter.format(contato.getDataNascimento().getTime()) %></td>
                 </tr>
             <%
-      }
-    %>
+                }
+            %>
         </table>
     </body>
 </html>
