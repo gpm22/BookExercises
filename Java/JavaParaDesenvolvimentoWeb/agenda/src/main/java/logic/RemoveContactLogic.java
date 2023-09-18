@@ -19,6 +19,6 @@ public class RemoveContactLogic implements Logic {
 
         System.out.println("Removing contact ...");
 
-        return "contacts-list-3.jsp";
+        return new ContactsListLogic().execute(request, response);
     }
 }

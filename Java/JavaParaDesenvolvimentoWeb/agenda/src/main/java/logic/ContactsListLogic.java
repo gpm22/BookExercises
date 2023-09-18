@@ -3,13 +3,14 @@ package logic;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class FirstLogic implements Logic {
+import daos.ContatoDAO;
+
+public class ContactsListLogic implements Logic {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        System.out.println("Executing the logic ...");
-        System.out.println("returning the name of the jsp page");
-        return "WEB-INF/jsp/first-logic.jsp";
+        request.setAttribute("contatos", new ContatoDAO().getTodosOsContatos());
+        return "WEB-INF/jsp/contacts-list-3.jsp";
     }
-    
+
 }

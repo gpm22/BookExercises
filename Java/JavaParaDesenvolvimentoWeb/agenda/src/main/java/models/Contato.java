@@ -2,8 +2,12 @@ package models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class Contato {
 
@@ -15,18 +19,19 @@ public class Contato {
 
     // métodos get e set para id, nome, email, endereço e dataNascimento
 
-    public Contato(){}
+    public Contato() {
+    }
 
-    public Contato(ResultSet rs) throws SQLException{
-            id = rs.getLong("id");
-            nome = rs.getString("nome");
-            email = rs.getString("email");
-            endereco = rs.getString("endereco");
+    public Contato(ResultSet rs) throws SQLException {
+        id = rs.getLong("id");
+        nome = rs.getString("nome");
+        email = rs.getString("email");
+        endereco = rs.getString("endereco");
 
-            // montando a data através do Calendar
-            Calendar data = Calendar.getInstance();
-            data.setTime(rs.getDate("dataNascimento"));
-            dataNascimento = data;
+        // montando a data através do Calendar
+        Calendar data = Calendar.getInstance();
+        data.setTime(rs.getDate("dataNascimento"));
+        dataNascimento = data;
     }
 
     public String getNome() {
@@ -72,8 +77,32 @@ public class Contato {
     @Override
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String data = dataNascimento != null? formatter.format(dataNascimento.getTime()) : "null";
+        String data = dataNascimento != null ? formatter.format(dataNascimento.getTime()) : "null";
         return "Contato [id=" + id + ", nome=" + nome + ", email=" + email + ", endereco=" + endereco
                 + ", dataNascimento=" + data + "]";
+    }
+
+    public static Contato createContatoByRequest(HttpServletRequest request) throws ParseException {
+        String idStr = request.getParameter("id");
+        Long id = idStr != null ? Long.parseLong(idStr) : null;
+
+        String nome = request.getParameter("nome");
+        String endereco = request.getParameter("endereco");
+        String email = request.getParameter("email");
+        String dataEmTexto = request.getParameter("dataNascimento");
+        Calendar dataNascimento = null;
+
+        Date date = new SimpleDateFormat("dd/MM/yyyy")
+                .parse(dataEmTexto);
+        dataNascimento = Calendar.getInstance();
+        dataNascimento.setTime(date);
+
+        Contato contato = new Contato();
+        contato.setId(id);
+        contato.setNome(nome);
+        contato.setEndereco(endereco);
+        contato.setEmail(email);
+        contato.setDataNascimento(dataNascimento);
+        return contato;
     }
 }
