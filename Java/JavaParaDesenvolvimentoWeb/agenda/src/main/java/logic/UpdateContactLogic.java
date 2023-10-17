@@ -1,5 +1,6 @@
 package logic;
 
+import java.sql.Connection;
 import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,9 @@ public class UpdateContactLogic implements Logic {
             return "../erro.html";
         }
 
-        ContatoDAO dao = new ContatoDAO();
+        Connection connection = (Connection) request.getAttribute("connection");
+
+        ContatoDAO dao = new ContatoDAO(connection);
 
         if (contato.getId() == null) {
             dao.adiciona(contato);

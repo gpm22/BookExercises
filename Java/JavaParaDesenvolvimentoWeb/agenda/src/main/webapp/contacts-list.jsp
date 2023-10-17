@@ -1,7 +1,8 @@
 <%@ page import="java.util.*,
                  java.text.SimpleDateFormat,
                  daos.*,
-                 models.*" %>
+                 models.*,
+                 java.sql.*" %>
 
 <html>
     <body>
@@ -13,7 +14,9 @@
                 <th>Data de Nascimento</th>
             </tr>
             <%
-                ContatoDAO dao = new ContatoDAO();
+                Connection connection = (Connection) request.getAttribute("connection");
+
+                ContatoDAO dao = new ContatoDAO(connection);
                 List<Contato> contatos = dao.getTodosOsContatos();
 
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");

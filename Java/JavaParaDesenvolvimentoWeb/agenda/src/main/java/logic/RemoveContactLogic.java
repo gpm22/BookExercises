@@ -1,5 +1,7 @@
 package logic;
 
+import java.sql.Connection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +16,9 @@ public class RemoveContactLogic implements Logic {
         Contato contato = new Contato();
         contato.setId(id);
 
-        ContatoDAO dao = new ContatoDAO();
+        Connection connection = (Connection) request.getAttribute("connection");
+
+        ContatoDAO dao = new ContatoDAO(connection);
         dao.remove(contato);
 
         System.out.println("Removing contact ...");

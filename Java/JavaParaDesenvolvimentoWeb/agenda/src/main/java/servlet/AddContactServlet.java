@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.text.ParseException;
 
 import javax.servlet.RequestDispatcher;
@@ -30,7 +31,9 @@ public class AddContactServlet extends HttpServlet {
         }
 
         // salva o contato
-        ContatoDAO dao = new ContatoDAO();
+        Connection connection = (Connection) request.getAttribute("connection");
+
+        ContatoDAO dao = new ContatoDAO(connection);
         dao.adiciona(contato);
 
         // imprime o nome do contato que foi adicionado
