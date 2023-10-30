@@ -2,7 +2,10 @@ package tasks.controller;
 
 import java.sql.SQLException;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import tasks.dao.JdbcTaskDao;
@@ -17,7 +20,11 @@ public class TaskController {
     }
 
     @RequestMapping("/addTask")
-    public String addNewTask(Task task) throws SQLException {
+    public String addNewTask(@Valid Task task, BindingResult result) throws SQLException {
+
+        if(result.hasFieldErrors("description"))
+            return "tasks/task-form";
+
         JdbcTaskDao dao = new JdbcTaskDao();
         dao.add(task);
         return "tasks/task-added";

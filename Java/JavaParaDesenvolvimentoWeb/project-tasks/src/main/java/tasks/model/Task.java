@@ -2,8 +2,12 @@ package tasks.model;
 
 import java.util.Calendar;
 
+import javax.validation.constraints.Size;
+
 public class Task {
     private Long id;
+
+    @Size(min=5)
     private String description;
     private boolean concluded;
     private Calendar conclusionDate;
