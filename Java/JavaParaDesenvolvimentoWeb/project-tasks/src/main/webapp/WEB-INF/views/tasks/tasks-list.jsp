@@ -12,14 +12,12 @@
         </c:if>
     </display:column>
     <display:column
-    sortable="true" property="conclusionDate.time" title="Conclusion Date" format="{0, date, dd/MM/yyyy}"/>
-<!--
-    <display:column paramProperty="id" title="" paramId="id" href="mvc?logic=RemoveContactLogic">
+    sortable="true" property="conclusionDate.time" title="Conclusion Date" format="{0, date, dd/MM/yyyy HH:mm:ss}"/>
+    <display:column paramProperty="id" title="" paramId="id" href="removeTask">
         remove
     </display:column>
-    <display:column paramProperty="id" title="" paramId="id" href="mvc?logic=ShowContactDataForChangingLogic">
-        change
+    <display:column paramProperty="id" title="" paramId="id" href="concludeTask">
+        Conclude
     </display:column>
--->
 </display:table>
 <button type="button" onclick="location.href='newTask'">Create new task</button>

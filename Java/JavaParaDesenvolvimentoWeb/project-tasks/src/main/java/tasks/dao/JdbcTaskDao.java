@@ -16,8 +16,7 @@ public class JdbcTaskDao {
     // a conexão com o banco de dados
     private Connection connection;
 
-
-    public JdbcTaskDao(Connection connection){
+    public JdbcTaskDao(Connection connection) {
         this.connection = connection;
     }
 
@@ -38,10 +37,10 @@ public class JdbcTaskDao {
 
             stmt.setString(1, task.getDescription());
             stmt.setBoolean(2, task.getConcluded());
-            if (task.getConclusionDate() != null){
+            if (task.getConclusionDate() != null) {
                 stmt.setDate(3, new Date(
-                    task.getConclusionDate().getTimeInMillis()));
-            }else {
+                        task.getConclusionDate().getTimeInMillis()));
+            } else {
                 stmt.setDate(3, null);
             }
             // executa
@@ -57,6 +56,27 @@ public class JdbcTaskDao {
             return task;
         } catch (SQLException e) {
             throw e;
+        }
+    }
+
+    public Task getTaskById(Long id) {
+        try {
+            PreparedStatement stmt = this.connection
+                    .prepareStatement("select * from tasks where id = ?");
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            Task task;
+            if (rs.next()) {
+                task = new Task(rs);
+            } else {
+                task = new Task();
+            }
+
+            rs.close();
+            stmt.close();
+            return task;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -87,5 +107,39 @@ public class JdbcTaskDao {
         rs.close();
         stmt.close();
         return tasks;
+    }
+
+    public void remove(Task task) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("delete " +
+                    "from tasks where id=?");
+            stmt.setLong(1, task.getId());
+            stmt.execute();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void update(Task task) {
+        String sql = "update tasks set description=?, concluded=?, conclusionDate=? where id=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, task.getDescription());
+            stmt.setBoolean(2, task.getConcluded());
+
+            if (task.getConclusionDate() != null) {
+                stmt.setDate(3, new Date(task.getConclusionDate()
+                        .getTimeInMillis()));
+            } else {
+                stmt.setDate(3, null);
+            }
+
+            stmt.setLong(4, task.getId());
+            stmt.execute();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

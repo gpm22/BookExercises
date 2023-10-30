@@ -1,7 +1,9 @@
 package tasks.controller;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.validation.Valid;
 
@@ -39,5 +41,22 @@ public class TaskController {
         List<Task> tasks = dao.getTasks();
         model.addAttribute("tasks", tasks);
         return "tasks/tasks-list";
+    }
+
+    @RequestMapping("/removeTask")
+    public String remove(Task task){
+        JdbcTaskDao dao = new JdbcTaskDao();
+        dao.remove(task);
+        return "redirect:getTasks";
+    }
+
+    @RequestMapping("/concludeTask")
+    public String conclude(Task task){
+        JdbcTaskDao dao = new JdbcTaskDao();
+        Task oldTask = dao.getTaskById(task.getId());
+        oldTask.setConcluded(true);
+        oldTask.setConclusionDate(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")));
+        dao.update(oldTask);
+        return "redirect:getTasks";
     }
 }
