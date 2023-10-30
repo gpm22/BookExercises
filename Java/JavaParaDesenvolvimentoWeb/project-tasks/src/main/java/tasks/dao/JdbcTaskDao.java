@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Date;
 
 import tasks.factories.ConnectionFactory;
@@ -56,5 +58,34 @@ public class JdbcTaskDao {
         } catch (SQLException e) {
             throw e;
         }
+    }
+
+    public List<Task> getTasks() {
+        try {
+            PreparedStatement stmt = this.connection
+                    .prepareStatement("select * from tasks");
+
+            return createTasksList(stmt);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private List<Task> createTasksList(PreparedStatement stmt) throws SQLException {
+
+        ResultSet rs = stmt.executeQuery();
+        List<Task> tasks = new ArrayList<>();
+        while (rs.next()) {
+
+            // criando o objeto Task
+            Task task = new Task(rs);
+
+            // adicionando o objeto à lista
+            tasks.add(task);
+        }
+
+        rs.close();
+        stmt.close();
+        return tasks;
     }
 }

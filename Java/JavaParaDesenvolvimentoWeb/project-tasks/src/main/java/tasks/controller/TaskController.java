@@ -1,10 +1,12 @@
 package tasks.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,5 +30,14 @@ public class TaskController {
         JdbcTaskDao dao = new JdbcTaskDao();
         dao.add(task);
         return "tasks/task-added";
+    }
+
+    @RequestMapping("/getTasks")
+    public String getTasks(Model model){
+
+        JdbcTaskDao dao = new JdbcTaskDao();
+        List<Task> tasks = dao.getTasks();
+        model.addAttribute("tasks", tasks);
+        return "tasks/tasks-list";
     }
 }

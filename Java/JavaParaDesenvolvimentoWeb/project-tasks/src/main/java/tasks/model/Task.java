@@ -1,16 +1,38 @@
 package tasks.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.validation.constraints.Size;
 
 public class Task {
     private Long id;
 
-    @Size(min=5)
+    @Size(min = 5)
     private String description;
     private boolean concluded;
     private Calendar conclusionDate;
+
+    public Task(){}
+
+    public Task(ResultSet rs) throws SQLException {
+        id = rs.getLong("id");
+        description = rs.getString("description");
+        concluded = rs.getBoolean("concluded");
+
+        // montando a data através do Calendar
+        Date date = rs.getDate("conclusionDate");
+        if (date == null) {
+            conclusionDate = null;
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            conclusionDate = calendar;
+        }
+
+    }
 
     public Long getId() {
         return id;
