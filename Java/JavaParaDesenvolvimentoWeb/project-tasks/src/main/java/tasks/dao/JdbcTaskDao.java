@@ -110,10 +110,14 @@ public class JdbcTaskDao {
     }
 
     public void remove(Task task) {
+        this.remove(task.getId());
+    }
+
+    public void remove(Long id) {
         try {
             PreparedStatement stmt = connection.prepareStatement("delete " +
                     "from tasks where id=?");
-            stmt.setLong(1, task.getId());
+            stmt.setLong(1, id);
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {

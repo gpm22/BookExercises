@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import tasks.dao.JdbcTaskDao;
 import tasks.model.Task;
@@ -43,20 +44,20 @@ public class TaskController {
         return "tasks/tasks-list";
     }
 
+    @ResponseBody
     @RequestMapping("/removeTask")
-    public String remove(Task task){
+    public void remove(Long id){
         JdbcTaskDao dao = new JdbcTaskDao();
-        dao.remove(task);
-        return "redirect:getTasks";
+        dao.remove(id);
     }
 
+    @ResponseBody
     @RequestMapping("/concludeTask")
-    public String conclude(Task task){
+    public void conclude(Long id){
         JdbcTaskDao dao = new JdbcTaskDao();
-        Task oldTask = dao.getTaskById(task.getId());
-        oldTask.setConcluded(true);
-        oldTask.setConclusionDate(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")));
-        dao.update(oldTask);
-        return "redirect:getTasks";
+        Task task = dao.getTaskById(id);
+        task.setConcluded(true);
+        task.setConclusionDate(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")));
+        dao.update(task);
     }
 }
