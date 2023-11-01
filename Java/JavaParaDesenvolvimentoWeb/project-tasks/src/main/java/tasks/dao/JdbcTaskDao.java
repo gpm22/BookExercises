@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 import tasks.factories.ConnectionFactory;
 import tasks.model.Task;
@@ -38,10 +38,10 @@ public class JdbcTaskDao {
             stmt.setString(1, task.getDescription());
             stmt.setBoolean(2, task.getConcluded());
             if (task.getConclusionDate() != null) {
-                stmt.setDate(3, new Date(
+                stmt.setTimestamp(3, new Timestamp(
                         task.getConclusionDate().getTimeInMillis()));
             } else {
-                stmt.setDate(3, null);
+                stmt.setTimestamp(3, null);
             }
             // executa
             int affectedRows = stmt.executeUpdate();
@@ -133,10 +133,10 @@ public class JdbcTaskDao {
             stmt.setBoolean(2, task.getConcluded());
 
             if (task.getConclusionDate() != null) {
-                stmt.setDate(3, new Date(task.getConclusionDate()
+                stmt.setTimestamp(3, new Timestamp(task.getConclusionDate()
                         .getTimeInMillis()));
             } else {
-                stmt.setDate(3, null);
+                stmt.setTimestamp(3, null);
             }
 
             stmt.setLong(4, task.getId());

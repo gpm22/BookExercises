@@ -51,13 +51,14 @@ public class TaskController {
         dao.remove(id);
     }
 
-    @ResponseBody
     @RequestMapping("/concludeTask")
-    public void conclude(Long id){
+    public String conclude(Long id, Model model){
         JdbcTaskDao dao = new JdbcTaskDao();
         Task task = dao.getTaskById(id);
         task.setConcluded(true);
         task.setConclusionDate(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")));
         dao.update(task);
+        model.addAttribute("task", task);
+        return "tasks/task-concluded";
     }
 }

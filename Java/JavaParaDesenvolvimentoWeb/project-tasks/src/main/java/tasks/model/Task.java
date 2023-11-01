@@ -23,7 +23,7 @@ public class Task {
         concluded = rs.getBoolean("concluded");
 
         // montando a data através do Calendar
-        Date date = rs.getDate("conclusionDate");
+        Date date = rs.getTimestamp("conclusionDate");
         if (date == null) {
             conclusionDate = null;
         } else {
