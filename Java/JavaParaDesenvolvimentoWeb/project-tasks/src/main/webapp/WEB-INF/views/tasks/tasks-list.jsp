@@ -20,4 +20,6 @@
         <button type="button" onclick="location.href='newTask'">Create new task</button>
 
     </body>
+    <br>
+    <a href="menu">Menu</a>
 </html>

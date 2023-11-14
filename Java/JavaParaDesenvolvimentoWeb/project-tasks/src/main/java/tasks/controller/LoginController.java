@@ -20,8 +20,19 @@ public class LoginController {
     public String doLogin(User user, HttpSession session) {
         if (new JdbcUserDao().doesUserExist(user)) {
             session.setAttribute("loggedUser", user);
-            return "menu";
+            return "redirect:menu";
         }
+        return "redirect:loginForm";
+    }
+
+    @RequestMapping("/menu")
+    public String getMenu(){
+        return "menu";
+    }
+
+    @RequestMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:loginForm";
     }
 }
