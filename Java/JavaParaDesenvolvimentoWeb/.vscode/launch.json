@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "WebJavaH2DataBaseApplication",
+            "request": "launch",
+            "mainClass": "com.gpm22.WebJavaH2DataBase.WebJavaH2DataBaseApplication",
+            "projectName": "WebJavaH2DataBase"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch web app",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}/project-tasks/target",
+        }
+    ]
+}
