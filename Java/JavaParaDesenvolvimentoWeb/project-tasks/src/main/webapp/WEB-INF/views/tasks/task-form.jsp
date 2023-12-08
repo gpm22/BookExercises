@@ -1,6 +1,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <html>
+    <head>
+        <link type="text/css" href="resources/css/tasks.css" rel="stylesheet" />
+    </head>
     <body>
         <h3>Adicionar tarefas</h3>
         <form:errors path="task.description"/>

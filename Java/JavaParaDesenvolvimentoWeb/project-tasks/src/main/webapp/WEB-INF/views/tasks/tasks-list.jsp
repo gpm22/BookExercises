@@ -5,6 +5,7 @@
 <html>
     <head>
         <script type="text/javascript" src="resources/js/jquery-3.7.1.js"></script>
+        <link type="text/css" href="resources/css/tasks.css" rel="stylesheet" />
     </head>
     <body>
         <table>
