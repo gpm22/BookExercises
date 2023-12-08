@@ -5,22 +5,28 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import tasks.model.User;
-import tasks.factories.ConnectionFactory;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import tasks.model.User;
+
+@Repository
 public class JdbcUserDao {
 
     private Connection connection;
 
-    public JdbcUserDao(Connection connection) {
-        this.connection = connection;
+    @Autowired
+    public JdbcUserDao(DataSource dataSource) {
+        try {
+            this.connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public JdbcUserDao() {
-        this.connection = ConnectionFactory.getConnection();
-    }
-
-    public boolean doesUserExist(User user){
+    public boolean doesUserExist(User user) {
         try {
             PreparedStatement stmt = this.connection
                     .prepareStatement("select * from users where login = ? and password = ?");

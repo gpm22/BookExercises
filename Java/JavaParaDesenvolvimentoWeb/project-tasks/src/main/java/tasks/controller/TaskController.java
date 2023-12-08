@@ -7,6 +7,7 @@ import java.util.TimeZone;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,13 @@ import tasks.model.Task;
 @Controller
 public class TaskController {
 
+    private final JdbcTaskDao dao;
+
+    @Autowired
+    public TaskController(JdbcTaskDao dao) {
+        this.dao = dao;
+    }
+
     @RequestMapping("/newTask")
     public String getNewTaskForm() {
         return "tasks/task-form";
@@ -26,19 +34,15 @@ public class TaskController {
 
     @RequestMapping("/addTask")
     public String addNewTask(@Valid Task task, BindingResult result) throws SQLException {
-
-        if(result.hasFieldErrors("description"))
+        if (result.hasFieldErrors("description"))
             return "tasks/task-form";
 
-        JdbcTaskDao dao = new JdbcTaskDao();
         dao.add(task);
         return "tasks/task-added";
     }
 
     @RequestMapping("/getTasks")
-    public String getTasks(Model model){
-
-        JdbcTaskDao dao = new JdbcTaskDao();
+    public String getTasks(Model model) {
         List<Task> tasks = dao.getTasks();
         model.addAttribute("tasks", tasks);
         return "tasks/tasks-list";
@@ -46,14 +50,12 @@ public class TaskController {
 
     @ResponseBody
     @RequestMapping("/removeTask")
-    public void remove(Long id){
-        JdbcTaskDao dao = new JdbcTaskDao();
+    public void remove(Long id) {
         dao.remove(id);
     }
 
     @RequestMapping("/concludeTask")
-    public String conclude(Long id, Model model){
-        JdbcTaskDao dao = new JdbcTaskDao();
+    public String conclude(Long id, Model model) {
         Task task = dao.getTaskById(id);
         task.setConcluded(true);
         task.setConclusionDate(Calendar.getInstance(TimeZone.getTimeZone("America/Sao_Paulo")));

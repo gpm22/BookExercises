@@ -9,19 +9,25 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import tasks.factories.ConnectionFactory;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import tasks.model.Task;
 
+@Repository
 public class JdbcTaskDao {
     // a conexão com o banco de dados
     private Connection connection;
 
-    public JdbcTaskDao(Connection connection) {
-        this.connection = connection;
-    }
-
-    public JdbcTaskDao() {
-        this.connection = ConnectionFactory.getConnection();
+    @Autowired
+    public JdbcTaskDao(DataSource dataSource) {
+        try {
+            this.connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Task add(Task task) throws SQLException {
