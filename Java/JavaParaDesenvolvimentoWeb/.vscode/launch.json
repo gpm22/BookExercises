@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SearchTasks",
+            "request": "launch",
+            "mainClass": "tasks.jpa.SearchTasks",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
+            "name": "LoadTasks",
+            "request": "launch",
+            "mainClass": "tasks.jpa.LoadTasks",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
+            "name": "AddTask",
+            "request": "launch",
+            "mainClass": "tasks.jpa.AddTask",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
             "name": "CreateTables",
             "request": "launch",
             "mainClass": "tasks.jpa.CreateTables",
