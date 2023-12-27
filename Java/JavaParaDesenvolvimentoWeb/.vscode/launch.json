@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CreateTables",
+            "request": "launch",
+            "mainClass": "tasks.jpa.CreateTables",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -22,7 +29,7 @@
             "request": "launch",
             "name": "Launch web app",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}/project-tasks/target",
+            "webRoot": "${workspaceFolder}/project-tasks/target"
         }
     ]
 }

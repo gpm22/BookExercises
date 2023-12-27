@@ -7,12 +7,24 @@ import java.util.Date;
 
 import javax.validation.constraints.Size;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Task {
+
+    @Id
+    @GeneratedValue
     private Long id;
 
     @Size(min = 5)
     private String description;
     private boolean concluded;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar conclusionDate;
 
     public Task(){}
