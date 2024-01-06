@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SearchTasks",
+            "request": "launch",
+            "mainClass": "tasks.jpa.SearchTasks",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
+            "name": "LoadTasks",
+            "request": "launch",
+            "mainClass": "tasks.jpa.LoadTasks",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
+            "name": "AddTask",
+            "request": "launch",
+            "mainClass": "tasks.jpa.AddTask",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
+            "name": "CreateTables",
+            "request": "launch",
+            "mainClass": "tasks.jpa.CreateTables",
+            "projectName": "project-tasks"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -22,7 +50,7 @@
             "request": "launch",
             "name": "Launch web app",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}/project-tasks/target",
+            "webRoot": "${workspaceFolder}/project-tasks/target"
         }
     ]
 }
