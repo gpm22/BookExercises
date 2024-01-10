@@ -1,0 +1,43 @@
+<body>
+
+	<h1 id="title">Projects</h1>
+	<section id="projects"></section>
+</body>
+
+<script>
+    let projects = [
+        {
+            title: "My First Project",
+            description: "A simple website for a small business.",
+            client: "Acme Corporation",
+            date_completed: "2023-10-01",
+            skills_applied: ["HTML", "CSS", "JavaScript"],
+        },
+        {
+            title: "My Second Project",
+            description:
+                "A more complex website for a larger business, with features such as e-commerce and a blog.",
+            client: "XYZ Company",
+            date_completed: "2023-11-01",
+            skills_applied: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+        },
+    ];
+
+    const ct = document.querySelector("#projects");
+    const createNewElement =
+        "<ul>" +
+        projects
+            .map(
+                (elm) => `<li>
+					<h2>${elm.title}</h2>
+					<p><b>Description</b>: ${elm.description}</p>
+					<p><b>Client</b>: ${elm.client}</p>
+					<p><b>Date complete</b>: ${elm.date_completed}</p>
+					<p><b>Skills applied</b>: ${elm.skills_applied.join(", ")} </p>
+					</li>`
+            )
+            .join("") +
+        "</ul>";
+
+    ct.insertAdjacentHTML("beforeend", createNewElement);
+</script>
