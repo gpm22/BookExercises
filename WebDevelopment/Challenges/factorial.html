@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Factorial Calculator</title>
+<style>
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+input[type="number"] {
+  width: 150px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Factorial Calculator</h2>
+  <input type="number" id="number" placeholder="Enter a number">
+  <br>
+  <br>
+  <button id="calculateIterative">Calculate Iterative</button>
+  <p class="result" id="resultIterative"></p>
+  <button id="calculateRecursive">Calculate Recursive</button>
+  <p class="result" id="resultIRecursive"></p>
+</div>
+
+<script>
+const numberInput = document.getElementById("number");
+const calculateButtonIterative = document.getElementById("calculateIterative");
+const calculateButtonRecursive = document.getElementById("calculateRecursive");
+
+
+calculateButtonIterative.addEventListener("click", () => {
+  const resultElement = document.getElementById("resultIterative");
+  resultWrapper(calculateFactorialIterative, resultElement);
+});
+
+calculateButtonRecursive.addEventListener("click", () => {
+  const resultElement = document.getElementById("resultIRecursive");
+  resultWrapper(calculateFactorialRecursive, resultElement);
+});
+
+function resultWrapper(calculateFactorial, resultElement){
+  const number = BigInt(numberInput.value);
+ 
+  if (number < 0n) {
+    resultElement.textContent = "Factorial is not defined for negative numbers.";
+  } else {
+    const factorial = calculateFactorial(number);
+    resultElement.textContent = `The factorial of ${number} is: ${factorial.toLocaleString()}`; 
+  }
+}
+
+function calculateFactorialIterative(number){
+
+  if (number in memoizedFactorials)
+    return memoizedFactorials[number];
+
+  if (number === 0)
+    return 1n;
+
+  let factorial = 1n; 
+    
+  for (let i = 1n; i<= number; i++) {
+      factorial *=i;
+  }
+  
+  memoizedFactorials[number] = factorial;
+  
+  return factorial;
+}
+
+const memoizedFactorials = {};
+
+function calculateFactorialRecursive(n){
+  if (n in memoizedFactorials)
+    return memoizedFactorials[n];
+
+  if (n === 0n) 
+    return 1n;
+  
+  const result = n * calculateFactorialRecursive(n - 1n);
+  memoizedFactorials[n] = result;
+  return result;  
+}
+</script>
+</body>
+</html>
