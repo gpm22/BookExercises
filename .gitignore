@@ -8,3 +8,4 @@ Servers/
 # chache files
 
 */__pycache__/*
+Python/Challenges/__pycache__/
