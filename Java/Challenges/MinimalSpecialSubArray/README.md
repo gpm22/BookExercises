@@ -5,7 +5,7 @@ The complete solution is on [`MinimalSpecialSubArray.java`](https://github.com/g
 ## Problem
 
 Define the special value of an array $\text{arr}$ with $n$ elements as 
-$$\sum_{i=2}^n |\text{arr}_i - \text{arr}_{i-1}|$$
+$$\sum_{i=2}^n=\mid\text{arr}_i-\text{arr}_{i-1}\mid$$
 Where the first elements is $\text{arr}_1$ and the last $\text{arr}_n$.
 
 Create a function that consumes an array of $n$ integers and an integer `k`, which represents the size of the sub array, and returns the minimal special value between all the possible sub arrays of the given array with size $k$. 
