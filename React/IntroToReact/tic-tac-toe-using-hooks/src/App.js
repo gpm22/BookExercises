@@ -84,7 +84,9 @@ export default function Game(){
 
     return (
       <li key={move}>
-        <button onClick={() => setCurrentMove(move)}>{description}</button>
+        {move != currentMove ?
+          <button onClick={() => setCurrentMove(move)}>{description}</button> :
+          "You are at move #" + move}
       </li>
     );
   });
