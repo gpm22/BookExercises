@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-function Square({value, onClick}){
-  return <button className="square" onClick={onClick}>{value}</button>;
+function Square({value, onClick, winner}){
+  return <button className={"square " + (winner ? "winner" : "")} onClick={onClick}>{value}</button>;
 }
 
 function calculateWinner(squares){
@@ -20,7 +20,7 @@ function calculateWinner(squares){
     const [a, b, c] = line;
 
     if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
-      return squares[a];
+      return line;
     }
   }
 
@@ -41,13 +41,21 @@ function Board({xIsNext, squares, onPlay}) {
   }
 
   const winner = calculateWinner(squares);
-  let status = winner ? "Winner: " + winner : "Next player: " + (xIsNext? "X" : "O");
+
+  let status;
+  if(winner){
+    status = "Winner: " + squares[winner[0]];
+  } else if (squares.some(el => el === null)){
+    status =  "Next player: " + (xIsNext? "X" : "O");
+  } else {
+    status =  "Draw!";
+  }
 
   function createRow(i){
       let boardRow = [];
       for (let j = i*3; j < i*3+3; j++) {
         boardRow.push(
-          <Square key={j} value = {squares[j]} onClick = {() => handleClick(j)} />
+          <Square key={j} winner = { winner && winner.includes(j)} value = {squares[j]} onClick = {() => handleClick(j)} />
         );
       }
       return <div key={i} className="board-row">{boardRow}</div>;
