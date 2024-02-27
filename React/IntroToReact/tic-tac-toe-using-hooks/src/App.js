@@ -47,10 +47,10 @@ function Board({xIsNext, squares, onPlay}) {
       let boardRow = [];
       for (let j = i*3; j < i*3+3; j++) {
         boardRow.push(
-          <Square value = {squares[j]} onClick = {() => handleClick(j)} />
+          <Square key={j} value = {squares[j]} onClick = {() => handleClick(j)} />
         );
       }
-      return <div className="board-row">{boardRow}</div>;
+      return <div key={i} className="board-row">{boardRow}</div>;
   }
 
   let squaresComponent=[];
@@ -72,6 +72,7 @@ function Board({xIsNext, squares, onPlay}) {
 export default function Game(){
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [sort, setSort] = useState(true);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
@@ -80,6 +81,10 @@ export default function Game(){
     const nextHistory = [...history.slice(0, currentMove+1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+  }
+
+  function Sort(){
+    return <button className="sort-button" onClick={() => setSort(!sort)}>sort</button>;
   }
 
   const moves = history.map((squares, move) => {
@@ -100,7 +105,8 @@ export default function Game(){
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay ={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <Sort />
+        <ol>{sort? moves : moves.toReversed()}</ol>
       </div>
     </div>
   )
