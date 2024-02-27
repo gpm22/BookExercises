@@ -37,7 +37,7 @@ function Board({xIsNext, squares, onPlay}) {
 
     const nextSquares = squares.slice();
     nextSquares[i] = xIsNext ? "X" : "O";
-    onPlay(nextSquares)
+    onPlay(nextSquares, i)
   }
 
   const winner = calculateWinner(squares);
@@ -79,16 +79,27 @@ function Board({xIsNext, squares, onPlay}) {
 
 export default function Game(){
   const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [histPos, setHistPos] = useState([null]);
   const [currentMove, setCurrentMove] = useState(0);
   const [sort, setSort] = useState(true);
 
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
-  function handlePlay(nextSquares){
+  function handlePlay(nextSquares, location){
     const nextHistory = [...history.slice(0, currentMove+1), nextSquares];
     setHistory(nextHistory);
+    const nextHistPos = [...histPos.slice(0, currentMove+1), location];
+    setHistPos(nextHistPos);
     setCurrentMove(nextHistory.length - 1);
+  }
+
+  function getPos(pos){
+    if(pos === null){
+      return "";
+    }
+
+    return `(${Math.floor(pos/3)}, ${pos % 3})`;
   }
 
   function Sort(){
@@ -96,13 +107,13 @@ export default function Game(){
   }
 
   const moves = history.map((squares, move) => {
-    let description = move > 0 ? "Go to move #" + move : "Go to game start";
-
+    let moveStr =  "move #" + move + " " + getPos(histPos[move]);
+    let description = move > 0 ? "Go to " + moveStr: "Go to game start";
     return (
       <li key={move}>
         {move != currentMove ?
           <button onClick={() => setCurrentMove(move)}>{description}</button> :
-          "You are at " + (move > 0 ? "move #" + move : "the game start")}
+          "You are at " + (move > 0 ? moveStr : "the game start")}
       </li>
     );
   });
