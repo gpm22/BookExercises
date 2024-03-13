@@ -10,6 +10,7 @@ public class Sorting{
         List<Integer> arr5 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
         List<Integer> arr6 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
         List<Integer> arr7 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1, 12));
+        List<Integer> arr8 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
         System.out.println(arr);
         selectSort(arr);
         System.out.println(arr);
@@ -31,7 +32,9 @@ public class Sorting{
         System.out.println(arr7);
         mergeSort(arr7);
         System.out.println(arr7);
-
+        System.out.println(arr8);
+        quickSort(arr8);
+        System.out.println(arr8);
 
         System.out.println("\nTest with ordered list\n");
         bubbleSort(arr2);
@@ -209,6 +212,79 @@ public class Sorting{
             }
         }
         return numberOfSteps;
+    }
+
+    private static <T extends Comparable<T>> void quickSort(List<T> list){
+        int numberOfSteps = quickSort(list, 0, list.size()-1);
+        System.out.println("quickSort steps:" + numberOfSteps + " for n:" + list.size());
+    }
+
+
+    private static <T extends Comparable<T>> int quickSort(List<T> list, int firstIndex, int secondIndex){
+        if(firstIndex == secondIndex || firstIndex > secondIndex || secondIndex >= list.size())
+            return 1;
+
+        int pivotIndex = firstIndex;
+        int rightIndex = rightSearch(list, pivotIndex, secondIndex);    
+        int leftIndex = -1;
+        int numberOfSteps = 0;
+        while(leftIndex != -1 || rightIndex != -1){
+
+            if(rightIndex !=-1){
+                quickSwap(list, pivotIndex, rightIndex);
+                pivotIndex = rightIndex;
+                rightIndex = -1;
+                leftIndex = leftSearch(list, pivotIndex, firstIndex);
+
+                if(leftIndex > -1){
+                    numberOfSteps += pivotIndex - leftIndex+1;
+                } else {
+                    numberOfSteps += pivotIndex - firstIndex+1;
+                }
+            }
+
+            if(leftIndex !=-1){
+                quickSwap(list, pivotIndex, leftIndex);
+                pivotIndex = leftIndex;
+                leftIndex = -1;
+                rightIndex = rightSearch(list, pivotIndex, secondIndex);
+
+                if(rightIndex > -1){
+                    numberOfSteps += rightIndex- pivotIndex+1;
+                } else {
+                    numberOfSteps += secondIndex - pivotIndex+1; 
+                }
+            }
+        }
+        numberOfSteps += quickSort(list, firstIndex, pivotIndex-1);
+        numberOfSteps += quickSort(list, pivotIndex+1, secondIndex);
+        return numberOfSteps;
+    }
+
+    private static int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    private static <T extends Comparable<T>> int rightSearch(List<T> list, int pivotIndex, int rightIndex){
+        for(int i = rightIndex; i > pivotIndex; i--){
+            if(list.get(rightIndex).compareTo(list.get(pivotIndex)) < 0)
+                return i;
+        }
+        return -1;
+    }
+
+    private static <T extends Comparable<T>> int leftSearch(List<T> list, int pivotIndex, int leftIndex){
+        for(int i = leftIndex; i < pivotIndex; i++){
+            if(list.get(leftIndex).compareTo(list.get(pivotIndex)) > 0)
+                return i;
+        }
+        return -1;
+    }
+
+    private static <T extends Comparable<T>> void quickSwap(List<T> list, int pivotIndex, int newIndex){
+        T newValue = list.get(newIndex);
+        list.set(newIndex, list.get(pivotIndex));
+        list.set(pivotIndex, newValue);
     }
 
     private static <T extends Comparable<T>> void swap(List<T> list, int firstIndex, int secondIndex){
