@@ -1,79 +1,71 @@
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Sorting{
 
     public static void main(String[] args) {
-        List<Integer> arr = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
-        List<Integer> arr2 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
-        List<Integer> arr3 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
-        List<Integer> arr4 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
-        List<Integer> arr5 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
-        List<Integer> arr6 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
-        List<Integer> arr7 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1, 12));
-        List<Integer> arr8 = new ArrayList<>(Arrays.asList(10, 9, 8, 4, 3, 1));
-        System.out.println(arr);
-        selectSort(arr);
-        System.out.println(arr);
-        System.out.println(arr2);
-        bubbleSort(arr2);
-        System.out.println(arr2);
-        System.out.println(arr3);
-        insertSort(arr3);
-        System.out.println(arr3);
-        System.out.println(arr4);
-        shellSort(arr4);
-        System.out.println(arr4);
-        System.out.println(arr5);
-        bubbleShellSort(arr5);
-        System.out.println(arr5);
-        System.out.println(arr6);
-        mergeSort(arr6);
-        System.out.println(arr6);
-        System.out.println(arr7);
-        mergeSort(arr7);
-        System.out.println(arr7);
-        System.out.println(arr8);
-        quickSort(arr8);
-        System.out.println(arr8);
+        individualTests();
+        //testOrdered();
+        testReversed();
+    }
 
-        System.out.println("\nTest with ordered list\n");
-        bubbleSort(arr2);
-        selectSort(arr2);
-        insertSort(arr2);
-        shellSort(arr2);
-        bubbleShellSort(arr2);
-        mergeSort(arr2);
+    private static final List<Consumer<List<Integer>>> SORTS = Arrays.asList(
+//            (list) -> selectSort(list),
+            //(list) -> bubbleSort(list),
+ //           (list) -> insertSort(list),
+//            (list) -> shellSort(list),
+            //(list) -> bubbleShellSort(list),
+            (list) -> mergeSort(list));
+            //(list) -> quickSort(list));
+
+    private static void individualTests(){
+        System.err.println("Individual tests");
+        List<Integer> list = Arrays.asList(10, 9, 8, 4, 3, 1, 12);
+        for(Consumer<List<Integer>> cons: SORTS)
+            test(cons, new ArrayList<>(list));
+    }
+
+    private static <T extends Comparable<T>> void test(Consumer<List<T>> cons, List<T> list){
+        System.out.println(list);
+        cons.accept(list);
+        System.out.println(list);
+    }
+
+    private static void testReversed(){
         System.out.println("\nTest with reversed list\n");
-        Collections.reverse(arr2);
-        bubbleSort(arr2);
-        Collections.reverse(arr2);
-        selectSort(arr2);
-        Collections.reverse(arr2);
-        insertSort(arr2);
-        Collections.reverse(arr2);
-        shellSort(arr2);
-        Collections.reverse(arr2);
-        bubbleShellSort(arr2);
-        Collections.reverse(arr2);
-        mergeSort(arr2);
+        List<Integer> reversed = getReversedList(20);
+        List<Integer> correct = new ArrayList<>(reversed);
+        Collections.reverse(correct);
+        for(Consumer<List<Integer>> cons: SORTS){
+            List<Integer> ans = new ArrayList<>(reversed);
+            cons.accept(ans);
+            System.out.println("correct? " + ans.equals(correct) );
+            System.out.println(ans);
+        }
+    }
 
-        System.out.println("\nBubble sort x Insert sort x Shell Sort\n");
-        List<Integer> arrr1 = new ArrayList<>(Arrays.asList(1, 5, 4, 7, 6, 9, 10, 11));
-        List<Integer> arrr2 = new ArrayList<>(Arrays.asList(1, 5, 4, 7, 6, 9, 10, 11));
-        List<Integer> arrr3 = new ArrayList<>(Arrays.asList(1, 5, 4, 7, 6, 9, 10, 11));
-        List<Integer> arrr4 = new ArrayList<>(Arrays.asList(1, 5, 4, 7, 6, 9, 10, 11));
-        System.out.println(arrr1);
-        bubbleSort(arrr1);
-        System.out.println(arrr1);
-        System.out.println(arrr2);
-        insertSort(arrr2);
-        System.out.println(arrr2);
-        System.out.println(arrr3);
-        shellSort(arrr3);
-        System.out.println(arrr3);
-        System.out.println(arrr4);
-        bubbleShellSort(arrr4);
-        System.out.println(arrr4);
+    private static List<Integer> getReversedList(int n){
+        List<Integer> list = new ArrayList<>();
+        for(int i = n; i > 0 ; i--)
+            list.add(i);
+        return list;
+    }
+
+    private static void testOrdered(){
+        System.out.println("\nTest with ordered list\n");
+        List<Integer> ordered = getOrderedList(1000);
+        for(Consumer<List<Integer>> cons: SORTS){
+            List<Integer> ans = new ArrayList<>(ordered);
+            cons.accept(ans);
+            System.out.println("correct? " + ans.equals(ordered) );
+        }
+    }
+
+    private static List<Integer> getOrderedList(int n){
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < n ; i++)
+            list.add(i);
+        return list;
     }
 
     private static <T extends Comparable<T>> void selectSort(List<T> list){
@@ -114,7 +106,7 @@ public class Sorting{
     private static <T extends Comparable<T>> int insertSort(List<T> list, int increment, boolean log){
         int numberOfSteps = 0;
 
-        for(int j = 1; j + increment < list.size(); j++){
+        for(int j = 0; j + increment < list.size(); j++){
             for(int i = j + increment; i - increment >= 0 ; i -= increment){
                 numberOfSteps++;
                 T valueToCompare = list.get(i);
@@ -167,6 +159,7 @@ public class Sorting{
         for(int step = 1; step < list.size(); step*=2){
             for(int i = 0; i < list.size(); i+=2*step){
               numberOfSteps +=  merge(list, i, i+step-1, i+step, i+2*step-1);;
+              System.err.println("merged list - " + list);
             }
         }
 
@@ -175,13 +168,14 @@ public class Sorting{
 
     private static <T extends Comparable<T>> int merge(List<T> list,
     int startFirstList, int endFirstList, int startSecondList, int endSecondList){
+        System.err.println("merge - startFirstList: " + startFirstList + " - endFirstList: " + endFirstList + " - startSecondList: " + startSecondList + " - endSecondList:" + endSecondList);
         if(startSecondList >= list.size())
             return 1;
         
         int indexFirstList = startFirstList;
         int indexSecondList = startSecondList;
         int numberOfSteps = 0;
-        while(indexFirstList <= endFirstList && (indexSecondList <= endSecondList && indexSecondList < list.size() )){
+        while(indexFirstList <= endFirstList && (indexSecondList <= endSecondList && indexSecondList < list.size())){
             numberOfSteps++;
             T firstValue = list.get(indexFirstList);
             T secondValue = list.get(indexSecondList);
@@ -224,10 +218,11 @@ public class Sorting{
         if(firstIndex == secondIndex || firstIndex > secondIndex || secondIndex >= list.size())
             return 1;
 
-        int pivotIndex = firstIndex;
+        int pivotIndex = getRandomNumber(firstIndex, secondIndex);
         int rightIndex = rightSearch(list, pivotIndex, secondIndex);    
-        int leftIndex = -1;
+        int leftIndex = rightIndex == -1 ? leftSearch(list, pivotIndex, firstIndex) : -1 ;
         int numberOfSteps = 0;
+
         while(leftIndex != -1 || rightIndex != -1){
 
             if(rightIndex !=-1){
@@ -237,9 +232,9 @@ public class Sorting{
                 leftIndex = leftSearch(list, pivotIndex, firstIndex);
 
                 if(leftIndex > -1){
-                    numberOfSteps += pivotIndex - leftIndex+1;
+                    numberOfSteps += leftIndex - firstIndex;
                 } else {
-                    numberOfSteps += pivotIndex - firstIndex+1;
+                    numberOfSteps += pivotIndex - firstIndex;
                 }
             }
 
@@ -250,9 +245,9 @@ public class Sorting{
                 rightIndex = rightSearch(list, pivotIndex, secondIndex);
 
                 if(rightIndex > -1){
-                    numberOfSteps += rightIndex- pivotIndex+1;
+                    numberOfSteps += secondIndex - rightIndex;
                 } else {
-                    numberOfSteps += secondIndex - pivotIndex+1; 
+                    numberOfSteps += secondIndex - pivotIndex; 
                 }
             }
         }
@@ -267,7 +262,7 @@ public class Sorting{
 
     private static <T extends Comparable<T>> int rightSearch(List<T> list, int pivotIndex, int rightIndex){
         for(int i = rightIndex; i > pivotIndex; i--){
-            if(list.get(rightIndex).compareTo(list.get(pivotIndex)) < 0)
+            if(list.get(i).compareTo(list.get(pivotIndex)) < 0)
                 return i;
         }
         return -1;
@@ -275,7 +270,7 @@ public class Sorting{
 
     private static <T extends Comparable<T>> int leftSearch(List<T> list, int pivotIndex, int leftIndex){
         for(int i = leftIndex; i < pivotIndex; i++){
-            if(list.get(leftIndex).compareTo(list.get(pivotIndex)) > 0)
+            if(list.get(i).compareTo(list.get(pivotIndex)) > 0)
                 return i;
         }
         return -1;
