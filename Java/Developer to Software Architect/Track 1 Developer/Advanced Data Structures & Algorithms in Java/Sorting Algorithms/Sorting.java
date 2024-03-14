@@ -5,22 +5,24 @@ public class Sorting{
 
     public static void main(String[] args) {
         individualTests();
-        //testOrdered();
+        testOrdered();
         testReversed();
+        testRandom();
     }
 
     private static final List<Consumer<List<Integer>>> SORTS = Arrays.asList(
-//            (list) -> selectSort(list),
+  //          (list) -> selectSort(list),
             //(list) -> bubbleSort(list),
- //           (list) -> insertSort(list),
-//            (list) -> shellSort(list),
-            //(list) -> bubbleShellSort(list),
-            (list) -> mergeSort(list));
-            //(list) -> quickSort(list));
+            //(list) -> insertSort(list),
+            //(list) -> shellSort(list),
+            (list) -> bubbleShellSort(list),
+            (list) -> mergeSort(list),
+            (list) -> mergeSortBad(list),
+            (list) -> quickSort(list));
 
     private static void individualTests(){
         System.err.println("Individual tests");
-        List<Integer> list = Arrays.asList(10, 9, 8, 4, 3, 1, 12);
+        List<Integer> list = Arrays.asList(-100, 10, -12, 9, 8, 4, 3, 1, 12);
         for(Consumer<List<Integer>> cons: SORTS)
             test(cons, new ArrayList<>(list));
     }
@@ -33,14 +35,13 @@ public class Sorting{
 
     private static void testReversed(){
         System.out.println("\nTest with reversed list\n");
-        List<Integer> reversed = getReversedList(20);
+        List<Integer> reversed = getReversedList(1000);
         List<Integer> correct = new ArrayList<>(reversed);
         Collections.reverse(correct);
         for(Consumer<List<Integer>> cons: SORTS){
             List<Integer> ans = new ArrayList<>(reversed);
             cons.accept(ans);
             System.out.println("correct? " + ans.equals(correct) );
-            System.out.println(ans);
         }
     }
 
@@ -65,6 +66,25 @@ public class Sorting{
         List<Integer> list = new ArrayList<>();
         for(int i = 0; i < n ; i++)
             list.add(i);
+        return list;
+    }
+
+    private static void testRandom(){
+        System.out.println("\nTest with random list\n");
+        List<Integer> random = getRandomList(1000);
+        List<Integer> correct = new ArrayList<>(random);
+        Collections.sort(correct);
+        for(Consumer<List<Integer>> cons: SORTS){
+            List<Integer> ans = new ArrayList<>(random);
+            cons.accept(ans);
+            System.out.println("correct? " + ans.equals(correct) );
+        }
+    }
+
+    private static List<Integer> getRandomList(int n){
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < n ; i++)
+            list.add(getRandomNumber(-1000, 1000));
         return list;
     }
 
@@ -157,53 +177,85 @@ public class Sorting{
 
         int numberOfSteps = 0;
         for(int step = 1; step < list.size(); step*=2){
-            for(int i = 0; i < list.size(); i+=2*step){
-              numberOfSteps +=  merge(list, i, i+step-1, i+step, i+2*step-1);;
-              System.err.println("merged list - " + list);
-            }
+            for(int i = 0; i < list.size(); i+=2*step)
+              numberOfSteps +=  merge(list, i, i+2*step-1);;
         }
 
         System.out.println("mergeSort steps:" + numberOfSteps + " for n:" + list.size());
     }
 
-    private static <T extends Comparable<T>> int merge(List<T> list,
-    int startFirstList, int endFirstList, int startSecondList, int endSecondList){
-        System.err.println("merge - startFirstList: " + startFirstList + " - endFirstList: " + endFirstList + " - startSecondList: " + startSecondList + " - endSecondList:" + endSecondList);
+   private static <T extends Comparable<T>> int merge(List<T> list,
+        int startFirstList, int endSecondList){
+
+        if(endSecondList > list.size() - 1)
+            endSecondList = list.size() -1;
+        int gap = endSecondList - startFirstList;
+        int numberOfSteps = 0;
+        for(gap = nextGap(gap); gap > 0; gap = nextGap(gap)){
+            for(int i = startFirstList; i+gap <= endSecondList; i++){
+                numberOfSteps++;
+                int j = i + gap;
+                swap(list, i, j);
+            }
+        }
+       
+        return numberOfSteps;
+    }
+
+    private static int nextGap(int gap){
+        if (gap <= 1)
+            return 0;
+        return (int)Math.ceil(gap / 2.0);
+    }
+
+    private static <T extends Comparable<T>> void mergeSortBad(List<T> list){
+
+        int numberOfSteps = 0;
+        for(int step = 1; step < list.size(); step*=2){
+            for(int i = 0; i < list.size(); i+=2*step)
+              numberOfSteps +=  mergeBad(list, i, i+step-1, i+step, i+2*step-1);;
+        }
+
+        System.out.println("mergeSortBad steps:" + numberOfSteps + " for n:" + list.size());
+    }
+
+
+
+    private static <T extends Comparable<T>> int mergeBad(List<T> list,
+        int startFirstList, int endFirstList, int startSecondList, int endSecondList){
+
         if(startSecondList >= list.size())
             return 1;
-        
         int indexFirstList = startFirstList;
         int indexSecondList = startSecondList;
         int numberOfSteps = 0;
-        while(indexFirstList <= endFirstList && (indexSecondList <= endSecondList && indexSecondList < list.size())){
+
+        if(endSecondList > list.size() - 1)
+            endSecondList = list.size() -1;
+        
+        while(indexFirstList <= endFirstList && indexSecondList <= endSecondList){
             numberOfSteps++;
             T firstValue = list.get(indexFirstList);
             T secondValue = list.get(indexSecondList);
+
             if(firstValue.compareTo(secondValue) < 0 ){
                 indexFirstList++;
                 continue;
             } 
 
-            list.set(indexFirstList, secondValue);
-            
-            if(indexSecondList < endSecondList && indexSecondList < list.size()-1){
-                T nextSecondValue = list.get(indexSecondList+1);
-                if(nextSecondValue.compareTo(firstValue) < 0){
-                    list.set(indexSecondList, nextSecondValue);
-                    list.set(indexSecondList+1, firstValue);
-                } else {
-                    list.set(indexSecondList, firstValue);
-                }
-            } else {
-                list.set(indexSecondList, firstValue);
+            int indexShiffting = indexSecondList;
+
+            while(indexShiffting > indexFirstList ){
+                list.set(indexShiffting, list.get(indexShiffting-1));
+                indexShiffting--;
+                numberOfSteps++;
             }
 
+            list.set(indexFirstList, secondValue);
 
             indexFirstList++;
-            if(indexFirstList == endFirstList){
-                endFirstList++;
-                indexSecondList++;
-            }
+            endFirstList++;
+            indexSecondList++;
         }
         return numberOfSteps;
     }
