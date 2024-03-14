@@ -5,17 +5,16 @@ public class Sorting{
 
     public static void main(String[] args) {
         individualTests();
-        testOrdered();
-        testReversed();
-        testRandom();
+        testOrdered(1000);
+        testReversed(1000);
+        testRandom(1000);
     }
 
     private static final List<Consumer<List<Integer>>> SORTS = Arrays.asList(
-  //          (list) -> selectSort(list),
-            //(list) -> bubbleSort(list),
-            //(list) -> insertSort(list),
-            //(list) -> shellSort(list),
-            (list) -> bubbleShellSort(list),
+            (list) -> selectSort(list),
+            (list) -> bubbleSort(list),
+            (list) -> insertSort(list),
+            (list) -> shellSort(list),
             (list) -> mergeSort(list),
             (list) -> mergeSortBad(list),
             (list) -> quickSort(list));
@@ -33,9 +32,9 @@ public class Sorting{
         System.out.println(list);
     }
 
-    private static void testReversed(){
+    private static void testReversed(int n){
         System.out.println("\nTest with reversed list\n");
-        List<Integer> reversed = getReversedList(1000);
+        List<Integer> reversed = getReversedList(n);
         List<Integer> correct = new ArrayList<>(reversed);
         Collections.reverse(correct);
         for(Consumer<List<Integer>> cons: SORTS){
@@ -52,9 +51,9 @@ public class Sorting{
         return list;
     }
 
-    private static void testOrdered(){
+    private static void testOrdered(int n){
         System.out.println("\nTest with ordered list\n");
-        List<Integer> ordered = getOrderedList(1000);
+        List<Integer> ordered = getOrderedList(n);
         for(Consumer<List<Integer>> cons: SORTS){
             List<Integer> ans = new ArrayList<>(ordered);
             cons.accept(ans);
@@ -69,9 +68,9 @@ public class Sorting{
         return list;
     }
 
-    private static void testRandom(){
+    private static void testRandom(int n){
         System.out.println("\nTest with random list\n");
-        List<Integer> random = getRandomList(1000);
+        List<Integer> random = getRandomList(n);
         List<Integer> correct = new ArrayList<>(random);
         Collections.sort(correct);
         for(Consumer<List<Integer>> cons: SORTS){
@@ -141,27 +140,6 @@ public class Sorting{
 
         return numberOfSteps;
     }
-
-    private static <T extends Comparable<T>> void  bubbleShellSort(List<T> list){
-        int numberOfSteps = 0;
-        int step = list.size()/2;
-
-        while(true){
-            for(int i = 0; i < list.size(); i++){
-                if(i+step > list.size()-1)
-                    break;
-                numberOfSteps++;
-                swap(list, i, i+step);
-            }
-
-            if(step == 1)
-                break;
-
-            step = (int) Math.ceil(step/2.0);
-        }
-        System.out.println("bubbleShell steps:" + numberOfSteps + " for n:" + list.size());
-    }
-
 
     private static <T extends Comparable<T>> void  shellSort(List<T> list){
         int numberOfSteps = 0;
