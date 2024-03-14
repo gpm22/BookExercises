@@ -47,10 +47,13 @@ public class Searching {
     }
     
     private static <T> int linearSearch(List<T> list, T element){
-        for(int i = 0; i < list.size(); i++)
+        int numberOfSteps = 0;
+        for(int i = 0; i < list.size(); i++){
+            numberOfSteps++;
             if (list.get(i) == element)
                 return i;
-        
+        } 
+        System.out.println("linear - number of steps: " + numberOfSteps);
         return-1 ;
     }
     
@@ -64,8 +67,10 @@ public class Searching {
             count++;
             int mid = (high-low)/2+low;
             T testElement = list.get(mid);
-            if(testElement.equals(element))
+            if(testElement.equals(element)){
+                System.out.println("binary - number of steps: " + count);
                 return mid;
+            }
             
             if(testElement.compareTo(element) > 0){
                 high = mid-1;
@@ -77,6 +82,7 @@ public class Searching {
                 throw new RuntimeException("list is not ascended sorted");
         }
 
+        System.out.println("binary - number of steps: " + count);
         return -1;
     }
 
@@ -88,7 +94,10 @@ public class Searching {
     private static <T extends Comparable<T>> int jumpSearch(List<T> list, T element, int jumpLength){
 
     int i;
-    for(i=0; i < list.size() && list.get(i).compareTo(element) <= 0; i+=jumpLength);
+    int numberOfSteps = 0;
+    for(i=0; i < list.size() && list.get(i).compareTo(element) <= 0; i+=jumpLength){
+        numberOfSteps++;
+    }
 
     int startIndex = i - jumpLength;
     if(startIndex < 0)
@@ -96,31 +105,40 @@ public class Searching {
 
     int endIndex = Math.min(i, list.size());
     
-    for (int j = startIndex; j <endIndex; j++)
-        if(list.get(j).equals(element))
+    for (int j = startIndex; j <endIndex; j++){
+        numberOfSteps++;
+        if(list.get(j).equals(element)){
+            System.out.println("jump - number of steps: " + numberOfSteps);
             return j;
-    
+        }
+    }
+
+    System.out.println("jump - number of steps: " + numberOfSteps);
     return -1;
 }
     private static int interpolationSearch(List<Integer> list, Integer element){
         int low = 0;
         int high = list.size() -1;
+        int numberOfSteps = 0;
         while(low <= high){
+            numberOfSteps++;
             int mid = low + ((element - list.get(low))*(high-low))/(list.get(high) - list.get(low));
 
             if(mid < 0 | mid > list.size() - 1)
-                return -1;
+                break;
         
-            if(list.get(mid) == element)
+            if(list.get(mid) == element){
+                System.out.println("interpolation - number of steps: " + numberOfSteps);
                 return mid;
-        
+            }
+
             if(list.get(mid) < element){
                 low = mid + 1;
             } else {
                 high = mid -1;
             }
         }
-    
+        System.out.println("interpolation - number of steps: " + numberOfSteps);
         return -1;
     }
 }
