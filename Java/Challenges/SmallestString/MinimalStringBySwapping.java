@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-class MinimalStringBySwaping {
+class MinimalStringBySwapping {
 
     private static int MAX_ALPHABET_SIZE = 26;
 
