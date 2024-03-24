@@ -164,10 +164,7 @@ class MinimalStringBySwapping {
     }
 
     private static List<Integer> getSortedValues(Map<Character, Integer> map) {
-        List<Integer> list = new ArrayList<>(map.values());
-
-        Collections.sort(list);
-        return list;
+        return map.values().stream().sorted().toList();
     }
 
     private static List<Character> getSortedKeys(Map<Character, Integer> map) {
