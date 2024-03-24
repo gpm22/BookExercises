@@ -116,12 +116,12 @@ class MinimalStringBySwapping {
     }
 
     private static Map<Character, Character> mapOldToNewChar(String str) {
-        Map<Character, Integer> mapCorrectOrder = mapCorrectOrder(str);
-        Map<Character, Character> map = new HashMap<>();
-        for (Entry<Character, Integer> entry : mapCorrectOrder.entrySet())
-            map.put(str.charAt(entry.getValue()), entry.getKey());
-
-        return map;
+        return mapCorrectOrder(str)
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        e -> str.charAt(e.getValue()),
+                        Entry::getKey));
     }
 
     private static Map<Character, Integer> mapCorrectOrder(String str) {
