@@ -1,9 +1,9 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 class MinimalStringBySwapping {
 
@@ -129,13 +129,11 @@ class MinimalStringBySwapping {
     }
 
     private static Map<Character, Integer> mapCorrectOrder(Map<Character, Integer> mapCharPos) {
-        Map<Character, Integer> newMap = new HashMap<>();
         List<Character> sortedKeys = getSortedKeys(mapCharPos);
         List<Integer> sortedValues = getSortedValues(mapCharPos);
 
-        for (int i = 0; i < sortedKeys.size(); i++)
-            newMap.put(sortedKeys.get(i), sortedValues.get(i));
-        return newMap;
+        return IntStream.range(0, sortedKeys.size()).boxed()
+                .collect(Collectors.toMap(sortedKeys::get, sortedValues::get));
     }
 
     private static Map<Character, Integer> mapCharPos(String str) {
