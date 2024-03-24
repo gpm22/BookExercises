@@ -110,15 +110,15 @@ class MinimalStringBySwapping {
 
     // Algorithm is O(m log m + n), where n is the string length and m is the
     // alphabet length, in the case n >> m, it is O(n)
-    public static String getMinimalStringLinear(String str){
+    public static String getMinimalStringLinear(String str) {
         Map<Character, Character> mapChars = mapOldToNewChar(str);
         return getSwappedString(str, mapChars);
     }
 
-    private static Map<Character, Character> mapOldToNewChar(String str){
+    private static Map<Character, Character> mapOldToNewChar(String str) {
         Map<Character, Integer> mapCorrectOrder = mapCorrectOrder(str);
         Map<Character, Character> map = new HashMap<>();
-        for(Entry<Character, Integer> entry: mapCorrectOrder.entrySet())
+        for (Entry<Character, Integer> entry : mapCorrectOrder.entrySet())
             map.put(str.charAt(entry.getValue()), entry.getKey());
 
         return map;
@@ -154,10 +154,10 @@ class MinimalStringBySwapping {
 
     }
 
-    private static String getSwappedString(String str, Map<Character, Character> mapOldToNew){
+    private static String getSwappedString(String str, Map<Character, Character> mapOldToNew) {
         char[] chars = str.toCharArray();
 
-        for(int i =0; i < chars.length; i++)
+        for (int i = 0; i < chars.length; i++)
             chars[i] = mapOldToNew.get(chars[i]);
 
         return String.valueOf(chars);
@@ -171,10 +171,7 @@ class MinimalStringBySwapping {
     }
 
     private static List<Character> getSortedKeys(Map<Character, Integer> map) {
-        List<Character> list = new ArrayList<>(map.keySet());
-
-        Collections.sort(list);
-        return list;
+        return map.keySet().stream().sorted().toList();
     }
 
     private static List<Character> getListOfSortedUniqueChars(String str) {
