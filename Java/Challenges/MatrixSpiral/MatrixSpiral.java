@@ -17,6 +17,11 @@ public class MatrixSpiral {
 
         String[] arr5 = new String[] { "1,2,3, 4", "5,6, 7, 8", "9, 10, 11, 12", "13, 14, 15, 16" };
         test(arr5, "1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10");
+
+        String[] arr6 = new String[] { "" };
+        test(arr6, "");
+        String[] arr7 = new String[] { "1" };
+        test(arr7, "1");
     }
 
     private static void test(String[] input, String result){
