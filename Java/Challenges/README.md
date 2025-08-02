@@ -15,3 +15,4 @@
 * **Minimal Special Sub Array;**
 * **Number of Steps;**
 * **Smallest String;**
+* **Array Equalization with Minimum Swap Cost**
