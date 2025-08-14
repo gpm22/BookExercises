@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains codes of solved exercises from books and tutorials and it is organized by programming language and books/tutorials.
+This repository contains codes of solved exercises from books and tutorials and it is organized by programming language, books, tutorials, or topics.
 
 ## Contents
 
@@ -10,6 +10,9 @@ This repository contains codes of solved exercises from books and tutorials and 
   * **Introduction to Python for Science and Egineering** by David J. Pine;
   * **Python Algorithms**: Mastering Basic Algorithms in the Python Language *Second Edition*  by Magnus Lie Hetland;
   * **Classic Computer Science Problems in Python** by David Kopec;
+* **LLM**
+  * **Prompt Engineering for LLMs** by John Berryman & Albert Ziegler
+
 * **JavaScript**
   * **JavaScript for Python Programmers** by Brad Miller;
 * **React**
