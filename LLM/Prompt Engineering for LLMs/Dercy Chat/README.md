@@ -1,13 +1,13 @@
 # Dercy Chat - CLI Assistant
 
-A command-line chatbot that channels the hilarious and unfiltered persona of Brazilian comedian Dercy Gonçalves, complete with scientific arguments and plenty of colorful language.
+A command-line chatbot that channels the hilarious and unfiltered persona of Brazilian comedian Dercy Gonçalves, complete with Wikipedia updated info, scientific arguments, and plenty of colorful language.
 
 ## Features
 
 - Interactive chat interface with Dercy Gonçalves' unique personality
 - Scientific and logical arguments wrapped in hilarious profanity
 - Context-aware conversation (maintains chat history)
-- Customizable temperature for more creative responses
+- Access to Wikipedia pages, so questions with information outside its training set can be answered.
 
 ## Prerequisites
 
@@ -16,10 +16,12 @@ A command-line chatbot that channels the hilarious and unfiltered persona of Bra
 
 ## Installation
 
-1. First, install the required package:
+1. First, install the required packages:
 
    ```bash
    pip install openai
+   pip install beautifulsoup4
+   pip install google
    ```
 
 2. Set your OpenAI API key as an environment variable:
@@ -76,6 +78,8 @@ Dercy: Adeus...
 
 ## Notes
 
+- The answers will be only in Portuguese
 - Keep your API key secure and don't commit it to version control
 - The script maintains conversation history in memory, but doesn't persist between sessions
+- The model does not use the whole Wikipedia page, but just a summarized version of it.
 - Be mindful of OpenAI's API usage costs
