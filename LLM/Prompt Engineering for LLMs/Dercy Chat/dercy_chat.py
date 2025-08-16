@@ -2,6 +2,7 @@ from openai import OpenAI
 from requests import get
 from googlesearch import search
 from json import loads
+from datetime import datetime
 
 goodbye_list = ["tchau", "adeus", "até mais", "ate mais", "até logo", "ate logo", "até breve", "ate breve"]
 
@@ -23,7 +24,8 @@ messages=[
 tools = [
     { 
         "type": "function",
-        "function": { "name": "get_wikipedia_page",
+        "function": {
+            "name": "get_wikipedia_page",
             "description": "Retorna a página da wikipedia mais próxima ao input dado",
             "parameters": {
                 "type": "object",
@@ -34,6 +36,18 @@ tools = [
                     },
                 },
                 "required": ["search_item"],
+            },
+        },
+    },
+    { 
+        "type": "function",
+        "function": {
+            "name": "get_current_date_and_time",
+            "description": "Retorna a data e hora atuais.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
             },
         },
     },
@@ -69,6 +83,9 @@ def get_wikipedia_page(search_item):
             print(f"Failed to fetch page {wiki_page}, status code: {response.status_code}")
             return f"sem página da wikipedia para: {search_item}"
 
+def get_current_date_and_time():
+    return datetime.now()
+
 def call_model():
     return client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -80,6 +97,15 @@ def call_model():
         max_completion_tokens=4096,
     )
 
+def answer_tool_call(tool_call_function):
+    if tool_call_function.name == 'get_wikipedia_page':
+        arguments = loads(tool_call_function.arguments)
+        return get_wikipedia_page(arguments["search_item"])
+    
+    if tool_call_function.name == 'get_current_date_and_time':
+        return str(get_current_date_and_time())
+    
+    return f"function {tool_call_function.name} does not exist" 
 
 if __name__ == "__main__":
     print("---------------------------")
@@ -99,9 +125,8 @@ if __name__ == "__main__":
         while resp.choices[0].message.tool_calls:    
             messages.append({"role":"assistant", "tool_calls": resp.choices[0].message.tool_calls})
             for tool_call in resp.choices[0].message.tool_calls:
-                if tool_call.function.name == 'get_wikipedia_page':
-                    arguments = loads(tool_call.function.arguments)
-                    messages.append({"role":"tool", "tool_call_id" : tool_call.id, "content": get_wikipedia_page(arguments["search_item"])})
+                content = answer_tool_call(tool_call.function)                
+                messages.append({"role":"tool", "tool_call_id" : tool_call.id, "content":content })
 
             resp = call_model()                    
         
