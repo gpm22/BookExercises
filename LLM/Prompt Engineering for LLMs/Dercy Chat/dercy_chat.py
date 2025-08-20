@@ -18,7 +18,7 @@ max_completion_tokens = 4096
 messages = [
     {
         "role": "system",
-        "content" : """
+        "content": """
             Você é a Dercy Gonçalves.
             Você apenas response em Português e xingamentos, mesmo se a pergunta for em outra lingua.
             Você tem bom humor, é divertida, é engraçada e fala palavrões o tempo todo.
@@ -26,8 +26,8 @@ messages = [
             Você sempre responde corretamente o que foi pedido, sempre com palavrões.
             Teus argumentos sempre são baseados em ciência, lógica e xingamentos.
             Você alterar os textos da wikipedia para conter mais xingamentos. 
-        """
-        }
+        """,
+    },
 ]
 
 tools = [
@@ -93,6 +93,8 @@ def get_wikipedia_page(search_item):
             return f"sem página da wikipedia para: {search_item}"
 
 def get_current_date_and_time():
+    return datetime.now()
+
 
 # from https://cookbook.openai.com/examples/how_to_count_tokens_with_tiktoken#6-counting-tokens-for-chat-completions-api-calls
 def num_tokens_from_messages(messages, model="gpt-4o-mini-2024-07-18"):
@@ -102,7 +104,7 @@ def num_tokens_from_messages(messages, model="gpt-4o-mini-2024-07-18"):
     except KeyError:
         print("Warning: model not found. Using o200k_base encoding.")
         encoding = tiktoken.get_encoding("o200k_base")
-        max_completion_tokens=max_completion_tokens,
+    if model in {
         "gpt-3.5-turbo-0125",
         "gpt-4-0314",
         "gpt-4-32k-0314",
@@ -226,13 +228,36 @@ def handle_overflow(model, overflow_mode, messages, tools):
         # Keep the last 20 messages and the system message
         return [messages[0]] + messages[-20:]
     elif overflow_mode == "CONDENSE":
-        # Here you would implement your logic to condense the messages
-        # For now, we will just return the last message and the system message
-        return [messages[0], messages[-1]]
+        return condense_messages(messages, model)
     else:
         raise ValueError(f"Unknown overflow mode: {overflow_mode}")
 
-    return datetime.now()
+
+def condense_messages(messages, model):
+    prompt = [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant that condenses chat messages while preserving their meaning. Summarize the messages into a concise format containing at least 500 tokens.",
+        },
+        {
+            "role": "user",
+            "content": f"Condense the following messages into a concise format containing at least 500 tokens: {messages}",
+        },
+    ]
+    response = client.chat.completions.create(
+        model=model,
+        messages=prompt,
+        temperature=0,
+        max_tokens=1000,
+    )
+    condensed = response.choices[0].message.content
+
+    return [
+        messages[0],  # keep the system message
+        {"role": "user", "content": condensed},
+    ] + messages[
+        -10:
+    ]  # keep the last 10 messages for context
 
 
 def call_model(model):
@@ -243,7 +268,7 @@ def call_model(model):
         messages=messages,
         temperature=1.2,
         n=1,
-        max_completion_tokens=4096,
+        max_completion_tokens=max_completion_tokens,
     )
 
 
@@ -290,6 +315,7 @@ if __name__ == "__main__":
     print("---------------------------")
 
     while True:
+        messages = handle_overflow(args.model, args.overflow_mode, messages, tools)
         prompt = get_prompt()
         print("---------------------------")
         if not prompt:
