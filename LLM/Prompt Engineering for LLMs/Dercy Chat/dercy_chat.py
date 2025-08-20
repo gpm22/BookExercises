@@ -6,11 +6,6 @@ from datetime import datetime
 import argparse
 import tiktoken
 
-# TODO - Gabriel - condense messages when approaching the token limit, so the chat can go on forever
-# search more about
-# but my idea is to condense the whole chat but the system massage and the last user message in 1000 tokens
-# any time the 95% of the maximum token usage is reached
-
 goodbye_list = ["tchau", "adeus", "até mais", "ate mais", "até logo", "ate logo", "até breve", "ate breve"]
 
 max_completion_tokens = 4096
