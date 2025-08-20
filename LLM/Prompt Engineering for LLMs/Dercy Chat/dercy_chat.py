@@ -3,6 +3,7 @@ from requests import get
 from googlesearch import search
 from json import loads
 from datetime import datetime
+import argparse
 
 goodbye_list = ["tchau", "adeus", "até mais", "ate mais", "até logo", "ate logo", "até breve", "ate breve"]
 
@@ -62,15 +63,15 @@ def get_prompt():
             line = input()
             if any(sub.lower() == line.lower() for sub in goodbye_list):
                 return False
-            
+
         except EOFError:
             break
         contents.append(line)
-    
+
     dercy = "Dercy Gonçalves"
-    
+
     return "\n".join(contents).replace("você", dercy).replace("Você", dercy)
-    
+
 def get_wikipedia_page(search_item):
     for wiki_page in search(search_item + " site:en.wikipedia.org", tld="co.in", num=1, stop=1, pause=2):
         title = wiki_page.split('/')[-1]         
@@ -86,9 +87,10 @@ def get_wikipedia_page(search_item):
 def get_current_date_and_time():
     return datetime.now()
 
-def call_model():
+
+def call_model(model):
     return client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model=model,
         tools=tools,
         tool_choice="auto",
         messages=messages,
@@ -97,17 +99,45 @@ def call_model():
         max_completion_tokens=4096,
     )
 
+
 def answer_tool_call(tool_call_function):
-    if tool_call_function.name == 'get_wikipedia_page':
-        arguments = loads(tool_call_function.arguments)
-        return get_wikipedia_page(arguments["search_item"])
-    
-    if tool_call_function.name == 'get_current_date_and_time':
-        return str(get_current_date_and_time())
-    
-    return f"function {tool_call_function.name} does not exist" 
+    match tool_call_function.name:
+        case "get_wikipedia_page":
+            arguments = loads(tool_call_function.arguments)
+            return get_wikipedia_page(arguments["search_item"])
+
+        case "get_current_date_and_time":
+            return str(get_current_date_and_time())
+
+        case _:
+            return f"function {tool_call_function.name} does not exist"
+
+
+def set_arguments():
+    parser = argparse.ArgumentParser(
+        prog="dercy_chat",
+        description="Dercy Chat - Chat with Dercy Gonçalves",
+        epilog="A command-line chatbot that channels the hilarious and unfiltered persona of Brazilian comedian Dercy Gonçalves, complete with Wikipedia updated info, scientific arguments, and plenty of colorful language.",
+    )
+    parser.add_argument(
+        "--overflow-mode",
+        "-o",
+        type=str,
+        default="THROW_OUT",
+        help="Mode to handle context overflow. Options: THROW_OUT, CONDENSE",
+    )
+    parser.add_argument(
+        "--model",
+        "-m,",
+        type=str,
+        default="gpt-3.5-turbo",
+        help="Model to use for the chat. Default is gpt-3.5-turbo.",
+    )
+    return parser.parse_args()
+
 
 if __name__ == "__main__":
+    args = set_arguments()
     print("---------------------------")
     print("Dercy: Olá! Como posso te ajudar hoje?")
     print("---------------------------")
@@ -118,18 +148,18 @@ if __name__ == "__main__":
         if not prompt:
             print("Dercy: Adeus...")
             break
-            
+
         messages.append({"role":"user", "content": prompt})
-        resp = call_model()
-        
+        resp = call_model(args.model)
+
         while resp.choices[0].message.tool_calls:    
             messages.append({"role":"assistant", "tool_calls": resp.choices[0].message.tool_calls})
             for tool_call in resp.choices[0].message.tool_calls:
                 content = answer_tool_call(tool_call.function)                
                 messages.append({"role":"tool", "tool_call_id" : tool_call.id, "content":content })
 
-            resp = call_model()                    
-        
+            resp = call_model(args.model)
+
         content = resp.choices[0].message.content
         messages.append({"role":"assistant", "content": content})
         print("Dercy: ", content)
