@@ -291,7 +291,7 @@ def set_arguments():
         "-o",
         type=str,
         default="THROW_OUT",
-        help="Mode to handle context overflow. Options:\n THROW_OUT -- keep last 20 messages,\nCONDENSE -- condense the messages in 500 tokens.",
+        help="Mode to handle context overflow. Options:\n THROW_OUT -- keep last 20 messages,\nCONDENSE -- condense the messages in 500-1000 tokens and keep last 10 messages.",
     )
     parser.add_argument(
         "--model",
