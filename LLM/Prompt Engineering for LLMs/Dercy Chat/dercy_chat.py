@@ -22,6 +22,14 @@ def set_arguments():
         default="gpt-3.5-turbo",
         help="Model to use for the chat. Default is gpt-3.5-turbo.",
     )
+    parser.add_argument(
+        "--max-messages-in-context",
+        "-M",
+        type=int,
+        default=20,
+        help="Maximum number of messages to keep in context. Default is 20.",
+    )
+
     return parser.parse_args()
 
 
@@ -32,5 +40,6 @@ if __name__ == "__main__":
         client=client,
         model=args.model,
         overflow_mode=args.overflow_mode,
+        max_messages_in_context=args.max_messages_in_context,
     )
     dercy_chat.run()

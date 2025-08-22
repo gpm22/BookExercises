@@ -23,11 +23,18 @@ class DercyChat:
             Você alterar os textos da wikipedia para conter mais xingamentos. 
         """,
     }
-    
-    def __init__(self, client, model, overflow_mode):
+
+    def __init__(
+        self,
+        client,
+        model,
+        overflow_mode,
+        max_messages_in_context,
+    ):
         self.client = client
         self.model = model
         self.overflow_mode = overflow_mode
+        self.max_messages_in_context = max_messages_in_context
         self.messages = [DercyChat.system_message]
 
     @classmethod
@@ -43,9 +50,7 @@ class DercyChat:
                 break
             contents.append(line)
 
-
         return "\n".join(contents).replace("você", cls.dercy_name).replace("Você", cls.dercy_name)
-
 
     def __condense_messages(self):
         prompt = [
@@ -73,8 +78,10 @@ class DercyChat:
             -10:
         ]  # keep the last 10 messages for context
 
-
     def __handle_overflow(self):
+        if len(self.messages) <= self.max_messages_in_context:
+            return
+
         token_number = num_tokens_for_tools(tools_definition, self.messages, self.model)
         limit = (DercyChat.context_window - DercyChat.max_completion_tokens) * 0.85
         if token_number < limit:
