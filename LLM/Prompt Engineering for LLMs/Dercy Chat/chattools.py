@@ -40,12 +40,16 @@ def get_wikipedia_page(search_item):
         title = wiki_page.split('/')[-1]         
         # this gets a summarized and smaller version of the wikipedia page
         url = f"https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles={title}"
-        response = get(url)
+        headers = {'User-Agent': 'DercyBot/0.0 (https://github.com/gpm22/BookExercises/blob/master/LLM/Prompt%20Engineering%20for%20LLMs/Dercy%20Chat/dercy_chat.py)'}
+        response = get(url, headers=headers)
         if response.status_code == 200 and response.text:
             return response.text
         else:
             print(f"Failed to fetch page {wiki_page}, status code: {response.status_code}")
+            print(f"Faile with body: {response.text}")
             return f"sem página da wikipedia para: {search_item}"
+    
+    return f"sem página da wikipedia para: {search_item}"
 
 def get_current_date_and_time():
     return datetime.now()
