@@ -50,7 +50,7 @@ class DercyChat:
                 break
             contents.append(line)
 
-        return "\n".join(contents).replace("você", cls.dercy_name).replace("Você", cls.dercy_name)
+        return "\n".join(contents).replace("você", f"você ({cls.dercy_name})").replace("Você", f"Você ({cls.dercy_name})")
 
     def __condense_messages(self):
         prompt = [
@@ -67,7 +67,7 @@ class DercyChat:
             model=self.model,
             messages=prompt,
             temperature=0,
-            max_tokens=1000,
+            max_tokens=700,
         )
         condensed = response.choices[0].message.content
 
@@ -75,8 +75,8 @@ class DercyChat:
             DercyChat.system_message, 
             {"role": "user", "content": condensed},
         ] + self.messages[
-            -10:
-        ]  # keep the last 10 messages for context
+            -5:
+        ]  # keep the last 5 messages for context
 
     def __handle_overflow(self):
         if len(self.messages) <= self.max_messages_in_context:
@@ -135,3 +135,4 @@ class DercyChat:
             self.messages.append({"role":"assistant", "content": content})
             print("Dercy: ", content)
             print("---------------------------")
+
