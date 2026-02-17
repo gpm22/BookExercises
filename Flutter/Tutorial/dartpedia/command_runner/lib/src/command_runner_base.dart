@@ -6,7 +6,7 @@ import 'arguments.dart';
 import 'exception.dart';
 
 class CommandRunner {
-  CommandRunner({this.onError});
+  CommandRunner({this.onOutput, this.onError});
 
   final Map<String, Command> _commands = <String, Command>{};
 
@@ -15,6 +15,8 @@ class CommandRunner {
 
   FutureOr<void> Function(Object)? onError;
 
+  FutureOr<void> Function(String)? onOutput;
+
   /// Runs the command-line application logic with given arguments
   Future<void> run(List<String> input) async {
     try {
@@ -22,7 +24,11 @@ class CommandRunner {
 
       if (results.command != null) {
         Object? output = await results.command!.run(results);
-        print(output.toString());
+        if (onOutput != null) {
+          await onOutput!(output.toString());
+        } else {
+          print(output.toString());
+        }
       }
     } on Exception catch (exception) {
       if (onError != null) {

@@ -1,6 +1,9 @@
 import 'dart:async';
 
-import 'arguments.dart';
+import 'package:command_runner/command_runner.dart';
+
+import 'console.dart';
+import 'exception.dart';
 
 // Prints program and argument usage.
 //
@@ -38,11 +41,54 @@ class HelpCommand extends Command {
 
   @override
   FutureOr<Object?> run(ArgResults args) async {
-    var usage = runner.usage;
-    for (var command in runner.commands) {
-      usage += '\n ${command.usage}';
+    final buffer = StringBuffer();
+    buffer.writeln(runner.usage.titleText);
+
+    if (args.flag('verbose')) {
+      runner.commands
+          .map((c) => _renderCommandVerbose(c))
+          .forEach(buffer.write);
+
+      return buffer.toString();
     }
 
-    return usage;
+    if (args.hasOption('commnad')) {
+      var (:option, :input) = args.getOption('command');
+
+      var cmd = runner.commands.firstWhere(
+        (command) => command.name == input,
+        orElse: () => throw ArgumentException(
+          'Input ${args.commandArg} is not a known command.',
+        ),
+      );
+
+      return _renderCommandVerbose(cmd);
+    }
+
+    runner.commands.map((c) => c.usage).forEach(buffer.writeln);
+
+    return buffer.toString();
+  }
+
+  String _renderCommandVerbose(Command cmd) {
+    final indent = ' ' * 10;
+    final buffer = StringBuffer();
+
+    buffer.writeln(cmd.usage.instructionText);
+    buffer.writeln('$indent ${cmd.help}');
+
+    if (cmd.valueHelp != null) {
+      buffer.writeln(
+        '$indent [Argument] Required? ${cmd.requiresArgument}, Type: ${cmd.valueHelp}, Default: ${cmd.defaultValue ?? 'none'}',
+      );
+    }
+
+    buffer.writeln('$indent Options:');
+
+    cmd.options
+        .map((option) => '$indent ${option.usage}')
+        .forEach(buffer.writeln);
+
+    return buffer.toString();
   }
 }
