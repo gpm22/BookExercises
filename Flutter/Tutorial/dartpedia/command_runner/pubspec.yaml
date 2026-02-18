@@ -1,7 +1,8 @@
 name: command_runner
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+resolution: workspace
+repository: https://github.com/gpm22/BookExercises/tree/master/Flutter/Tutorial/dartpedia
 
 environment:
   sdk: ^3.10.8

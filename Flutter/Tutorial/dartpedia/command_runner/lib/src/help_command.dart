@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:command_runner/command_runner.dart';
 
-import 'console.dart';
-import 'exception.dart';
-
 // Prints program and argument usage.
 //
 // When given a command as an argument, it prints the usage of
