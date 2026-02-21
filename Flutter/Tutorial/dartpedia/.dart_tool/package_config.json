@@ -3,13 +3,13 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///home/gabriel1000homem/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-95.0.0",
+      "rootUri": "file:///home/gabriel1000homem/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-96.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///home/gabriel1000homem/.pub-cache/hosted/pub.dev/analyzer-10.1.0",
+      "rootUri": "file:///home/gabriel1000homem/.pub-cache/hosted/pub.dev/analyzer-10.2.0",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
