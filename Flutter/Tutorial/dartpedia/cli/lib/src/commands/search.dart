@@ -1,20 +1,18 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:command_runner/command_runner.dart';
-import 'package:logging/logging.dart';
 import 'package:wikipedia/wikipedia.dart';
 
-class SearchCommand extends Command {
-  SearchCommand({required this.logger}) {
+import 'logged_command.dart';
+
+class SearchCommand extends LoggedCommand {
+  SearchCommand({required super.logger}) {
     addFlag(
       'im-feeling-lucky',
       help:
           'If true, prints the summary of the top article that the search returns',
     );
   }
-
-  final Logger logger;
 
   @override
   String get description => 'Search for Wikipedia articles';
@@ -30,48 +28,38 @@ class SearchCommand extends Command {
       'Prints a list of links to Wikipedia articles that match the given term';
 
   @override
-  FutureOr<Object?> run(ArgResults args) async {
+  FutureOr<Object?> baseRun(ArgResults args) async {
     if (requiresArgument &&
         (args.commandArg == null || args.commandArg!.isEmpty)) {
       return 'Please include a search term';
     }
 
+    final SearchResults results = await search(args.commandArg!);
+
+    if (results.results.isEmpty) {
+      return 'No results found for ${args.commandArg}';
+    }
+
     final buffer = StringBuffer('Search results:');
-    try {
-      final SearchResults results = await search(args.commandArg!);
 
-      if (args.flag('im-feeling-lucky')) {
-        final title = results.results.first.title;
-        final Summary article = await getArticleSummaryByTitle(title);
-        buffer.writeln('Lucky you!');
-        buffer.writeln(article.titles.normalized.titleText);
-        if (article.description != null) {
-          buffer.writeln(article.description);
-        }
-
-        buffer.writeln(article.extract);
-        buffer.writeln();
-        buffer.writeln('All results:');
+    if (args.flag('im-feeling-lucky')) {
+      final title = results.results.first.title;
+      final Summary article = await getArticleSummaryByTitle(title);
+      buffer.writeln('Lucky you!');
+      buffer.writeln(article.titles.normalized.titleText);
+      if (article.description != null) {
+        buffer.writeln(article.description);
       }
 
-      results.results
-          .map((result) => '${result.title} - ${result.url}')
-          .forEach(buffer.writeln);
-
-      return buffer.toString();
-    } on HttpException catch (e) {
-      logger
-        ..warning(e.message)
-        ..warning(e.uri)
-        ..info(usage);
-      return e.message;
-    } on FormatException catch (e) {
-      logger
-        ..warning(e.message)
-        ..warning(e.source)
-        ..info(usage);
-
-      return e.message;
+      buffer.writeln(article.extract);
+      buffer.writeln();
+      buffer.writeln('All results:');
     }
+
+    results.results
+        .map((result) => '${result.title} - ${result.url}')
+        .forEach(buffer.writeln);
+
+    return buffer.toString();
   }
 }

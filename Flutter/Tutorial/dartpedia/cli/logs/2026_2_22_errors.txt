@@ -1,0 +1,3 @@
+[2026-02-22 02:12:08.810721 - errors] WARNING: ArgumentException: Input can only contain one command. Got search and help 
+[2026-02-22 02:12:28.293209 - errors] WARNING: ArgumentException: The first word of input must be a command. 
+[2026-02-22 02:27:16.900571 - errors] WARNING: ArgumentException: Commands can only have up to one argument. 

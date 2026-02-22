@@ -6,7 +6,7 @@ Future<List<Article>> getArticleByTitle(String title) async {
     'action': 'query',
     'format': 'json',
     'titles': title.trim(),
-    'prop': 'exctracts',
+    'prop': 'extracts',
     'explaintext': '',
   });
 

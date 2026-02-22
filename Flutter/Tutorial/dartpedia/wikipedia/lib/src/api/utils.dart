@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 /// Generic HTTP GET function that fetches JSON and converts it using a factory
-/// 
+///
 /// Example usage:
 /// ```dart
 /// final summary = await fetchAndParse(
 ///   Uri.parse('https://api.example.com/summary'),
 ///   Summary.fromJson,
 /// );
-/// 
+///
 /// final user = await fetchAndParse(
 ///   Uri.parse('https://api.example.com/user/123'),
 ///   User.fromJson,
@@ -34,9 +34,6 @@ Future<T> fetchAndParse<T>(
     }
 
     return fromJson(jsonDecode(response.body));
-  } on FormatException {
-    // todo: add logs here
-    rethrow;
   } finally {
     httpClient.close();
   }
