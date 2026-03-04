@@ -160,6 +160,7 @@ class Word with IterableMixin<Letter> {
 // Domain specific methods that contain word related logic.
 extension WordUtils on Word {
   bool get isLegalGuess {
+    print("gabriel - allLegalGuesses: $allLegalGuesses");
     if (!allLegalGuesses.contains(toString())) {
       return false;
     }
