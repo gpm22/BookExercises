@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rolodex/screens/contacts.dart';
 
 import 'contact_groups.dart';
 
@@ -22,7 +23,7 @@ class _AdaptiveLayoutState extends State<AdaptiveLayout> {
     builder: (context, constraints) =>
         constraints.maxWidth > largeScreenMinWidth
         ? _buildLargeScreenLayout()
-        : const ContactGroupsPage(),
+        : const ContactListsPage(listId: 0),
   );
 
   Widget _buildLargeScreenLayout() => CupertinoPageScaffold(
