@@ -9,24 +9,12 @@ function Square(props) {
 
   return (
     <button className={classNameLocal} onClick={props.onClick}>
-      <p class="square-position">
+      <p className="square-position">
         ({props.location[0]}, {props.location[1]})
       </p>
       {props.value}
     </button>
   );
-}
-
-function isInclude(array, i) {
-  let answer = false;
-
-  array.forEach((element) => {
-    if (element[0] === i[0] && element[1] === i[1]) {
-      answer = true;
-    }
-  });
-
-  return answer;
 }
 
 function squareGenerator() {
@@ -46,21 +34,17 @@ class Board extends React.Component {
   renderSquare(i) {
     const [i1, i2] = i;
 
-    if (isInclude(this.props.winnerSet, i)) {
-      return (
-        <Square
-          value={this.props.squares[i1][i2]}
-          classValue={"square-winner"}
-          onClick={() => this.props.onClick(i)}
-          location={i}
-        />
-      );
-    }
+    const isIncluded = this.props.winnerSet.some(
+      element => element[0] === i1 && element[1] === i2
+    );
+
     return (
       <Square
         value={this.props.squares[i1][i2]}
+        className={isIncluded && "square-winner"}
         onClick={() => this.props.onClick(i)}
         location={i}
+        key={i}
       />
     );
   }
@@ -72,7 +56,7 @@ class Board extends React.Component {
         boardRow.push(this.renderSquare([i, j]));
       }
 
-      return <div className="board-row">{boardRow}</div>;
+      return <div className="board-row" key={i}>{boardRow}</div>;
     };
 
     let boardComplete = [];
@@ -120,6 +104,9 @@ class Game extends React.Component {
       xIsNext: true,
       order: true,
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.jumpTo = this.jumpTo.bind(this);
+    this.reorder = this.reorder.bind(this);
   }
 
   handleClick(i) {
@@ -177,10 +164,6 @@ class Game extends React.Component {
     const lastSquares = history[history.length - 1].squares;
     const [winner, moveWinner] = calculateWinner(current.squares);
 
-    const nomeClasse = (i) => {
-      return "li-hist-" + i;
-    };
-
     changeColor(this.state.stepNumber);
 
     const moves = history.map((step, move) => {
@@ -196,31 +179,19 @@ class Game extends React.Component {
           ")"
         : "Go to game start";
 
-      if (move < history.length - 1) {
-        return (
-          <li key={move}>
-            <button
-              className="li-hist"
-              id={nomeClasse(move)}
-              onClick={() => this.jumpTo(move)}
-            >
-              {desc}
-            </button>
-          </li>
-        );
-      } else {
-        return (
-          <li key={move}>
-            <button
-              className="li-hist li-hist-last"
-              id={nomeClasse(move)}
-              onClick={() => this.jumpTo(move)}
-            >
-              {desc}
-            </button>
-          </li>
-        );
-      }
+      const classValue = "li-hist" + (move < history.length - 1) ? "" : " li-hist-last";
+
+      return (
+        <li key={move}>
+          <button
+            className={classValue}
+            id={"li-hist-" + move}
+            onClick={() => this.jumpTo(move)}
+          >
+            {desc}
+          </button>
+        </li>
+      );
     });
 
     if (!this.state.order) {
@@ -253,11 +224,11 @@ class Game extends React.Component {
           <Board
             squares={current.squares.slice()}
             winnerSet={winnerSet}
-            onClick={(i) => this.handleClick(i)}
+            onClick={this.handleClick}
           />
 
           <ul>
-            <button onClick={() => this.reorder()}>Reorder List</button>
+            <button onClick={this.reorder}>Reorder List</button>
             {moves}
           </ul>
         </div>
