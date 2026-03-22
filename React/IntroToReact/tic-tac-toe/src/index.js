@@ -5,12 +5,7 @@ import "./index.css";
 const squareSide = 3;
 
 function Square(props) {
-  let classNameLocal;
-  if (props.classValue) {
-    classNameLocal = "square " + props.classValue;
-  } else {
-    classNameLocal = "square";
-  }
+  const classNameLocal = "square" + (props.classValue ? " " + props.classValue : "");
 
   return (
     <button className={classNameLocal} onClick={props.onClick}>
